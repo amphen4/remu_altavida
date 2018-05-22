@@ -309,6 +309,13 @@
     -->
     <!-- Main content -->
     <section class="content">
+      @if(session('exito'))
+      <div class="alert alert-success success-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4><i class="icon fa fa-check"></i> Atencion!</h4>
+          {{session('exito')}}
+      </div>
+      @endif
       @yield('content')
       
 

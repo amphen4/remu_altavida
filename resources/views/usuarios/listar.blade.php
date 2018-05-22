@@ -25,10 +25,10 @@
 			                <tbody>
 			                @foreach($users as $user)
 			                <tr>
-			                  <td><button class="btn btn-xs">Editar</button></td>
+			                  <td><a href="{{route('usuarios.edit',['usuario' => $user->id])}}" class="btn btn-default btn-xs">Editar</a></td>
 			                  <td>{{$user->name}}</td>
 			                  <td>{{$user->email}}</td>
-			                  <td><span class="badge badge-primary">{{$user->roles()->first()->description}}</span></td>
+			                  <td><span class="label label-@if($user->roles()->first()->name == 'admin'){{'primary'}}@else{{'default'}}@endif">{{$user->roles()->first()->description}}</span></td>
 			                </tr>
 			                @endforeach
 			                

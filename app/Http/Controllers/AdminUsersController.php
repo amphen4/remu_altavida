@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
 {
@@ -93,7 +94,8 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('usuarios.editar',['user' => $user]);
     }
 
     /**
@@ -105,7 +107,32 @@ class AdminUsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:190',
+            'email' => ['required','string','email','max:190', Rule::unique('users')->ignore($user->id)],
+            'password' => 'nullable|string|min:6|confirmed',
+            'role' => 'required|numeric|min:1|max:2'
+        ]);
+        if(!empty($request->password))
+        {
+            $user->password = bcrypt($request->password);
+        }
+        $user->email = $request->email;
+        $user->name = $request->name;
+        switch($request->role){
+            case '1':
+                $rol = 'admin';
+                break;
+            case '2':
+                $rol = 'secretary';
+                break;
+        }
+        $role = Role::where('name', $rol)->first();
+        $user->save();
+        $user->roles()->attach($role);
+
+        return redirect()->route('usuarios.index')->with('exito','El usuario fue actualizado con éxito!');
     }
 
     /**
