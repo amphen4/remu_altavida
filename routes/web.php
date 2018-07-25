@@ -36,3 +36,11 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/usuarios','AdminUsersController');
+Route::get('/indicadores','AdminIndicadoresController@index')->name('indicadores');
+Route::post('/indicadores/data','AdminIndicadoresController@enviarData');
+Route::get('/data/eventos','EventsController@data');
+Route::post('/data/eventos/save','EventsController@store');
+Route::get('/data/graficos/uf','AdminIndicadoresController@graficoUf');
+Route::get('/data/graficos/dolar','AdminIndicadoresController@graficoDolar');
+Route::get('/data/graficos/utm','AdminIndicadoresController@graficoUtm');
+Route::get('/data/graficos/ipc','AdminIndicadoresController@graficoIpc');

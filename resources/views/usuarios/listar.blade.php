@@ -31,7 +31,8 @@
 			                  <td><span class="label label-@if($user->roles()->first()->name == 'admin'){{'primary'}}@else{{'default'}}@endif">{{$user->roles()->first()->description}}</span></td>
 			                </tr>
 			                @endforeach
-			                
+			                </tbody>
+			                <tfoot>
 			                </tfoot>
 			              </table>
 			            </div>

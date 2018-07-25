@@ -215,7 +215,14 @@
       
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
+        
+        <li>
+          <a href="{{url('/home')}}">
+            <i class="fa fa-home"></i> <span>Home</span>
+          </a>
+        </li>
         <li class="header">Herramientas Administración</li>
+        <!--
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -228,13 +235,14 @@
             <li><a href="{{asset('templates/AdminLTE-master')}}/index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul>
         </li>
+        -->
         @if(Auth::user()->hasRole('admin'))
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>Remuneraciones</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
+              <span class="label label-primary pull-right">Pronto</span>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -246,40 +254,40 @@
         </li>
         @endif
         <li>
-          <a href="../widgets.html">
+          <a href="#">
             <i class="fa fa-th"></i> <span>Contratos</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">Hot</small>
+              <small class="label pull-right bg-green">Pronto</small>
             </span>
           </a>
         </li>
         
         
         <li>
-          <a href="../calendar.html">
+          <a href="#">
             <i class="fa fa-calendar"></i> <span>Isapres</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
+              <small class="label pull-right bg-red">Pronto</small>
             </span>
           </a>
         </li>
         <li>
-          <a href="../mailbox/mailbox.html">
+          <a href="#">
             <i class="fa fa-envelope"></i> <span>AFP's</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
+              <small class="label pull-right bg-yellow">Pronto</small>
             </span>
           </a>
         </li>
         
         
-        <li><a href="#"><i class="fa fa-book"></i> <span>Documentación</span></a></li>
+        <li><a href="#"><i class="fa fa-book"></i> <span class="pull-right-container">
+              <small class="label pull-right bg-yellow">Pronto</small>
+            </span><span>Documentación</span></a></li>
         @if(Auth::user()->hasRole('admin'))
         <li class="header">Aplicación</li>
-        <li><a href="/usuarios"><i class="fa fa-users"></i> <span>Gestionar Usuarios</span></a></li>
+        <li><a href="{{url('usuarios')}}"><i class="fa fa-users"></i> <span>Gestionar Usuarios</span></a></li>
+        <li><a href="{{url('indicadores')}}"><i class="fa fa-line-chart"></i> <span>Indicadores Económicos</span></a></li>
         @endif
         <!--
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
@@ -328,7 +336,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 0.2
     </div>
-    <strong><a href="http://www.inf.ucv.cl" target="_blank">Escuela Ing. Informatica Pucv</a> - 2018 - <a target="_blank"href="https://adminlte.io">Template</a>
+    <strong><a href="http://www.inf.ucv.cl" target="_blank">Escuela Ing. Informatica Pucv</a> - 2018 - <a target="_blank" href="https://adminlte.io">Template</a>
   </footer>
 
   <!-- Control Sidebar -->
