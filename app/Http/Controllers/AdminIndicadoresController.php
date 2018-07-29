@@ -28,6 +28,9 @@ class AdminIndicadoresController extends Controller
     {
         Carbon::setLocale('es');
         $fecha = Carbon::now('America/Santiago');
+        $diaSemana = $fecha->format('l'); // Se busca obtener el nombre del dia en la semana, si es sabado o domingo, la api no funciona bien para esos dias.
+        if($diaSemana == 'Saturday') { $fecha->subDay(); }
+        if($diaSemana == 'Sunday') { $fecha->subDays(2); }
         $ano = $fecha->format('Y');
         $mes = $fecha->format('m');
         $dia = $fecha->format('d');

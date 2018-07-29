@@ -9,4 +9,5 @@ class Indicador extends Model
     protected $fillable = [
         'uf','utm','ipc','dolar','euro','fecha'
     ];
+    public $timestamps = false;
 }

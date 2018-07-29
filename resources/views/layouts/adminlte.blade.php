@@ -237,6 +237,22 @@
         </li>
         -->
         @if(Auth::user()->hasRole('admin'))
+        <li>
+          <a href="{{url('empleados')}}">
+            <i class="fa fa-users"></i> <span>Empleados</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">En desarrollo</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-th"></i> <span>Registro Horas</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">Pronto</small>
+            </span>
+          </a>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
