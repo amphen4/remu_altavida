@@ -45,5 +45,6 @@ Route::get('/data/graficos/dolar','AdminIndicadoresController@graficoDolar');
 Route::get('/data/graficos/utm','AdminIndicadoresController@graficoUtm');
 Route::get('/data/graficos/ipc','AdminIndicadoresController@graficoIpc');
 
-Route::get('/empleados','AdminEmpleadosController@index');
+Route::get('/empleados','AdminEmpleadosController@index')->name('empleados.index');
 Route::get('/data/empleados/lista','AdminEmpleadosController@enviarLista');
+Route::post('/empleados/create','AdminEmpleadosController@create');
