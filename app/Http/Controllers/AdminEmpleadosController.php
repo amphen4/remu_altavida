@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Empleado;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
 
 class AdminEmpleadosController extends Controller
 {
@@ -83,5 +85,19 @@ class AdminEmpleadosController extends Controller
         $nuevo->empresa_id = 1;
         $nuevo->save();
         return redirect()->route('empleados.index')->with('exito','El empleado ha sido agregado con exito!');
+    }
+    public function enviarFoto($id){
+
+    	$empleado = Empleado::findOrFail($id);
+    	if(Storage::disk('fotos-empleados')->exists($empleado->id.'.jpg'))
+    	{
+    		return new Response(Storage::disk('fotos-empleados')->get($empleado->id.'.jpg'),200);
+    	} 
+    	return new Response(Storage::disk('fotos-empleados')->get('sinfoto.jpg'),200);
+    }
+    public function enviarDatosEmpleadoJson($id)
+    {
+    	$empleado = Empleado::findOrFail($id);
+    	return $empleado->toJson();
     }
 }

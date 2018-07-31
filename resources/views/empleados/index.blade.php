@@ -3,12 +3,15 @@
 <!-- iCheck for checkboxes and radio inputs -->
 <link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/plugins/iCheck/all.css">
 <!-- bootstrap datepicker -->
-  <link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 <!-- FlexDataList -->
 <link rel="stylesheet" href="{{asset('js/jquery-flexdatalist-2.2.4')}}/jquery.flexdatalist.min.css">
 <!-- Select2 -->
-  <link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/select2/dist/css/select2.min.css">
+<!-- la animacion loading -->
+<link rel="stylesheet" href="{{asset('css')}}/loading.css">
 @endsection
+@section('cabecera','Gestionar Empleados')
 @section('content')
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -18,27 +21,385 @@
             @endforeach
         </ul>
     </div>
+    <br>
 @endif
-		<div class="box box-info">
-            <div class="box-header with-border">
-              <h2 class="box-title">Gestionar Empleados</h2>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal">
+<div class="box box-info">
+    <div class="box-header with-border">
+      
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form class="form-horizontal">
+      <div class="box-body">
+        <div class="input-group input-group-lg">
+        	<span class="input-group-addon"><strong>Búsqueda:</strong></span>
+        	<input type="text" id="inputBusqueda" class="form-control" placeholder="Ingrese un nombre o apellido">
+        	<span class="input-group-btn">
+              <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-flat">Nuevo Empleado</button>
+            </span>
+      	</div>
+      	
+      </div>
+      <!-- /.box-footer -->
+    </form>
+    
+</div>
+<br>
+<div id="divLoading" class="pre col-lg-12 col-md-12 col-md-xs-12">
+	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 30" enable-background="new 0 0 30 30" xml:space="preserve" width="30" height="30">
+
+		<rect fill="#FBBA44" width="15" height="15">
+	  <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;15,0;15,15;0,15;0,0;" repeatCount="indefinite"/>
+		</rect>	
+
+		<rect x="15" fill="#E84150" width="15" height="15">
+	  <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;0,15;-15,15;-15,0;0,0;" repeatCount="indefinite"/>
+		</rect>	
+	  
+		<rect x="15" y="15" fill="#62B87B" width="15" height="15">
+	  <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;-15,0;-15,-15;0,-15;0,0;" repeatCount="indefinite"/>
+		</rect>	
+
+		<rect y="15" fill="#2F6FB6" width="15" height="15">
+	  <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;0,-15;15,-15;15,0;0,0;" repeatCount="indefinite"/>
+		</rect>
+	</svg>
+</div>
+<div class="row" id="perfil">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle" id="imgEmpleado" src="" alt="User profile picture">
+
+              <h3 class="profile-username text-center" id="pNombreCompleto">Nina Mcintire</h3>
+
+              <p class="text-muted text-center" id="pCargo">Software Engineer</p>
+
               <div class="box-body">
-                <div class="input-group input-group-lg">
-                	<span class="input-group-addon"><strong>Búsqueda:</strong></span>
-                	<input type="text" id="inputBusqueda" class="form-control" placeholder="Ingrese un nombre o apellido">
-                	<span class="input-group-btn">
-                      <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-flat">Nuevo Empleado</button>
-                    </span>
-              	</div>
-              	<br>
+              	  <strong><i class="fa fa-file-text-o margin-r-5"></i> Contrato</strong>
+
+	              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+	              <hr>
+	              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+
+	              <p class="text-muted">
+	                B.S. in Computer Science from the University of Tennessee at Knoxville
+	              </p>
+
+	              <hr>
+
+	              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+
+	              <p class="text-muted">Malibu, California</p>
+
+	              <hr>
+
+	              <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+
+	              <p>
+	                <span class="label label-danger">UI Design</span>
+	                <span class="label label-success">Coding</span>
+	                <span class="label label-info">Javascript</span>
+	                <span class="label label-warning">PHP</span>
+	                <span class="label label-primary">Node.js</span>
+	              </p>
+
+	              
+
+	              
+	          </div>
+
+              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="nav-tabs-custom">
+          	<div class="pull-right"><button id="botonHide" class="btn btn-xs">X</button></div>
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#activity" data-toggle="tab">Registros</a></li>
+              <li><a href="#timeline" data-toggle="tab">Liquidaciones</a></li>
+              <li><a href="#settings" data-toggle="tab">Editar Datos</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+                <!-- Post -->
+                <div class="post">
+                  <div class="user-block">
+                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="user image">
+                        <span class="username">
+                          <a href="#">Jonathan Burke Jr.</a>
+                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                        </span>
+                    <span class="description">Shared publicly - 7:30 PM today</span>
+                  </div>
+                  <!-- /.user-block -->
+                  <p>
+                    Lorem ipsum represents a long-held tradition for designers,
+                    typographers and the like. Some people hate it and argue for
+                    its demise, but others ignore the hate as they create awesome
+                    tools to help create filler text for everyone from bacon lovers
+                    to Charlie Sheen fans.
+                  </p>
+                  <ul class="list-inline">
+                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
+                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
+                    </li>
+                    <li class="pull-right">
+                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
+                        (5)</a></li>
+                  </ul>
+
+                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
+                </div>
+                <!-- /.post -->
+
+                <!-- Post -->
+                <div class="post clearfix">
+                  <div class="user-block">
+                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="User Image">
+                        <span class="username">
+                          <a href="#">Sarah Ross</a>
+                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                        </span>
+                    <span class="description">Sent you a message - 3 days ago</span>
+                  </div>
+                  <!-- /.user-block -->
+                  <p>
+                    Lorem ipsum represents a long-held tradition for designers,
+                    typographers and the like. Some people hate it and argue for
+                    its demise, but others ignore the hate as they create awesome
+                    tools to help create filler text for everyone from bacon lovers
+                    to Charlie Sheen fans.
+                  </p>
+
+                  <form class="form-horizontal">
+                    <div class="form-group margin-bottom-none">
+                      <div class="col-sm-9">
+                        <input class="form-control input-sm" placeholder="Response">
+                      </div>
+                      <div class="col-sm-3">
+                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- /.post -->
+
+                <!-- Post -->
+                <div class="post">
+                  <div class="user-block">
+                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="User Image">
+                        <span class="username">
+                          <a href="#">Adam Jones</a>
+                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                        </span>
+                    <span class="description">Posted 5 photos - 5 days ago</span>
+                  </div>
+                  <!-- /.user-block -->
+                  <div class="row margin-bottom">
+                    <div class="col-sm-6">
+                      <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-6">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
+                          <br>
+                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-6">
+                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
+                          <br>
+                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
+                        </div>
+                        <!-- /.col -->
+                      </div>
+                      <!-- /.row -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+
+                  <ul class="list-inline">
+                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
+                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
+                    </li>
+                    <li class="pull-right">
+                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
+                        (5)</a></li>
+                  </ul>
+
+                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
+                </div>
+                <!-- /.post -->
               </div>
-              <!-- /.box-footer -->
-            </form>
-         </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="timeline">
+                <!-- The timeline -->
+                <ul class="timeline timeline-inverse">
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                        <span class="bg-red">
+                          10 Feb. 2014
+                        </span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-envelope bg-blue"></i>
+
+                    <div class="timeline-item">
+                      <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
+
+                      <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+
+                      <div class="timeline-body">
+                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                        quora plaxo ideeli hulu weebly balihoo...
+                      </div>
+                      <div class="timeline-footer">
+                        <a class="btn btn-primary btn-xs">Read more</a>
+                        <a class="btn btn-danger btn-xs">Delete</a>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-user bg-aqua"></i>
+
+                    <div class="timeline-item">
+                      <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+
+                      <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
+                      </h3>
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-comments bg-yellow"></i>
+
+                    <div class="timeline-item">
+                      <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+                      <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+
+                      <div class="timeline-body">
+                        Take me to your leader!
+                        Switzerland is small and neutral!
+                        We are more like Germany, ambitious and misunderstood!
+                      </div>
+                      <div class="timeline-footer">
+                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                      </div>
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  <!-- timeline time label -->
+                  <li class="time-label">
+                        <span class="bg-green">
+                          3 Jan. 2014
+                        </span>
+                  </li>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <li>
+                    <i class="fa fa-camera bg-purple"></i>
+
+                    <div class="timeline-item">
+                      <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+
+                      <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+
+                      <div class="timeline-body">
+                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                      </div>
+                    </div>
+                  </li>
+                  <!-- END timeline item -->
+                  <li>
+                    <i class="fa fa-clock-o bg-gray"></i>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="settings">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputName" placeholder="Name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+
+                    <div class="col-sm-10">
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputName" placeholder="Name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
+
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" >
@@ -271,6 +632,10 @@
 <!-- Select2 -->
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/select2/dist/js/select2.full.min.js"></script>
 <script>
+	$(document).ready(function(){
+		$('#divLoading').hide();
+		$('#perfil').hide();
+	})
 	$('#inputBusqueda').flexdatalist({
 		requestType: 'GET',
 		data: "{{url('/data/empleados/lista')}}",
@@ -285,6 +650,10 @@
 		searchIn: ['nombre','apellido_pat','apellido_mat'],
 		visibleProperties: ["nombre","apellido_pat",'apellido_mat'],
 	});
+	$('#inputBusqueda').on('select:flexdatalist',function(event,set,options){
+		console.log('has elegido '+set.nombre);
+		cargarPerfil(set.id);
+	})
 	$('#inputCiudad').flexdatalist({
 		data: "{{asset('json/comunas.json')}}",
 		minLength: 1,
@@ -311,7 +680,33 @@
       autoclose: true,
       format: 'yyyy-mm-dd'
     })
-    
+    $('#botonHide').on('click',function(){$('#perfil').hide(); });
+
+    function cargarPerfil(id){
+    	$('#perfil').fadeOut();
+    	$('#perfil').hide();
+    	setTimeout(function(){1==1},100);
+    	$('#divLoading').show();
+    	$.ajax({
+    		url: "{{url('data/empleados')}}"+"/"+id,
+	    	method: "GET",
+	    	success: function(data){
+	    		var datos = JSON.parse(data);
+	    		$('#pNombreCompleto').html(datos.nombre+' '+datos.apellido_pat+' '+datos.apellido_mat);
+	    		$('#pCargo').html(datos.cargo);
+	    		$('#divLoading').hide();
+    			$('#perfil').fadeIn();
+    			$('#imgEmpleado').attr('src',"{{url('empleados/fotos')}}"+'/'+datos.id);
+	    	},
+	    	error: function(jqXHR, textStatus){
+	    		console.log(jqXHR.responseText);
+	    		$('#divLoading').hide();
+	    	},
+	    	async: false
+    	});
+
+    	
+    }
 
 </script>
 @endsection

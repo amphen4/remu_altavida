@@ -48,3 +48,5 @@ Route::get('/data/graficos/ipc','AdminIndicadoresController@graficoIpc');
 Route::get('/empleados','AdminEmpleadosController@index')->name('empleados.index');
 Route::get('/data/empleados/lista','AdminEmpleadosController@enviarLista');
 Route::post('/empleados/create','AdminEmpleadosController@create');
+Route::get('/empleados/fotos/{id}','AdminEmpleadosController@enviarFoto');
+Route::get('/data/empleados/{id}','AdminEmpleadosController@enviarDatosEmpleadoJson');

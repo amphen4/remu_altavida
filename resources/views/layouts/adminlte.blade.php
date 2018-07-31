@@ -333,6 +333,13 @@
     -->
     <!-- Main content -->
     <section class="content">
+      <section class="content-header">
+        <h1>
+          @yield('cabecera')
+        </h1>
+        <br>
+      </section>
+
       @if(session('exito'))
       <div class="alert alert-success success-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
