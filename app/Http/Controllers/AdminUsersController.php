@@ -17,8 +17,8 @@ class AdminUsersController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('role:admin');
+        //$this->middleware('auth');
+        //$this->middleware('role:admin');
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +27,9 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        return view('usuarios.listar',['users' => User::all()]);
+        if(User::where('role_id',1)->count() == 1) $quedaUnAdmin = true;
+        else $quedaUnAdmin = false;
+        return view('usuarios.listar',['quedaUnAdmin' => $quedaUnAdmin]);
     }
 
     /**
@@ -69,8 +71,9 @@ class AdminUsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->role()->associate($role);
         $user->save();
-        $user->roles()->attach($role);
+        
 
         return redirect()->route('usuarios.index');
     }
@@ -129,8 +132,9 @@ class AdminUsersController extends Controller
                 break;
         }
         $role = Role::where('name', $rol)->first();
+        $user->role()->associate($role);
         $user->save();
-        $user->roles()->attach($role);
+        
 
         return redirect()->route('usuarios.index')->with('exito','El usuario fue actualizado con éxito!');
     }
@@ -143,6 +147,28 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd('kewea');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return response(200);
+    }
+    public function data()
+    {
+        $wea['data'] = User::all()->toArray();
+
+        if(User::where('role_id',1)->count() == 1){
+            foreach($wea['data'] as &$user){
+
+                if($user["role_name"] == 'admin'){
+
+                    $user["opciones"] = str_replace('botonEliminar','disabled',$user["opciones"]);
+                    
+                }
+            }
+        }
+        //dd($wea['data']);
+        return json_encode($wea);
+
+        //return User::all()->toJson('data');
     }
 }

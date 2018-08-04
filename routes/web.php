@@ -35,7 +35,15 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/usuarios','AdminUsersController');
+//Route::resource('/usuarios','AdminUsersController');
+Route::get('/usuarios','AdminUsersController@index')->name('usuarios.index');
+Route::post('/usuarios','AdminUsersController@store')->name('usuarios.store');
+Route::get('/usuarios/create','AdminUsersController@create')->name('usuarios.create');
+Route::get('/usuarios/{id}/edit','AdminUsersController@edit')->name('usuarios.edit');
+Route::put('/usuarios/{id}','AdminUsersController@update')->name('usuarios.update');
+Route::delete('/usuarios/eliminar/{id}','AdminUsersController@destroy');
+Route::get('/usuarios/data','AdminUsersController@data');
+
 Route::get('/indicadores','AdminIndicadoresController@index')->name('indicadores');
 Route::post('/indicadores/data','AdminIndicadoresController@enviarData');
 Route::get('/data/eventos','EventsController@data');

@@ -249,14 +249,14 @@
           <a href="#">
             <i class="fa fa-th"></i> <span>Registro Horas</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">Pronto</small>
+              <small class="label pull-right label-primary">Pronto</small>
             </span>
           </a>
         </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
-            <span>Remuneraciones</span>
+            <span>Liquidaciones</span>
             <span class="pull-right-container">
               <span class="label label-primary pull-right">Pronto</span>
             </span>
@@ -273,7 +273,7 @@
           <a href="#">
             <i class="fa fa-th"></i> <span>Contratos</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">Pronto</small>
+              <small class="label pull-right label-primary">Pronto</small>
             </span>
           </a>
         </li>
@@ -283,7 +283,7 @@
           <a href="#">
             <i class="fa fa-calendar"></i> <span>Isapres</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-red">Pronto</small>
+              <small class="label pull-right label-primary">Pronto</small>
             </span>
           </a>
         </li>
@@ -291,14 +291,14 @@
           <a href="#">
             <i class="fa fa-envelope"></i> <span>AFP's</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">Pronto</small>
+              <small class="label pull-right label-primary">Pronto</small>
             </span>
           </a>
         </li>
         
         
         <li><a href="#"><i class="fa fa-book"></i> <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">Pronto</small>
+              <small class="label pull-right label-primary">Pronto</small>
             </span><span>Documentación</span></a></li>
         @if(Auth::user()->hasRole('admin'))
         <li class="header">Aplicación</li>

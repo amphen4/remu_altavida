@@ -7,6 +7,18 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+
+## Instalacion en entorno de desarrollo
+
+<ul>
+	<li>-Descargar el archivo .env y ponerlo en la carpeta raiz del proyecto</li>
+	<li>Abrir terminal o consola en raiz del proyecto</li>
+	<li>Crear una base de datos vacia en el SGBD Mysql del equipo con el nombre: remu_sw2018</li>
+	<li>Ejecutar comando: php artisan migrate. Este creara la tablas necesarias en la base de datos</li>
+	<li>Ejecutar comando: php artisan db:seed. Este insertara datos necesarios en las tablas correspondientes</li>
+	<li>Ejecutar comando: php artisan serve. Y listo.</li>
+</ul>
+
 ## Sobre el Proyecto
 
 Este proyecto es parte del ramo Taller de Ingeniería de Software 2018. A continuación una pequeña reseña:

@@ -65,7 +65,7 @@
 		</rect>
 	</svg>
 </div>
-<div class="row" id="perfil">
+<div class="row hidden" id="perfil">
         <div class="col-md-3">
 
           <!-- Profile Image -->
@@ -78,9 +78,9 @@
               <p class="text-muted text-center" id="pCargo">Software Engineer</p>
 
               <div class="box-body">
-              	  <strong><i class="fa fa-file-text-o margin-r-5"></i> Contrato</strong>
+              	  <strong><i class="fa fa-file-text-o margin-r-5"></i> Contrato Activo:</strong>
 
-	              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+	              <a href=""><p>Contrato No.2 24/07/2018</p></a>
 	              <hr>
 	              <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
 
@@ -90,20 +90,18 @@
 
 	              <hr>
 
-	              <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+	              <strong><i class="fa fa-map-marker margin-r-5"></i> Domicilio</strong>
 
 	              <p class="text-muted">Malibu, California</p>
 
 	              <hr>
 
-	              <strong><i class="fa fa-pencil margin-r-5"></i> Skills</strong>
+	              <strong><i class="fa fa-pencil margin-r-5"></i> Afiliaciones</strong>
 
 	              <p>
-	                <span class="label label-danger">UI Design</span>
-	                <span class="label label-success">Coding</span>
-	                <span class="label label-info">Javascript</span>
-	                <span class="label label-warning">PHP</span>
-	                <span class="label label-primary">Node.js</span>
+	                <span class="label label-danger">FONASA</span>
+	                <span class="label label-success">AFP Cuprum</span>
+	                <span class="label label-info">APV</span>
 	              </p>
 
 	              
@@ -111,7 +109,7 @@
 	              
 	          </div>
 
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+              <a href="#settings" id="botonEditar" data-toggle="tab" class="btn btn-primary btn-block"><b>Editar</b></a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -122,122 +120,62 @@
           <div class="nav-tabs-custom">
           	<div class="pull-right"><button id="botonHide" class="btn btn-xs">X</button></div>
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab">Registros</a></li>
-              <li><a href="#timeline" data-toggle="tab">Liquidaciones</a></li>
-              <li><a href="#settings" data-toggle="tab">Editar Datos</a></li>
+              <li class="active"><a href="#activity" data-toggle="tab">Últimos Registros</a></li>
+              <li><a href="#timeline" data-toggle="tab">Últimas Liquidaciones</a></li>
+              <li><a href="#settings" id="tabEditarDatos" data-toggle="tab">Editar Datos</a></li>
             </ul>
             <div class="tab-content">
               <div class="active tab-pane" id="activity">
-                <!-- Post -->
-                <div class="post">
-                  <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="user image">
-                        <span class="username">
-                          <a href="#">Jonathan Burke Jr.</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
-                        </span>
-                    <span class="description">Shared publicly - 7:30 PM today</span>
-                  </div>
-                  <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
-                </div>
-                <!-- /.post -->
-
                 <!-- Post -->
                 <div class="post clearfix">
                   <div class="user-block">
                     <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="User Image">
                         <span class="username">
-                          <a href="#">Sarah Ross</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                          <a href="#">Entrada</a> 31/07/2018 08:58 Hrs
                         </span>
-                    <span class="description">Sent you a message - 3 days ago</span>
+                    <span class="description"> Hace 13 Horas atrás</span>
+                  </div>
+                  <div class="user-block">
+                    
+                        <span class="username">
+                          <a href="#">Salida</a> 31/07/2018 18:03 Hrs
+                        </span>
+                    <span class="description"> Hace 3 Horas atrás</span>
                   </div>
                   <!-- /.user-block -->
-                  <p>
-                    Lorem ipsum represents a long-held tradition for designers,
-                    typographers and the like. Some people hate it and argue for
-                    its demise, but others ignore the hate as they create awesome
-                    tools to help create filler text for everyone from bacon lovers
-                    to Charlie Sheen fans.
-                  </p>
-
-                  <form class="form-horizontal">
-                    <div class="form-group margin-bottom-none">
-                      <div class="col-sm-9">
-                        <input class="form-control input-sm" placeholder="Response">
-                      </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Send</button>
-                      </div>
-                    </div>
-                  </form>
+	                <div class="form-group margin-bottom-none">
+	                  
+	                  <div class="col-sm-3">
+	                    <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Eliminar</button>
+	                  </div>
+	                </div>
+                  
                 </div>
                 <!-- /.post -->
-
                 <!-- Post -->
-                <div class="post">
+                <div class="post clearfix">
                   <div class="user-block">
                     <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="User Image">
                         <span class="username">
-                          <a href="#">Adam Jones</a>
-                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                          <a href="#">Entrada</a> 30/07/2018 08:58 Hrs
                         </span>
-                    <span class="description">Posted 5 photos - 5 days ago</span>
+                    <span class="description"> Hace 1 día</span>
+                  </div>
+                  <div class="user-block">
+                    
+                        <span class="username">
+                          <a href="#">Salida</a> 30/07/2018 18:03 Hrs
+                        </span>
+                    <span class="description"> Hace 1 día</span>
                   </div>
                   <!-- /.user-block -->
-                  <div class="row margin-bottom">
-                    <div class="col-sm-6">
-                      <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
-                          <br>
-                          <img class="img-responsive" src="{{url('empleados/fotos')}}/3" alt="Photo">
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-
-                  <ul class="list-inline">
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-share margin-r-5"></i> Share</a></li>
-                    <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> Like</a>
-                    </li>
-                    <li class="pull-right">
-                      <a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i> Comments
-                        (5)</a></li>
-                  </ul>
-
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
+	                <div class="form-group margin-bottom-none">
+	                  
+	                  <div class="col-sm-3">
+	                    <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Eliminar</button>
+	                  </div>
+	                </div>
+                  
                 </div>
                 <!-- /.post -->
               </div>
@@ -652,6 +590,7 @@
 	});
 	$('#inputBusqueda').on('select:flexdatalist',function(event,set,options){
 		console.log('has elegido '+set.nombre);
+		$('#perfil').removeClass('hidden');
 		cargarPerfil(set.id);
 	})
 	$('#inputCiudad').flexdatalist({
@@ -681,8 +620,9 @@
       format: 'yyyy-mm-dd'
     })
     $('#botonHide').on('click',function(){$('#perfil').hide(); });
-
+    $('#botonEditar').on('click',function(){$('#tabEditarDatos').click();});
     function cargarPerfil(id){
+
     	$('#perfil').fadeOut();
     	$('#perfil').hide();
     	setTimeout(function(){1==1},100);

@@ -39,8 +39,8 @@
 				                  <label>Rol</label> <label><p style="color:red">*</p></label>
 				                  <select name="role" class="form-control" required>
 				                    <option  disabled>Seleccione opcion...</option>
-				                    <option @if($user->roles()->first()->name == 'admin') selected @endif value="1">Administrador</option>
-				                    <option @if($user->roles()->first()->name == 'secretary') selected @endif value="2">Usuario Secretaria</option>
+				                    <option @if($user->role()->first()->name == 'admin') selected @endif value="1">Administrador</option>
+				                    <option @if($user->role()->first()->name == 'secretary') selected @endif value="2">Usuario Secretaria</option>
 				                  </select>
 				                </div>
 				              	<div class="form-group">

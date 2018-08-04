@@ -57,6 +57,10 @@ class AdminIndicadoresController extends Controller
         $valor_utm = floatval($string_utm);
 
         $fecha_menos_un_mes = $fecha->copy()->subMonth();
+        $firstDay = new Carbon('first day of last month');
+        if($fecha_menos_un_mes->diffInDays($firstDay) <= 9){
+            $fecha_menos_un_mes->subDays(9);
+        }
         $ano = $fecha_menos_un_mes->format('Y');
         $mes = $fecha_menos_un_mes->format('m');
         $dia = $fecha_menos_un_mes->format('d');
@@ -160,6 +164,10 @@ class AdminIndicadoresController extends Controller
         $client = new Client();
         $fecha = Carbon::now('America/Santiago');
         $fecha->subMonth();
+        $firstDay = new Carbon('first day of last month');
+        if($fecha->diffInDays($firstDay) <= 9){
+            $fecha->subDays(9);
+        }
         $arreglo_meses = array();
         $arreglo_promedios = array();
         for($i = 0; $i < 12; $i++)

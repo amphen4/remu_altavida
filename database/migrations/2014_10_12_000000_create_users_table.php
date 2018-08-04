@@ -20,6 +20,14 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            // ==================
+            // Llaves Foraneas  
+            // ==================
+            $table->integer('role_id')->unsigned();
+            $table->foreign('role_id')
+                  ->references('id')->on('roles')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
         });
     }
 

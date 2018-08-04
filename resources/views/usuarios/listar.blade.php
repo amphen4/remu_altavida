@@ -1,7 +1,9 @@
 @extends('layouts.adminlte')
 @section('css')
+<!-- Toastr -->
+<link href="{{asset('js/toastr-master/build')}}/toastr.css" rel="stylesheet"/>
 <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 @endsection
 @section('content')
 			<div class="row">
@@ -16,21 +18,13 @@
 			              <table id="example1" class="table table-bordered table-striped">
 			                <thead>
 			                <tr>
-			                  <th style="width:15px">Opciones</th>
+			                  <th style="width:90px">Opciones</th>
 			                  <th>Nombre</th>
 			                  <th>Email</th>
 			                  <th>Rol</th>
 			                </tr>
 			                </thead>
 			                <tbody>
-			                @foreach($users as $user)
-			                <tr>
-			                  <td><a href="{{route('usuarios.edit',['usuario' => $user->id])}}" class="btn btn-default btn-xs">Editar</a></td>
-			                  <td>{{$user->name}}</td>
-			                  <td>{{$user->email}}</td>
-			                  <td><span class="label label-@if($user->roles()->first()->name == 'admin'){{'primary'}}@else{{'default'}}@endif">{{$user->roles()->first()->description}}</span></td>
-			                </tr>
-			                @endforeach
 			                </tbody>
 			                <tfoot>
 			                </tfoot>
@@ -42,12 +36,56 @@
 			</div>
 @endsection
 @section('js')
+<!-- Toastr -->
+<script src="{{asset('js/toastr-master/build')}}/toastr.min.js"></script>
 <!-- DataTables -->
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script>
-  $(function () {
-    $('#example1').DataTable()
+$(document).ready(function(){
+	var tabla = $('#example1').DataTable({
+    	"ajax": "{{url('usuarios/data')}}",
+        "columns": [
+            { "data": "opciones" },
+            { "data": "name" },
+            { "data": "email" },
+            { "data": "role_name_span" }
+        ]
+    });
+    tabla.on( 'draw', function () {
+	    
+	    $('.botonEditar').each(function(){
+	    	$(this).attr('href',"{{url('usuarios')}}/"+$(this).attr('data-id')+"/edit");
+
+	    });	
+	    
+	    $('.botonEliminar').one('click',function(){
+		  	if(confirm('Está seguro? ')){
+		  		$.ajax({
+			  		url: "{{url('usuarios/eliminar')}}"+"/"+$(this).attr('data-id'),
+			    	method: "POST",
+			    	headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			    	data: {
+			    		'_method': 'DELETE'
+			    	},
+			    	success: function(data){
+			    		toastr.success('El usuario fue eliminado con exito');
+			    		tabla.ajax.reload();
+			    	},
+			    	error: function(jqXHR, textStatus){
+			    		console.log(jqXHR.responseText);
+			    		toastr.error('Ha ocurrido un error');
+			    	},
+			    	async: false
+			  	});
+		  	}
+			  	
+		  });
+	});
+	
+});  
+    
+    /*
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
@@ -55,7 +93,9 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : false
-    })
-  })
+    })*/
+  
+		  
+
 </script>
 @endsection

@@ -10,8 +10,8 @@ class Role extends Model
         'name', 'description'
     ];
 
-    public function roles()
+    public function users()
 	{
-	    return $this->belongsToMany('App\Role')->withTimestamps();
+	    return $this->hasMany('App\User');
 	}
 }
