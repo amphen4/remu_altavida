@@ -55,6 +55,6 @@ class Empleado extends Model
     }
     public function contratos()
     {
-        return $this->belongsToMany('App\Contrato')->withPivot('estado');
+        return $this->hasMany('App\Contrato');
     }
 }

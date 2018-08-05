@@ -14,12 +14,15 @@ class Contrato extends Model
     						'valor_hora_extra',
     						'valor_hora_atraso',
     						'horas_semanales',
-    						'dias_semanales'
+    						'dias_semanales',
+                            'estado',
+                            'fecha_inicio',
+                            'tipo'
     						]
 
-    public function empleados()
+    public function empleado()
     {
-        return $this->belongsToMany('App\Empleado')->withPivot('estado','fecha_inicio','tipo');
+        return $this->belongsTo('App\Empleado');
     }
     public function habers()
     {

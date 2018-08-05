@@ -22,21 +22,17 @@ class CreateContratosTable extends Migration
             $table->unsignedInteger('valor_hora_atraso');
             $table->unsignedTinyInteger('horas_semanales');
             $table->unsignedTinyInteger('dias_semanales')->default(5);
-            //$table->unsignedTinyInteger();
-            
-        });
-        // Tabla relacion Muchos a Muchos
-        Schema::create('empleado_contrato', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('empleado_id')->unsigned();
-            $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('restrict');
-            $table->integer('contrato_id')->unsigned();
-            $table->foreign('contrato_id')->references('id')->on('contratos')->onDelete('restrict');
-            // Atributos extras
             $table->enum('estado',['ACTIVO','INACTIVO']);
             $table->date('fecha_inicio');
             $table->enum('tipo',['DEFINIDO','INDEFINIDO']);
+            //$table->unsignedTinyInteger();
+
+            // Llaves Foraneas
+            $table->integer('empleado_id')->unsigned();
+            $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('restrict');
+            
         });
+        
     }
 
     /**
