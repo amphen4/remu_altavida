@@ -35,7 +35,7 @@
         	<span class="input-group-addon"><strong>Búsqueda:</strong></span>
         	<input type="text" id="inputBusqueda" class="form-control" placeholder="Ingrese un nombre o apellido">
         	<span class="input-group-btn">
-              <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-flat">Nuevo Empleado</button>
+              <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success btn-flat"><i class="fa fa-plus"></i> Nuevo Empleado</button>
             </span>
       	</div>
       	

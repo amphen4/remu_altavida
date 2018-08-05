@@ -246,10 +246,10 @@
           </a>
         </li>
         <li>
-          <a href="#">
-            <i class="fa fa-th"></i> <span>Registro Horas</span>
+          <a href="{{url('registros_horas')}}">
+            <i class="fa fa-clock-o"></i> <span>Registro Horas</span>
             <span class="pull-right-container">
-              <small class="label pull-right label-primary">Pronto</small>
+              <small class="label pull-right bg-green">En desarrollo</small>
             </span>
           </a>
         </li>

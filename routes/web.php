@@ -58,3 +58,7 @@ Route::get('/data/empleados/lista','AdminEmpleadosController@enviarLista');
 Route::post('/empleados/create','AdminEmpleadosController@create');
 Route::get('/empleados/fotos/{id}','AdminEmpleadosController@enviarFoto');
 Route::get('/data/empleados/{id}','AdminEmpleadosController@enviarDatosEmpleadoJson');
+
+Route::get('/registros_horas','AdminRegistrosController@index')->name('registros.index');
+Route::get('/registros_horas/data','AdminRegistrosController@data');
+Route::post('/registros_horas','AdminRegistrosController@store');
