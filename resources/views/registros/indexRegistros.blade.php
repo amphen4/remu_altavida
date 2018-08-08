@@ -22,37 +22,37 @@
     </div>
     <br>
 @endif
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="box">
-			            <div class="box-header">
-			             	<h3 class="box-title">Registros de entrada y salida en el Sistema</h3>
-			             	<div class="pull-right">
-			             		<button class="btn btn-primary" id="botonActualizar" ><i class="fa fa-refresh"></i> <strong>Actualizar</strong></button>
-			             		<button data-toggle="modal" data-target="#exampleModal" class="btn btn-success" ><i class="fa fa-plus"></i> Registrar manualmente</button>
-			             	</div>
-			            </div>
-			            <!-- /.box-header -->
-			            <div class="box-body">
-			              <table id="example1" class="table table-bordered table-striped">
-			                <thead>
-			                <tr>
-			                  <!--<th style="width:90px">Opciones</th>-->
-			                  <th>Entrada/Salida</th>
-			                  <th>Hora</th>
-			                  <th>Nombre Empleado</th>
-			                </tr>
-			                </thead>
-			                <tbody>
-			                </tbody>
-			                <tfoot>
-			                </tfoot>
-			              </table>
-			            </div>
-			            <!-- /.box-body -->
-			         </div>
-				</div>
-			</div>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+            <div class="box-header">
+             	<h3 class="box-title">Registros de entrada y salida en el Sistema</h3>
+             	<div class="pull-right">
+             		<button class="btn btn-primary" id="botonActualizar" ><i class="fa fa-refresh"></i> <strong>Actualizar</strong></button>
+             		<button data-toggle="modal" data-target="#exampleModal" class="btn btn-success" ><i class="fa fa-plus"></i> Registrar manualmente</button>
+             	</div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <!--<th style="width:90px">Opciones</th>-->
+                  <th>Entrada/Salida</th>
+                  <th>Hora</th>
+                  <th>Nombre Empleado</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
+         </div>
+	</div>
+</div>
 <!-- Modal -->
 <div class="modal fade bd-example-modal-sm" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" >
@@ -164,13 +164,14 @@ $(document).ready(function(){
 		valueProperty: 'id'
 	});
 	var tabla = $('#example1').DataTable({
+		  "processing": true,
     	"ajax": "{{url('registros_horas/data')}}",
-        "columns": [
+      "columns": [
             //{ "data": "opciones" },
             { "data": "tipo" },
             { "data": "hora" },
             { "data": "empleado" }
-        ]
+        ],
     });
     $('#botonActualizar').on('click',function(){
     	tabla.ajax.reload();

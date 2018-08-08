@@ -340,6 +340,7 @@ class ComposerStaticInit91bceb9fd5688797247dbacde9653d21
     );
 
     public static $classMap = array (
+        'AfpsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AfpsTableSeeder.php',
         'App\\Afp' => __DIR__ . '/../..' . '/app/Afp.php',
         'App\\Console\\Commands\\ActualizarIndicadores' => __DIR__ . '/../..' . '/app/Console/Commands/ActualizarIndicadores.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
@@ -350,8 +351,12 @@ class ComposerStaticInit91bceb9fd5688797247dbacde9653d21
         'App\\Event' => __DIR__ . '/../..' . '/app/Event.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Haber' => __DIR__ . '/../..' . '/app/Haber.php',
+        'App\\Http\\Controllers\\AdminContratosController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminContratosController.php',
+        'App\\Http\\Controllers\\AdminDescuentosController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminDescuentosController.php',
         'App\\Http\\Controllers\\AdminEmpleadosController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminEmpleadosController.php',
+        'App\\Http\\Controllers\\AdminHaberesController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminHaberesController.php',
         'App\\Http\\Controllers\\AdminIndicadoresController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminIndicadoresController.php',
+        'App\\Http\\Controllers\\AdminIsapresController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminIsapresController.php',
         'App\\Http\\Controllers\\AdminRegistrosController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminRegistrosController.php',
         'App\\Http\\Controllers\\AdminUsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminUsersController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -1855,6 +1860,7 @@ class ComposerStaticInit91bceb9fd5688797247dbacde9653d21
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'IsapresTableSeeder' => __DIR__ . '/../..' . '/database/seeds/IsapresTableSeeder.php',
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',

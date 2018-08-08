@@ -29,9 +29,12 @@ class Empleado extends Model
     						'fecha_ingreso',
     						'fecha_retiro',
     						'fecha_renovacion',
-    						'empresa_id'
+    						'empresa_id',
+                            'isapre_id',
+                            'afp_id'
     					];
      public $timestamps = false;
+     public $appends = ['afp_nombre','isapre_nombre','isapre_porcentaje','afp_porcentaje'];
 
      public function registros()
     {
@@ -56,5 +59,21 @@ class Empleado extends Model
     public function contratos()
     {
         return $this->hasMany('App\Contrato');
+    }
+    public function getAfpNombreAttribute()
+    {
+        return $this->afp()->first()->nombre;
+    }
+    public function getIsapreNombreAttribute()
+    {
+        return $this->isapre()->first()->nombre;
+    }
+    public function getIsaprePorcentajeAttribute()
+    {
+        return $this->isapre()->first()->porcentaje;
+    }
+    public function getAfpPorcentajeAttribute()
+    {
+        return $this->afp()->first()->porcentaje;
     }
 }

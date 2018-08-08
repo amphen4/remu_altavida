@@ -30,6 +30,10 @@ class EmpleadosTableSeeder extends Seeder
         $empleado->pais = 'Chile';
         $empleado->fecha_ingreso = '2018-07-27';
         $empleado->empresa_id = 1;
+        
+        $empleado->isapre_id = 1;
+        $empleado->afp_id = 1;
+
         $empleado->save();
     }
 }

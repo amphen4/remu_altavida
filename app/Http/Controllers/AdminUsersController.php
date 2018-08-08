@@ -27,9 +27,9 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        if(User::where('role_id',1)->count() == 1) $quedaUnAdmin = true;
-        else $quedaUnAdmin = false;
-        return view('usuarios.listar',['quedaUnAdmin' => $quedaUnAdmin]);
+        //if(User::where('role_id',1)->count() == 1) $quedaUnAdmin = true;
+        //else $quedaUnAdmin = false;
+        return view('usuarios.listar');
     }
 
     /**
@@ -98,7 +98,10 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('usuarios.editar',['user' => $user]);
+        if(User::where('role_id',1)->count() == 1 && $user->role()->first()->name == 'admin') $quedaUnAdmin = true;
+        else $quedaUnAdmin = false;
+        
+        return view('usuarios.editar',['user' => $user, 'quedaUnAdmin' => $quedaUnAdmin]);
     }
 
     /**

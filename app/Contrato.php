@@ -26,11 +26,11 @@ class Contrato extends Model
     }
     public function habers()
     {
-        return $this->belongsToMany('App\Haber');
+        return $this->belongsToMany('App\Haber')->withPivot(['fecha_inicio','duracion']);
     }
     public function dsctos()
     {
-        return $this->belongsToMany('App\Dscto');
+        return $this->belongsToMany('App\Dscto')->withPivot(['fecha_inicio','duracion']);
     }
     public function liquidacions()
     {

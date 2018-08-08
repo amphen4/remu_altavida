@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AfpsTableSeeder' => $baseDir . '/database/seeds/AfpsTableSeeder.php',
     'App\\Afp' => $baseDir . '/app/Afp.php',
     'App\\Console\\Commands\\ActualizarIndicadores' => $baseDir . '/app/Console/Commands/ActualizarIndicadores.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
@@ -16,8 +17,12 @@ return array(
     'App\\Event' => $baseDir . '/app/Event.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Haber' => $baseDir . '/app/Haber.php',
+    'App\\Http\\Controllers\\AdminContratosController' => $baseDir . '/app/Http/Controllers/AdminContratosController.php',
+    'App\\Http\\Controllers\\AdminDescuentosController' => $baseDir . '/app/Http/Controllers/AdminDescuentosController.php',
     'App\\Http\\Controllers\\AdminEmpleadosController' => $baseDir . '/app/Http/Controllers/AdminEmpleadosController.php',
+    'App\\Http\\Controllers\\AdminHaberesController' => $baseDir . '/app/Http/Controllers/AdminHaberesController.php',
     'App\\Http\\Controllers\\AdminIndicadoresController' => $baseDir . '/app/Http/Controllers/AdminIndicadoresController.php',
+    'App\\Http\\Controllers\\AdminIsapresController' => $baseDir . '/app/Http/Controllers/AdminIsapresController.php',
     'App\\Http\\Controllers\\AdminRegistrosController' => $baseDir . '/app/Http/Controllers/AdminRegistrosController.php',
     'App\\Http\\Controllers\\AdminUsersController' => $baseDir . '/app/Http/Controllers/AdminUsersController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
@@ -1521,6 +1526,7 @@ return array(
     'Illuminate\\View\\ViewFinderInterface' => $vendorDir . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
     'Illuminate\\View\\ViewName' => $vendorDir . '/laravel/framework/src/Illuminate/View/ViewName.php',
     'Illuminate\\View\\ViewServiceProvider' => $vendorDir . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+    'IsapresTableSeeder' => $baseDir . '/database/seeds/IsapresTableSeeder.php',
     'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => $vendorDir . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
     'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => $vendorDir . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
     'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => $vendorDir . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',

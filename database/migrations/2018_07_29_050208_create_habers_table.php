@@ -16,16 +16,17 @@ class CreateHabersTable extends Migration
         Schema::create('habers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->enum('tipo',['valor','porcentaje']);
+            $table->enum('tipo',['MONTO','PORCENTAJE']);
             $table->unsignedDecimal('valor_porcentaje',5,3)->nullable();
             $table->unsignedInteger('valor_entero')->nullable();
-            $table->enum('factor',['sueldo_base','uf','utm'])->nullable(); // ir agregando mas
+            $table->enum('factor',['SUELDO BASE','SALARIO MINIMO','UF','UTM'])->nullable(); // ir agregando mas
             $table->boolean('imponible');
-            
         });
         // Tabla relacion Muchos a Muchos
         Schema::create('contrato_haber', function (Blueprint $table) {
             $table->increments('id');
+            $table->date('fecha_inicio');
+            $table->integer('duracion')->unsigned()->nullable();
             $table->integer('contrato_id')->unsigned();
             $table->foreign('contrato_id')->references('id')->on('contratos')->onDelete('restrict');
             $table->integer('haber_id')->unsigned();

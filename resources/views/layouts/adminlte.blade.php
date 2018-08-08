@@ -258,7 +258,7 @@
             <i class="fa fa-files-o"></i>
             <span>Liquidaciones</span>
             <span class="pull-right-container">
-              <span class="label label-primary pull-right">Pronto</span>
+              <span class="label label-default pull-right">Pronto</span>
             </span>
           </a>
           <ul class="treeview-menu">
@@ -270,35 +270,35 @@
         </li>
         @endif
         <li>
-          <a href="#">
+          <a href="{{url('contratos')}}">
             <i class="fa fa-th"></i> <span>Contratos</span>
             <span class="pull-right-container">
-              <small class="label pull-right label-primary">Pronto</small>
+              <small class="label pull-right bg-green">En desarrollo</small>
             </span>
           </a>
         </li>
         
         
         <li>
-          <a href="#">
+          <a href="{{ url('isapres') }}">
             <i class="fa fa-calendar"></i> <span>Isapres</span>
             <span class="pull-right-container">
-              <small class="label pull-right label-primary">Pronto</small>
+              <small class="label pull-right label-default">En desarrollo</small>
             </span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{{ url('afps') }}">
             <i class="fa fa-envelope"></i> <span>AFP's</span>
             <span class="pull-right-container">
-              <small class="label pull-right label-primary">Pronto</small>
+              <small class="label pull-right label-default">En desarrollo</small>
             </span>
           </a>
         </li>
         
         
         <li><a href="#"><i class="fa fa-book"></i> <span class="pull-right-container">
-              <small class="label pull-right label-primary">Pronto</small>
+              <small class="label pull-right label-default">Pronto</small>
             </span><span>Documentación</span></a></li>
         @if(Auth::user()->hasRole('admin'))
         <li class="header">Aplicación</li>

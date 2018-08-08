@@ -129,7 +129,7 @@
                 <!-- Post -->
                 <div class="post clearfix">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="User Image">
+                    <img class="img-circle img-bordered-sm" src="" alt="User Image">
                         <span class="username">
                           <a href="#">Entrada</a> 31/07/2018 08:58 Hrs
                         </span>
@@ -155,7 +155,7 @@
                 <!-- Post -->
                 <div class="post clearfix">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos')}}/3" alt="User Image">
+                    <img class="img-circle img-bordered-sm" src="" alt="User Image">
                         <span class="username">
                           <a href="#">Entrada</a> 30/07/2018 08:58 Hrs
                         </span>
@@ -277,24 +277,24 @@
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal" id="formulario" method="POST" action="{{url('/empleados/create')}}">
-		      		@csrf
+                <form class="form-horizontal"  method="POST" >
+		      		  @csrf
 		            <div class="box-body">
-		            	<div class="row">
-		                	<div class="col-lg-6">
-				                <div class="input-group">
-			                        <label >RUN:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="rut" placeholder="Formato: XXXXXXXX-X" required>
-				                </div>
-				            </div>
-				            <div class="col-lg-6">
-				                <div class="input-group">
-			                        <label >Nombre:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="nombre" required>
-				                </div>
-				            </div>
-				        </div>
-				        <br>
+  		            	<div class="row">
+  		                	<div class="col-lg-6">
+  				                <div class="input-group">
+  			                        <label >RUN:</label><label><p style="color:red">*</p></label>
+  		                  			<input type="text" class="form-control" name="rut" placeholder="Formato: XXXXXXXX-X" required>
+  				                </div>
+  				            </div>
+  				            <div class="col-lg-6">
+  				                <div class="input-group">
+  			                        <label >Nombre:</label><label><p style="color:red">*</p></label>
+  		                  			<input type="text" class="form-control" name="nombre" required>
+  				                </div>
+  				            </div>
+  				          </div>
+				          <br>
 		                <div class="row">
 		                	<div class="col-lg-6">
 				                <div class="input-group">
@@ -327,7 +327,7 @@
 				            <div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Ciudad:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="ciudad" id="inputCiudad" required>
+		                  			<input type="text" class="form-control" name="ciudad"  required>
 				                </div>
 				            </div>
 				        </div>
@@ -380,7 +380,7 @@
 					                  <div class="input-group-addon">
 					                    <i class="fa fa-calendar"></i>
 					                  </div>
-					                  <input type="text" class="form-control pull-right" name="fecha_nacimiento" id="datepicker1" required>
+					                  <input type="text" class="form-control pull-right" name="fecha_nacimiento"  required>
 					                </div>
 				                </div>
 				            </div>
@@ -434,47 +434,48 @@
 				            </div>
 				        </div>
 				        <br>
-		                <div class="form-group">
-		                  <label for="inputEmail3" class="col-sm-2 control-label">Nro. Cuenta:</label>
-		                  <div class="col-sm-10">
-		                    <input type="text" class="form-control" name="nro_cuenta">
-		                  </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Nro. Cuenta:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="nro_cuenta">
+                  </div>
+                </div>
+                <div class="row">
+                	<div class="col-lg-4">
+		                <div class="input-group">
+	                        <label >Fecha Ingreso:</label><label><p style="color:red">*</p></label>
+                  			<div class="input-group date">
+			                  <div class="input-group-addon">
+			                    <i class="fa fa-calendar"></i>
+			                  </div>
+			                  <input type="text" class="form-control pull-right" name="fecha_ingreso"  required>
+			                </div>
 		                </div>
-		                <div class="row">
-		                	<div class="col-lg-4">
-				                <div class="input-group">
-			                        <label >Fecha Ingreso:</label><label><p style="color:red">*</p></label>
-		                  			<div class="input-group date">
-					                  <div class="input-group-addon">
-					                    <i class="fa fa-calendar"></i>
-					                  </div>
-					                  <input type="text" class="form-control pull-right" name="fecha_ingreso" id="datepicker2" required>
-					                </div>
+			            </div>
+			            <div class="col-lg-4">
+			                <div class="input-group">
+		                        <label >Fecha Retiro:</label>
+	                  			<div class="input-group date">
+				                  <div class="input-group-addon">
+				                    <i class="fa fa-calendar"></i>
+				                  </div>
+				                  <input type="text" class="form-control pull-right" name="fecha_retiro" >
 				                </div>
-				            </div>
-				            <div class="col-lg-4">
-				                <div class="input-group">
-			                        <label >Fecha Retiro:</label>
-		                  			<div class="input-group date">
-					                  <div class="input-group-addon">
-					                    <i class="fa fa-calendar"></i>
-					                  </div>
-					                  <input type="text" class="form-control pull-right" name="fecha_retiro" id="datepicker3">
-					                </div>
+			                </div>
+			            </div>
+			            <div class="col-lg-4">
+			                <div class="input-group">
+		                        <label >Fecha Renovacion:</label>
+	                  			<div class="input-group date">
+				                  <div class="input-group-addon">
+				                    <i class="fa fa-calendar"></i>
+				                  </div>
+				                  <input type="text" class="form-control pull-right" name="fecha_renovacion" >
 				                </div>
-				            </div>
-				            <div class="col-lg-4">
-				                <div class="input-group">
-			                        <label >Fecha Renovacion:</label>
-		                  			<div class="input-group date">
-					                  <div class="input-group-addon">
-					                    <i class="fa fa-calendar"></i>
-					                  </div>
-					                  <input type="text" class="form-control pull-right" name="fecha_renovacion" id="datepicker4">
-					                </div>
-				                </div>
-				            </div>
-				        </div>
+			                </div>
+			            </div>
+		            </div>
+                
 				        <br>
 		            </div>
 		        </form>
@@ -697,7 +698,26 @@
 		                </div>
 		            </div>
 		        </div>
-		        <br>
+            <br>
+            <div class="row">
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                          <label >AFP:</label>
+                        <select class="form-control " id="selectAfp" name="afp" >
+                          
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="input-group">
+                          <label >ISAPRE:</label>
+                        <select class="form-control " id="selectIsapre" name="isapre" >
+                         
+                        </select>
+                    </div>
+                </div>
+            </div>
+		        
             </div>
         </form>
       </div>
@@ -723,80 +743,131 @@
 	$(document).ready(function(){
 		$('#divLoading').hide();
 		$('#perfil').hide();
-	})
-	$('#inputBusqueda').flexdatalist({
-		requestType: 'GET',
-		data: "{{url('/data/empleados/lista')}}",
-		params: {
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		},
-		minLength: 1,
-		selectionRequired: true,
-		searchByWord: true,
-		searchIn: ['nombre','apellido_pat','apellido_mat'],
-		visibleProperties: ["nombre","apellido_pat",'apellido_mat'],
-	});
-	$('#inputBusqueda').on('select:flexdatalist',function(event,set,options){
-		console.log('has elegido '+set.nombre);
-		$('#perfil').removeClass('hidden');
-		cargarPerfil(set.id);
-	})
-	$('#inputCiudad').flexdatalist({
-		data: "{{asset('json/comunas.json')}}",
-		minLength: 1,
-     	searchIn: 'name',
-     	groupBy: 'region',
-	    visibleProperties: ["name"],
-	    textProperty: '{name}',
-	    searchByWord: true,
-	    valueProperty: 'name'
-	});
-	$('#datepicker1').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
-    })
-    $('#datepicker2').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
-    })
-    $('#datepicker3').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
-    })
-    $('#datepicker4').datepicker({
-      autoclose: true,
-      format: 'yyyy-mm-dd'
-    })
-    $('#botonHide').on('click',function(){$('#perfil').hide(); });
-    $('#botonEditar').on('click',function(){$('#tabEditarDatos').click();});
-    function cargarPerfil(id){
 
-    	$('#perfil').fadeOut();
-    	$('#perfil').hide();
-    	setTimeout(function(){1==1},100);
-    	$('#divLoading').show();
-    	$.ajax({
-    		url: "{{url('data/empleados')}}"+"/"+id,
-	    	method: "GET",
-	    	success: function(data){
-	    		var datos = JSON.parse(data);
-	    		$('#pNombreCompleto').html(datos.nombre+' '+datos.apellido_pat+' '+datos.apellido_mat);
-	    		$('#pCargo').html(datos.cargo);
-	    		$('#divLoading').hide();
-    			$('#perfil').fadeIn();
-    			$('#imgEmpleado').attr('src',"{{url('empleados/fotos')}}"+'/'+datos.id);
-	    	},
-	    	error: function(jqXHR, textStatus){
-	    		console.log(jqXHR.responseText);
-	    		$('#divLoading').hide();
-	    	},
-	    	async: false
-    	});
+    $.ajax({
+      url: "{{url('afps/data')}}",
+      method: "GET",
+      success: function(data){
+        var datos = JSON.parse(data).data;
+        for(var i=0; i<datos.length; i++){
+          if(i==0){
+            $('#selectAfp').append(
+                '<option selected value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
+          }else{
+            $('#selectAfp').append(
+                '<option value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
+          }
+        }
+            
+      },
+      error: function(jqXHR, textStatus){
+        console.log(jqXHR.responseText);
+        
+      },
+    });
 
-    	
-    }
+    $.ajax({
+      url: "{{url('isapres/data')}}",
+      method: "GET",
+      success: function(data){
+        var datos = JSON.parse(data).data;
+        for(var i=0; i<datos.length; i++){
+          if(i==0){
+            $('#selectIsapre').append(
+                '<option selected value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
+          }else{
+            $('#selectIsapre').append(
+                '<option value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
+          }
+        }
+            
+      },
+      error: function(jqXHR, textStatus){
+        console.log(jqXHR.responseText);
+        
+      },
+    });
+    $('#inputCiudad').flexdatalist({
+      data: "{{asset('json/comunas.json')}}",
+      minLength: 1,
+        searchIn: 'name',
+        groupBy: 'region',
+        visibleProperties: ["name"],
+        textProperty: '{name}',
+        searchByWord: true,
+        valueProperty: 'name'
+    });
+
+    $('#inputBusqueda').flexdatalist({
+      requestType: 'GET',
+      data: "{{url('/data/empleados/lista')}}",
+      params: {
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      },
+      minLength: 1,
+      selectionRequired: true,
+      searchByWord: true,
+      searchIn: ['nombre','apellido_pat','apellido_mat'],
+      visibleProperties: ["nombre","apellido_pat",'apellido_mat'],
+    });
+    $('#inputBusqueda').on('select:flexdatalist',function(event,set,options){
+      console.log('has elegido '+set.nombre);
+      $('#perfil').removeClass('hidden');
+      cargarPerfil(set.id);
+    });
+    
+    $('#datepicker1').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+      });
+      $('#datepicker2').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+      });
+      $('#datepicker3').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+      });
+      $('#datepicker4').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+      });
+      $('#botonHide').on('click',function(){$('#perfil').hide(); });
+      $('#botonEditar').on('click',function(){$('#tabEditarDatos').click();});
+      function cargarPerfil(id){
+
+        $('#perfil').fadeOut();
+        $('#perfil').hide();
+        setTimeout(function(){1==1},100);
+        $('#divLoading').show();
+        $.ajax({
+          url: "{{url('data/empleados')}}"+"/"+id,
+          method: "GET",
+          success: function(data){
+            var datos = JSON.parse(data);
+            $('#pNombreCompleto').html(datos.nombre+' '+datos.apellido_pat+' '+datos.apellido_mat);
+            $('#pCargo').html(datos.cargo);
+            $('#divLoading').hide();
+            $('#perfil').fadeIn();
+            $('#imgEmpleado').attr('src',"{{url('empleados/fotos')}}"+'/'+datos.id);
+          },
+          error: function(jqXHR, textStatus){
+            console.log(jqXHR.responseText);
+            $('#divLoading').hide();
+          },
+          async: false
+        });
+
+        
+      }
+	});
+  	
 
 </script>
 @endsection

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Empleado;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
+use App\Isapre;
+use App\Afp;
 
 class AdminEmpleadosController extends Controller
 {
@@ -58,6 +60,8 @@ class AdminEmpleadosController extends Controller
                                     'fecha_ingreso' => 'required|date',
                                     'fecha_retiro' => 'nullable|date',
                                     'fecha_renovacion' => 'nullable|date',
+                                    'afp' => 'required|numeric|exists:afps,id',
+                                    'isapre' => 'required|numeric|exists:isapres,id'
                                   ]);
         $nuevo = new Empleado();
         $nuevo->rut = $request->rut ;
@@ -83,11 +87,15 @@ class AdminEmpleadosController extends Controller
         if(!empty($request->fecha_retiro)) { $nuevo->fecha_retiro = $request->fecha_retiro; }
         if(!empty($request->fecha_renovacion)) { $nuevo->fecha_renovacion = $request->fecha_renovacion; }
         $nuevo->empresa_id = 1;
+        $isapre = Isapre::find($request->isapre);
+        $nuevo->isapre()->associate($isapre);
+        $afp = Afp::find($request->afp);
+        $nuevo->afp()->associate($afp);
         $nuevo->save();
         return redirect()->route('empleados.index')->with('exito','El empleado ha sido agregado con exito!');
     }
     public function enviarFoto($id){
-
+        //dd('wea');
     	$empleado = Empleado::findOrFail($id);
     	if(Storage::disk('fotos-empleados')->exists($empleado->id.'.jpg'))
     	{

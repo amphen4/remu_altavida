@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EmpresasTableSeeder::class);
 
+        $this->call(AfpsTableSeeder::class);
+        $this->call(IsapresTableSeeder::class);
+
         $this->call(EmpleadosTableSeeder::class);
 
         $this->call(RegistrosTableSeeder::class);
