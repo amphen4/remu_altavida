@@ -16,12 +16,10 @@ class CreateContratosTable extends Migration
         Schema::create('contratos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('sueldo_base');
-            $table->unsignedInteger('valor_colacion');
-            $table->unsignedInteger('valor_movilizacion');
-            $table->unsignedInteger('valor_hora_extra');
-            $table->unsignedInteger('valor_hora_atraso');
-            $table->unsignedTinyInteger('horas_semanales');
-            $table->unsignedTinyInteger('dias_semanales')->default(5);
+            $table->unsignedInteger('valor_hora_extra')->nullable(); // SON NULLAbLE PORQUE FALTA IMPLEMENTARLO EN EL CREAR CONTRATO
+            $table->unsignedInteger('valor_hora_atraso')->nullable(); // SON NULLAbLE PORQUE FALTA IMPLEMENTARLO EN EL CREAR CONTRATO
+            $table->unsignedTinyInteger('horas_semanales')->nullable(); // SON NULLAbLE PORQUE FALTA IMPLEMENTARLO EN EL CREAR CONTRATO
+            $table->unsignedTinyInteger('dias_semanales')->default(5); // SON NULLAbLE PORQUE FALTA IMPLEMENTARLO EN EL CREAR CONTRATO
             $table->enum('estado',['ACTIVO','INACTIVO']);
             $table->date('fecha_inicio');
             $table->enum('tipo',['DEFINIDO','INDEFINIDO']);

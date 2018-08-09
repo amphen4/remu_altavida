@@ -1,9 +1,9 @@
 @extends('layouts.adminlte')
 @section('css')
-    <!-- Toastr -->
-    <link href="{{asset('js/toastr-master/build')}}/toastr.css" rel="stylesheet"/>
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+<!-- Toastr -->
+<link href="{{asset('js/toastr-master/build')}}/toastr.css" rel="stylesheet"/>
+<!-- DataTables -->
+<link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 @endsection
 @section('content')
     <div class="row">
@@ -36,65 +36,65 @@
     </div>
 @endsection
 @section('js')
-    <!-- Toastr -->
-    <script src="{{asset('js/toastr-master/build')}}/toastr.min.js"></script>
-    <!-- DataTables -->
-    <script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            var tabla = $('#example1').DataTable({
-                "ajax": "{{url('isapres/data')}}",
-                "columns": [
-                    { "data": "opciones" },
-                    { "data": "nombre" },
-                    { "data": "porcentaje"},
-                ]
-            });
-            tabla.on( 'draw', function () {
+<!-- Toastr -->
+<script src="{{asset('js/toastr-master/build')}}/toastr.min.js"></script>
+<!-- DataTables -->
+<script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var tabla = $('#example1').DataTable({
+            "ajax": "{{url('isapres/data')}}",
+            "columns": [
+                { "data": "opciones" },
+                { "data": "nombre" },
+                { "data": "porcentaje"},
+            ]
+        });
+        tabla.on( 'draw', function () {
 
-                $('.botonEditar').each(function(){
-                    $(this).attr('href',"{{url('isapres')}}/"+$(this).attr('data-id')+"/edit");
+            $('.botonEditar').each(function(){
+                $(this).attr('href',"{{url('isapres')}}/"+$(this).attr('data-id')+"/edit");
 
-                });
-
-                $('.botonEliminar').one('click',function(){
-                    if(confirm('Está seguro? ')){
-                        $.ajax({
-                            url: "{{url('isapres/eliminar')}}"+"/"+$(this).attr('data-id'),
-                            method: "POST",
-                            headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            data: {
-                                '_method': 'DELETE'
-                            },
-                            success: function(data){
-                                toastr.success('La isapre fue eliminado con exito');
-                                tabla.ajax.reload();
-                            },
-                            error: function(jqXHR, textStatus){
-                                console.log(jqXHR.responseText);
-                                toastr.error('Ha ocurrido un error');
-                            },
-                            async: false
-                        });
-                    }
-
-                });
             });
 
+            $('.botonEliminar').one('click',function(){
+                if(confirm('Está seguro? ')){
+                    $.ajax({
+                        url: "{{url('isapres/eliminar')}}"+"/"+$(this).attr('data-id'),
+                        method: "POST",
+                        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            '_method': 'DELETE'
+                        },
+                        success: function(data){
+                            toastr.success('La isapre fue eliminado con exito');
+                            tabla.ajax.reload();
+                        },
+                        error: function(jqXHR, textStatus){
+                            console.log(jqXHR.responseText);
+                            toastr.error('Ha ocurrido un error');
+                        },
+                        async: false
+                    });
+                }
+
+            });
         });
 
-        /*
-        $('#example2').DataTable({
-          'paging'      : true,
-          'lengthChange': false,
-          'searching'   : false,
-          'ordering'    : true,
-          'info'        : true,
-          'autoWidth'   : false
-        })*/
+    });
+
+    /*
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })*/
 
 
 
-    </script>
+</script>
 @endsection

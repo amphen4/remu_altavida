@@ -65,6 +65,8 @@ Route::post('/registros_horas','AdminRegistrosController@store');
 
 Route::get('/contratos','AdminContratosController@index');
 Route::get('/contratos/crear','AdminContratosController@create');
+Route::post('/contratos','AdminContratosController@store');
+Route::get('/contratos/data','AdminContratosController@data');
 
 Route::post('/haberes','AdminHaberesController@store');
 Route::get('/haberes/data','AdminHaberesController@data');

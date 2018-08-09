@@ -2,7 +2,8 @@
 @section('css')
 <!-- Toastr -->
 <link href="{{asset('js/toastr-master/build')}}/toastr.css" rel="stylesheet"/>
-
+<!-- DataTables -->
+<link rel="stylesheet" href="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 @endsection
 @section('content')
 @if ($errors->any())
@@ -30,10 +31,12 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <!--<th style="width:90px">Opciones</th>-->
-                  <th>Nombre contrato</th>
-                  <th>Fecha Actualizacion</th>
+                  <th style="width:90px">Opciones</th>
+                  <th>#</th>
+                  <th>Fecha Creacion</th>
                   <th>Nombre Empleado</th>
+                  <th>Estado</th>
+                  <th>Tipo</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,5 +51,66 @@
 </div>
 @endsection
 @section('js')
+<!-- DataTables -->
+<script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var tabla = $('#example1').DataTable({
+            "ajax": "{{url('contratos/data')}}",
+            "columns": [
+                { "data": "opciones" },
+                { "data": "id" },
+                { "data": "fecha_inicio"},
+                { "data": "empleado" },
+                { "data": "estado" },
+                { "data": "tipo" }
+            ]
+        });
+        tabla.on( 'draw', function () {
 
+            $('.botonEditar').each(function(){
+                $(this).attr('href',"{{url('contratos')}}/"+$(this).attr('data-id')+"/edit");
+
+            });
+
+            $('.botonEliminar').one('click',function(){
+                if(confirm('Está seguro? ')){
+                    $.ajax({
+                        url: "{{url('contratos/eliminar')}}"+"/"+$(this).attr('data-id'),
+                        method: "POST",
+                        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            '_method': 'DELETE'
+                        },
+                        success: function(data){
+                            toastr.success('El contrato fue eliminado con exito');
+                            tabla.ajax.reload();
+                        },
+                        error: function(jqXHR, textStatus){
+                            console.log(jqXHR.responseText);
+                            toastr.error('Ha ocurrido un error');
+                        },
+                        async: false
+                    });
+                }
+
+            });
+        });
+
+    });
+
+    /*
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })*/
+
+
+
+</script>
 @endsection

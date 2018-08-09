@@ -9,8 +9,6 @@ class Contrato extends Model
     protected $table = 'contratos';
     public $timestamps = false;
     protected $fillable = [	'sueldo_base',
-    						'valor_colacion',
-    						'valor_movilizacion',
     						'valor_hora_extra',
     						'valor_hora_atraso',
     						'horas_semanales',
@@ -18,8 +16,8 @@ class Contrato extends Model
                             'estado',
                             'fecha_inicio',
                             'tipo'
-    						]
-
+    						];
+    protected $appends = ['empleado','opciones'];
     public function empleado()
     {
         return $this->belongsTo('App\Empleado');
@@ -35,5 +33,14 @@ class Contrato extends Model
     public function liquidacions()
     {
         return $this->hasMany('App\Liquidacion');
+    }
+    public function getEmpleadoAttribute()
+    {
+        $empleado = $this->empleado()->first();
+        return $empleado->nombre.' '.$empleado->apellido_pat.' '.$empleado->apellido_mat;
+    }
+    public function getOpcionesAttribute()
+    {
+        return '<button class="btn btn-default" >Pronto</button>';
     }
 }
