@@ -36,11 +36,13 @@ class AdminIndicadoresController extends Controller
         $dia = $fecha->format('d');
 
         $client = new Client();
-        
-        $res = $client->request('GET', 'https://api.sbif.cl/api-sbifv3/recursos_api/dolar/'.$ano.'/'.$mes.'/dias/'.$dia.'?apikey=243ee93523145ebdd7f6f2d9c1a3320401bbee5d&formato=json');
-        $string_dolar = str_replace(',','.',json_decode($res->getBody()->getContents())->Dolares[0]->Valor);
-        $valor_dolar= floatval($string_dolar);
-
+        try{
+            $res = $client->request('GET', 'https://api.sbif.cl/api-sbifv3/recursos_api/dolar/'.$ano.'/'.$mes.'/dias/'.$dia.'?apikey=243ee93523145ebdd7f6f2d9c1a3320401bbee5d&formato=json');
+            $string_dolar = str_replace(',','.',json_decode($res->getBody()->getContents())->Dolares[0]->Valor);
+            $valor_dolar= floatval($string_dolar);
+        } catch(Exception $e){
+            dd('NO esta conectado a internet');
+        };
         $res = $client->request('GET', 'https://api.sbif.cl/api-sbifv3/recursos_api/euro/'.$ano.'/'.$mes.'/dias/'.$dia.'?apikey=243ee93523145ebdd7f6f2d9c1a3320401bbee5d&formato=json');
         $string_euro = str_replace(',','.',json_decode($res->getBody()->getContents())->Euros[0]->Valor);
         $valor_euro = floatval($string_euro);

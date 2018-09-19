@@ -37,9 +37,9 @@
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>V</span>
+      <span class="logo-mini"><b>C</b>AV</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Alta</b>vida</span>
+      <span class="logo-lg"><b>Corporación</b>Altavida</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -67,7 +67,7 @@
                   <li><!-- start message -->
                     <a href="#">
                       <div class="pull-left">
-                        <img src="{{asset('templates/AdminLTE-master')}}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="{{url('usuarios/fotos')}}/{{Auth::user()->id}}" class="img-circle" alt="User Image">
                       </div>
                       <h4>
                         Support Team
@@ -139,45 +139,32 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{asset('templates/AdminLTE-master')}}/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <img src="{{url('usuarios/fotos')}}/{{Auth::user()->id}}" class="user-image" alt="User Image">
               <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{asset('templates/AdminLTE-master')}}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{{url('usuarios/fotos')}}/{{Auth::user()->id}}" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{Auth::user()->name}}
+                  <small id="miembroDesde"> </small>
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
+              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ url('profile') }}" class="btn btn-default btn-flat">Mis datos</a>
                 </div>
                 <div class="pull-right">
                   
                   <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Salir
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -205,7 +192,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{asset('templates/AdminLTE-master')}}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="{{url('usuarios/fotos')}}/{{Auth::user()->id}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>{{str_limit(Auth::user()->name,21)}}</p>
@@ -253,22 +240,6 @@
             </span>
           </a>
         </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Liquidaciones</span>
-            <span class="pull-right-container">
-              <span class="label label-default pull-right">Pronto</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        @endif
         <li>
           <a href="{{url('contratos')}}">
             <i class="fa fa-th"></i> <span>Contratos</span>
@@ -277,13 +248,20 @@
             </span>
           </a>
         </li>
-        
-        
+        @endif
+        <li>
+          <a href="{{url('liquidaciones')}}">
+            <i class="fa fa-files-o"></i> <span>Liquidaciones</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-green">En desarrollo</small>
+            </span>
+          </a>
+        </li>
         <li>
           <a href="{{ url('isapres') }}">
             <i class="fa fa-calendar"></i> <span>Isapres</span>
             <span class="pull-right-container">
-              <small class="label pull-right label-default">En desarrollo</small>
+              <small class="label pull-right bg-green">En desarrollo</small>
             </span>
           </a>
         </li>
@@ -291,7 +269,7 @@
           <a href="{{ url('afps') }}">
             <i class="fa fa-envelope"></i> <span>AFP's</span>
             <span class="pull-right-container">
-              <small class="label pull-right label-default">En desarrollo</small>
+              <small class="label pull-right bg-green">En desarrollo</small>
             </span>
           </a>
         </li>
@@ -359,7 +337,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 0.2
     </div>
-    <strong><a href="http://www.inf.ucv.cl" target="_blank">Escuela Ing. Informatica Pucv</a> - 2018 - <a target="_blank" href="https://adminlte.io">Template</a>
+    <strong><a href="http://www.inf.ucv.cl" target="_blank">Escuela Ing. Informatica PUCV</a> - 2018 - <a target="_blank" href="https://adminlte.io">Template</a>
   </footer>
 
   <!-- Control Sidebar -->
@@ -569,12 +547,18 @@
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('templates/AdminLTE-master')}}/dist/js/adminlte.min.js"></script>
-
+<script src="{{ asset('js/moment.js-2.22.2/moment.min.js') }}"></script>
+@yield('js')
 <script>
   $(document).ready(function () {
-    $('.sidebar-menu').tree()
+    $('.sidebar-menu').tree();
+    moment.locale('es');
+    let texto = moment("{{Auth::user()->created_at}}").fromNow();
+    
+    $('#miembroDesde').html('Miembro desde '+texto);
   })
+
 </script>
-@yield('js')
+
 </body>
 </html>

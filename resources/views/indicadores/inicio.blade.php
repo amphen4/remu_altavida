@@ -146,6 +146,7 @@
   $(function () {
     
     $('#example2').DataTable({
+      "language": { url: "{{url('js/esp.json')}}" },
       'columns': [
         	{ 'data': 'fecha' },
         	{ 'data': 'uf' },

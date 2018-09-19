@@ -71,7 +71,7 @@
     <div class="col-xs-12">
       <h2 class="page-header">
         <i class="glyphicon glyphicon-briefcase"></i>  Contrato de Trabajo
-        <small class="pull-right" id="hoy">Date: 2/10/2014 </small>
+        <div class="pull-right " ><small>Fecha de Inicio:<label><p style="color:red">*</p></label> <input style="width:100px" type="text"  id="datepickerFechaInicio"></small></div>
       </h2>
     </div>
     <!-- /.col -->
@@ -104,12 +104,20 @@
       <b>Payment Due:</b> 2/22/2014<br>
       <b>Account:</b> 968-34567 -->
       <div class="input-group">
-          <label >Sueldo Base:</label>
+          <label >Sueldo Base:<label><p style="color:red">*</p></label></label>
           <input type="text" id="inputSueldoBase" class="form-control" name="nombre" placeholder="" required>
       </div>
       <br>
-      <b>AFP:</b> <b id="bAfp"></b><br>
-      <b>Isapre:</b> <b id="bIsapre"></b><br>
+      <div class="input-group">
+          <label >Horas Semanales:<label><p style="color:red">*</p></label></label>
+          <input type="number" id="inputHorasSemanales" class="form-control" min="1"  max="168" value="45" name="horas_semanales" placeholder="" required>
+      </div>
+      <br>
+      <div class="input-group">
+          <label >Dias Semanales:<label><p style="color:red">*</p></label></label>
+          <input type="number" id="inputDiasSemanales" max="7" min="1" id="" class="form-control" value="5" name="dias_semanales" placeholder="" required>
+      </div>
+      
     </div>
     <!-- /.col -->
   </div>
@@ -132,7 +140,7 @@
             <th>Valor</th>
             <th>Factor</th>
             <th style="width:150px;">Fecha inicio</th>
-            <th style="width:100px;">Duracion</th>
+            <th style="width:100px;">Duracion (Meses)</th>
             <th></th>
           </tr>
         </thead>
@@ -160,7 +168,7 @@
             <th>Valor</th>
             <th>Factor</th>
             <th style="width:150px;">Fecha inicio</th>
-            <th style="width:100px;">Duracion</th>
+            <th style="width:100px;">Duracion (Meses)</th>
             <th></th>
             <th></th>
           </tr>
@@ -186,7 +194,7 @@
     </div>
     <!-- /.col -->
     <div class="col-xs-6">
-      <p class="lead">Resumen Contable</p>
+      <p class="lead">Resumen Próxima Liquidación</p>
 
       <div class="table-responsive">
         <table class="table">
@@ -203,11 +211,11 @@
             <td id="totalHaberes"></td>
           </tr>
           <tr>
-            <th>Descuento AFP:</th>
+            <th id="bAfp"></th>
             <td id="descuentoAfp"></td>
           </tr>
           <tr>
-            <th>Descuento Isapre:</th>
+            <th id="bIsapre"></th>
             <td id="descuentoIsapre"></td>
           </tr>
           <tr>
@@ -263,6 +271,7 @@
                         <button data-toggle="modal" data-target="#exampleModalCrearHaber" class="btn btn-success" ><i class="fa fa-plus"></i> Crear Haber</button>
                       </div>
                     </div>
+                    <p class="pull-right">*Mantener apretado tecla ctrl para seleccionar mas de uno</p>
                     <!-- /.box-header -->
                     <div class="box-body">
                       <table id="tablaAgregarHaberes" class="table table-bordered table-striped">
@@ -273,7 +282,7 @@
                             <th>Imponible?</th>
                             <th>Tipo</th>
                             <th>Valor</th>
-                            <th>Factor (opcional)</th>
+                            <!--<th>Factor (opcional)</th>-->
                           </tr>
                         </thead>
                         <tbody>
@@ -308,12 +317,13 @@
           <div class="col-xs-12">
             <div class="box">
                     <div class="box-header">
-                      <h3 class="box-title">Seleccione uno o mas descuentos para agregar:</h3>
+                      <h3 class="box-title">Seleccione uno o mas descuentos para agregar:</h3> 
                       <div class="pull-right">
                         <button class="btn btn-primary" id="botonActualizarDataDescuentos" ><i class="fa fa-refresh"></i> <strong>Actualizar</strong></button>
                         <button data-toggle="modal" data-target="#exampleModalCrearDescuento" class="btn btn-success" ><i class="fa fa-plus"></i> Crear Descuento</button>
                       </div>
                     </div>
+                    <p class="pull-right">*Mantener apretado tecla ctrl para seleccionar mas de uno</p>
                     <!-- /.box-header -->
                     <div class="box-body">
                       <table id="tablaAgregarDescuentos" class="table table-bordered table-striped">
@@ -324,7 +334,7 @@
                             <!--<th>Imponible?</th>-->
                             <th>Tipo</th>
                             <th>Valor</th>
-                            <th>Factor (opcional)</th>
+                            <!--<th>Factor (opcional)</th>-->
                           </tr>
                         </thead>
                         <tbody>
@@ -369,7 +379,9 @@
                         <label >Tipo:</label><label><p style="color:red">*</p></label>
                         <select id="tipoHaber" class="form-control" name="tipo" required>
                           <option selected="selected">MONTO</option>
-                          <option>PORCENTAJE</option>
+                          <option>PORCENTAJE SUELDO BASE</option>
+                          <option>UF</option>
+                          <option>UTM</option>
                         </select>
                     </div>
                 </div>
@@ -377,6 +389,7 @@
               <br>
               <div class="row">
                   <div class="col-lg-6">
+                    <!--
                     <div class="input-group">
                         <label >Factor:</label><label><p style="color:red">*</p></label>
                         <select disabled id="factorHaber" class="form-control" name="factor" required>
@@ -386,6 +399,7 @@
                           <option>UTM</option>
                         </select>
                     </div>
+                    -->
                 </div>
                 <div class="col-lg-6">
                     <div class="input-group">
@@ -442,7 +456,9 @@
                         <label >Tipo:</label><label><p style="color:red">*</p></label>
                         <select id="tipoDescuento" class="form-control" name="tipo" required>
                           <option selected="selected">MONTO</option>
-                          <option>PORCENTAJE</option>
+                          <option>PORCENTAJE SUELDO BASE</option>
+                          <option>UF</option>
+                          <option>UTM</option>
                         </select>
                     </div>
                 </div>
@@ -450,6 +466,7 @@
               <br>
               <div class="row">
                   <div class="col-lg-6">
+                    <!--
                     <div class="input-group">
                         <label >Factor:</label><label><p style="color:red">*</p></label>
                         <select disabled id="factorDescuento" class="form-control" name="factor" required>
@@ -459,6 +476,7 @@
                           <option>UTM</option>
                         </select>
                     </div>
+                  -->
                 </div>
                 <div class="col-lg-6">
                     <div class="input-group">
@@ -497,8 +515,8 @@
 <!-- DataTables -->
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="{{ asset('js/fullcalendar-3.9.0/lib/moment.min.js') }}"></script>
-<script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+<script src="{{asset('js/fullcalendar-3.9.0/lib/moment.min.js')}}"></script>
+<script src="{{asset('templates/AdminLTE-master')}}/bower_components/datatables.net/js/dataTables.select.min.js"></script>
 <!-- iCheck 1.0.1 -->
 <script src="{{asset('templates/AdminLTE-master')}}/plugins/iCheck/icheck.min.js"></script>
 <!-- Cleave -->
@@ -549,8 +567,8 @@ $(document).ready(function(){
         var datos = JSON.parse(data);
         id_global = datos.id;
         console.log('la id del empleado es: '+id);
-        $('#bAfp').html(datos.afp_nombre+' ('+datos.afp_porcentaje+'%)');
-        $('#bIsapre').html(datos.isapre_nombre+' ('+datos.isapre_porcentaje+'%)');
+        $('#bAfp').html('AFP: '+datos.afp_nombre+' ('+datos.afp_porcentaje+'%)');
+        $('#bIsapre').html('Salud: '+datos.isapre_nombre+' ('+datos.isapre_porcentaje+'%)');
         afp_porcentaje = parseFloat(datos.afp_porcentaje);
         isapre_porcentaje = parseFloat(datos.isapre_porcentaje);
         $('#datosEmpleado').html(
@@ -581,7 +599,12 @@ $(document).ready(function(){
   $('#inputSueldoBase').on('change',function(){
     reCalcular();
   });
-  $('#hoy').html('Fecha: '+moment().format('YYYY-MM-DD'));
+  //$('#hoy').html('Fecha: '+moment().format('YYYY-MM-DD'));
+  var fechaDeInicio = $('#datepickerFechaInicio').datepicker({
+        format: 'yyyy-mm-dd',
+        defaultViewDate: 'today'
+      });
+  fechaDeInicio.val(moment().format('YYYY-MM-DD'));
   //Flat red color scheme for iCheck
   $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
     checkboxClass: 'icheckbox_flat-green',
@@ -623,14 +646,14 @@ $(document).ready(function(){
           if($(this).find('#tipo').html() == 'MONTO'){
             total_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
           }else{
-            if( $(this).find('#factor').html() == 'SUELDO BASE'){
+            if( $(this).find('#tipo').html() == 'PORCENTAJE SUELDO BASE'){
               total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
             }
-            if( $(this).find('#factor').html() == 'UF'){
-              total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * valorUf;
+            if( $(this).find('#tipo').html() == 'UF'){
+              total_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
             }
-            if( $(this).find('#factor').html() == 'UTM'){
-              total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * valorUtm;
+            if( $(this).find('#tipo').html() == 'UTM'){
+              total_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
             }
           }
         }
@@ -642,14 +665,14 @@ $(document).ready(function(){
           if($(this).find('#tipo').html() == 'MONTO'){
             total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
           }else{
-            if( $(this).find('#factor').html() == 'SUELDO BASE'){
+            if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
               total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
             }
             if( $(this).find('#factor').html() == 'UF'){
-              total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * valorUf;
+              total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
             }
             if( $(this).find('#factor').html() == 'UTM'){
-              total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * valorUtm;
+              total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
             }
           }
         }
@@ -668,15 +691,15 @@ $(document).ready(function(){
         if($(this).find('#tipo').html() == 'MONTO'){
           total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') );
         }else{
-          if( $(this).find('#factor').html() == 'SUELDO BASE'){
+          if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
             total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
           }
-          if( $(this).find('#factor').html() == 'UF'){
-            total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * valorUf;
-          }
-          if( $(this).find('#factor').html() == 'UTM'){
-            total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * valorUtm;
-          }
+          if( $(this).find('#tipo').html() == 'UF'){
+              total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
+            }
+            if( $(this).find('#tipo').html() == 'UTM'){
+              total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
+            }
         }
       });
 
@@ -695,9 +718,9 @@ $(document).ready(function(){
 
   $('#tipoHaber').change(function(){
     console.log($(this).val());
-    if( $(this).val() == 'MONTO' ){
-      $('#factorHaber').val('NINGUNO');
-      $('#factorHaber').prop('disabled',true);
+    if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){
+      //$('#factorHaber').val('NINGUNO');
+      //$('#factorHaber').prop('disabled',true);
       //document.getElementById("formularioHaber").elements.namedItem("valor").value = '';
       $('#input-decimales-haberes').val('');
       algo_haber.destroy();
@@ -708,7 +731,7 @@ $(document).ready(function(){
           numeralDecimalScale: 0
       });
     }else{
-      $('#factorHaber').prop('disabled',false);
+      //$('#factorHaber').prop('disabled',false);
       //document.getElementById("formularioHaber").elements.namedItem("valor").value = '';
       $('#input-decimales-haberes').val('');
       algo_haber.destroy();
@@ -725,9 +748,9 @@ $(document).ready(function(){
   
   $('#tipoDescuento').change(function(){
     console.log($(this).val());
-    if( $(this).val() == 'MONTO' ){
-      $('#factorDescuento').val('NINGUNO');
-      $('#factorDescuento').prop('disabled',true);
+    if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){
+      //$('#factorDescuento').val('NINGUNO');
+      //$('#factorDescuento').prop('disabled',true);
       //("#formularioDescuento").find('input[name="valor"]').val('');
       $('#input-decimales-descuentos').val('');
       algo_descuento.destroy();
@@ -738,7 +761,7 @@ $(document).ready(function(){
           numeralDecimalScale: 0
       });
     }else{
-      $('#factorDescuento').prop('disabled',false);
+      //$('#factorDescuento').prop('disabled',false);
       //document.getElementById("formularioDescuento").elements.namedItem("valor").value = '';
       $('#input-decimales-descuentos').val('');
       algo_descuento.destroy();
@@ -754,6 +777,7 @@ $(document).ready(function(){
   })
 
   var tablaAgregarHaberes = $('#tablaAgregarHaberes').DataTable({
+    "language": { url: "{{url('js/esp.json')}}" },
     select: true,
     processing: true,
     "ajax": "{{url('haberes/data')}}",
@@ -762,11 +786,12 @@ $(document).ready(function(){
           { "data": "imp" },
           { "data": "tipo" },
           { "data": "valor" },
-          { "data": "factor" }
+          //{ "data": "factor" }
       ],
   });
 
   var tablaAgregarDescuentos = $('#tablaAgregarDescuentos').DataTable({
+    "language": { url: "{{url('js/esp.json')}}" },
     select: true,
     processing: true,
     "ajax": "{{url('descuentos/data')}}",
@@ -775,7 +800,7 @@ $(document).ready(function(){
           //{ "data": "imp" },
           { "data": "tipo" },
           { "data": "valor" },
-          { "data": "factor" }
+          //{ "data": "factor" }
       ],
   });
 
@@ -790,7 +815,7 @@ $(document).ready(function(){
                     '<td id="valor">'+arreglo[i].valor+'</td>'+
                     '<td id="factor">'+ ((arreglo[i].factor == null)? '':arreglo[i].factor) +'</td>'+
                     '<td>'+'<div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input class="form-control inputFecha" type="text" id="datepickerHaber'+(contador)+'"></div>'+'</td>'+
-                    '<td>'+'<input style="width:100px;" class="form-control" id="duracion" disabled min="1" value="1"type="number">'+'</td>'+
+                    '<td>'+'<input style="width:100px;" class="form-control" id="duracion" disabled min="1" value="1" type="number">'+'</td>'+
                     '<td>'+'<div class="input-group"><input type="checkbox" class="flat-red checkboxDuracion"  unchecked></label></div>'+'</td>'+
                     '<td>'+'<button class="btn btn-xs btn-danger botonEliminarFila" >X</button>'+'</td>'+
                 '</tr>';
@@ -798,7 +823,7 @@ $(document).ready(function(){
       var cake = $('#datepickerHaber'+(contador)).datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd'
-      })
+      });
       cake.val(moment().format('YYYY-MM-DD'));
       contador++;
       $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
@@ -831,7 +856,7 @@ $(document).ready(function(){
                     '<td id="valor">'+arreglo[i].valor+'</td>'+
                     '<td id="factor">'+ ((arreglo[i].factor == null)? '':arreglo[i].factor) +'</td>'+
                     '<td>'+'<div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input class="form-control inputFecha" type="text" id="datepickerDescuento'+(contador)+'"></div>'+'</td>'+
-                    '<td>'+'<input style="width:100px;" class="form-control" id="duracion" disabled min="1" value="1"type="number">'+'</td>'+
+                    '<td>'+'<input style="width:100px;" class="form-control" id="duracion" disabled min="1" value="1" type="number">'+'</td>'+
                     '<td>'+'<div class="input-group"><input type="checkbox" class="flat-red checkboxDuracion"  unchecked></label></div>'+'</td>'+
                     '<td>'+'<button class="btn btn-xs btn-danger botonEliminarFila" >X</button>'+'</td>'+
                 '</tr>';
@@ -878,7 +903,7 @@ $(document).ready(function(){
       data: {
           'nombre': document.getElementById("formularioHaber").elements.namedItem("nombre").value,
           'tipo': document.getElementById("formularioHaber").elements.namedItem("tipo").value,
-          'factor': ((document.getElementById("formularioHaber").elements.namedItem("tipo").value == 'MONTO')? 'NINGUNO':document.getElementById("formularioHaber").elements.namedItem("factor").value),
+          //'factor': ((document.getElementById("formularioHaber").elements.namedItem("tipo").value == 'MONTO')? 'NINGUNO':document.getElementById("formularioHaber").elements.namedItem("factor").value),
           'valor': document.getElementById("formularioHaber").elements.namedItem("valor").value,
           'imponible': document.getElementById("formularioHaber").elements.namedItem("imponible").checked
       },
@@ -904,7 +929,7 @@ $(document).ready(function(){
       data: {
           'nombre': document.getElementById("formularioDescuento").elements.namedItem("nombre").value,
           'tipo': document.getElementById("formularioDescuento").elements.namedItem("tipo").value,
-          'factor': ((document.getElementById("formularioHaber").elements.namedItem("tipo").value == 'MONTO')? 'NINGUNO':document.getElementById("formularioHaber").elements.namedItem("factor").value),
+          //'factor': ((document.getElementById("formularioHaber").elements.namedItem("tipo").value == 'MONTO')? 'NINGUNO':document.getElementById("formularioHaber").elements.namedItem("factor").value),
           'valor': document.getElementById("formularioDescuento").elements.namedItem("valor").value,
           //'imponible': document.getElementById("formularioDescuento").elements.namedItem("imponible").checked
           'imponible': 'false'
@@ -923,27 +948,38 @@ $(document).ready(function(){
   $('#botonGuardarContrato').on('click',function(){
     console.log('comenzo a guardarContrato');
     var sueldo_base_ajax = parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
+    var fechaDeInicio = $('#datepickerFechaInicio').val();
     if( sueldo_base_ajax == 0 ) { alert('Debe ingresar un valor en el campo: Sueldo Base.'); return;}
+    if( fechaDeInicio == '' ) { alert('Debe ingresar un valor en el campo: Sueldo Fecha de Inicio.'); return;}
+    
     var haberes = [];
     var descuentos = [];
-    console.log(id);
+    console.log(id_global);
     var empleado = id_global;
     $('#bodyTablaHaberes > tr').each(function(){
+      console.log('recorriendo tabla haberes');
+      //console.log('imprimiendo la id '+$(this).find('#id').html());
+      //console.log('imprimiendo el inputfecha '+$(this).find('.inputFecha').val());
+      //console.log('duracion esta con valor: '+$(this).find('#duracion').prop('disabled'));
       var objeto = {
         id: $(this).find('#id').html(),
-        fecha: ( ($(this).find('.inputFecha').html() == '')? moment().format('YYYY-MM-DD') : $(this).find('.inputFecha').html() ),
-        duracion: ( ($(this).find('#duracion').prop('disabled'))? -1: parseInt($(this).find('#duracion').value()) )
+        fecha: ( ($(this).find('.inputFecha').val() == '')? moment().format('YYYY-MM-DD') : $(this).find('.inputFecha').val() ),
+        duracion: ( ($(this).find('#duracion').prop('disabled'))? -1: parseInt($(this).find('#duracion').val()) )
       };
+      //console.log('Se pusheara el objeto haber');
       haberes.push(objeto);
     });
     $('#bodyTablaDescuentos > tr').each(function(){
+      //console.log('recorriendo tabla descuentos');
       var objeto = {
         id: $(this).find('#id').html(),
-        fecha: ( ($(this).find('.inputFecha').html() == '')? moment().format('YYYY-MM-DD') : $(this).find('.inputFecha').html() ),
-        duracion: ( ($(this).find('#duracion').prop('disabled'))? -1: parseInt($(this).find('#duracion').value()) )
+        fecha: ( ($(this).find('.inputFecha').val() == '')? moment().format('YYYY-MM-DD') : $(this).find('.inputFecha').val() ),
+        duracion: ( ($(this).find('#duracion').prop('disabled'))? -1: parseInt($(this).find('#duracion').val()) )
       };
+      //console.log('Se pusheara el objeto descuento');
       descuentos.push(objeto);
     });
+    console.log('Se enviara el contrato por ajax');
     $.ajax({
       url: "{{url('/contratos/')}}",
       method: "POST",
@@ -954,7 +990,10 @@ $(document).ready(function(){
           'empleado': JSON.stringify(empleado),
           'haberes': JSON.stringify(haberes),
           'descuentos': JSON.stringify(descuentos),
-          'sueldo_base': sueldo_base_ajax
+          'sueldo_base': sueldo_base_ajax,
+          'horas_semanales': $('#inputHorasSemanales').val(),
+          'dias_semanales': $('#inputDiasSemanales').val(),
+          'fecha_inicio': fechaDeInicio
       },
       success: function(data){
         window.location = "{{url('contratos')}}";
@@ -964,6 +1003,7 @@ $(document).ready(function(){
       },
       async: false
     });
+
   });
 });
 </script>

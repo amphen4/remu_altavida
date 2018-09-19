@@ -794,12 +794,12 @@
     $('#inputCiudad').flexdatalist({
       data: "{{asset('json/comunas.json')}}",
       minLength: 1,
-        searchIn: 'name',
-        groupBy: 'region',
-        visibleProperties: ["name"],
-        textProperty: '{name}',
-        searchByWord: true,
-        valueProperty: 'name'
+      searchIn: 'name',
+      groupBy: 'region',
+      visibleProperties: ["name"],
+      textProperty: '{name}',
+      searchByWord: true,
+      valueProperty: 'name'
     });
 
     $('#inputBusqueda').flexdatalist({

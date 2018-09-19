@@ -21,22 +21,28 @@ class AdminDescuentosController extends Controller
     {
     	$request->validate([
             'nombre' => 'required|string|max:190',
-            'tipo' => 'required|in:MONTO,PORCENTAJE',
-            'factor' => 'required|in:NINGUNO,SUELDO BASE,UF,UTM',
+            'tipo' => 'required|in:MONTO,PORCENTAJE SUELDO BASE,UF,UTM',
+            //'factor' => 'required|in:NINGUNO,MONTO,PORCENTAJE SUELDO BASE,UF,UTM',
             'valor' => 'required',
             'imponible' => 'required|in:false,true'
         ]);
     	$nuevo = new Dscto();
     	$nuevo->nombre = $request->nombre;
     	$nuevo->tipo = $request->tipo;
-    	if($request->factor !== 'NINGUNO') { $nuevo->factor = $request->factor; }
+    	$nuevo->factor = "NINGUNO"; 
     	switch($request->tipo){
     		case 'MONTO':
-    			$nuevo->valor_entero = intval(str_replace('.','',$request->valor));
-    			break;
-    		case 'PORCENTAJE':
-    			$nuevo->valor_porcentaje = floatval(str_replace(',','.',$request->valor));
-    			break;
+                $nuevo->valor_entero = intval(str_replace('.','',$request->valor));
+                break;
+            case 'UF':
+                $nuevo->valor_entero = intval(str_replace('.','',$request->valor));
+                break;
+            case 'UTM':
+                $nuevo->valor_entero = intval(str_replace('.','',$request->valor));
+                break;
+            case 'PORCENTAJE SUELDO BASE':
+                $nuevo->valor_porcentaje = floatval(str_replace(',','.',$request->valor));
+                break;
     	}
 
     	switch ($request->imponible){

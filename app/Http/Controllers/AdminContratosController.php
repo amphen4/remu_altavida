@@ -35,17 +35,21 @@ class AdminContratosController extends Controller
         $this->validate($request, [ 'empleado' => 'required|exists:empleados,id',
                                     'sueldo_base' => 'required|numeric',
                                     'haberes' => 'required|string',
-                                    'descuentos' => 'required|string'
+                                    'descuentos' => 'required|string',
+                                    'horas_semanales' => 'required|numeric',
+                                    'dias_semanales' => 'required|numeric',
+                                    'fecha_inicio' => 'required|date'
                                   ]);
         $haberes = json_decode($request->haberes);
         $descuentos = json_decode($request->descuentos);
         $empleado = Empleado::find($request->empleado);
         $sueldo_base = $request->sueldo_base;
         $contrato = new Contrato();
-
+        $contrato->horas_semanales = json_decode($request->horas_semanales);
+        $contrato->dias_semanales = json_decode($request->dias_semanales);
         $contrato->estado = 'ACTIVO';
         $contrato->tipo = 'INDEFINIDO';
-        $contrato->fecha_inicio = Carbon::now()->format('Y-m-d');
+        $contrato->fecha_inicio = $request->fecha_inicio;
         $contrato->sueldo_base = $sueldo_base;
         $contrato->empleado()->associate($empleado);
         $contrato->save();
@@ -73,6 +77,19 @@ class AdminContratosController extends Controller
     public function data()
     {
         $asi['data'] = Contrato::all()->toArray();
+        return json_encode($asi);
+    }
+    public function show($id)
+    {
+        $contrato = Contrato::findOrFail($id);
+        return view('contratos.verContrato',[ 'contrato' => $contrato,
+                                                'empresa' => Empresa::find(1),
+                                                'empleado' => $contrato->empleado()->first()
+                                                 ]);
+    }
+    public function data_l()
+    {
+        $asi['data'] = Contrato::where('estado','ACTIVO')->get()->toArray();
         return json_encode($asi);
     }
 }

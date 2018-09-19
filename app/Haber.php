@@ -22,9 +22,15 @@ class Haber extends Model
     		case 'MONTO':
     			return number_format($this->valor_entero,0,',','.');
     			break;
-    		case 'PORCENTAJE':
-    			return number_format($this->valor_porcentaje,3,',','.');
-    			break;
+    		case 'PORCENTAJE SUELDO BASE':
+                return number_format($this->valor_porcentaje,3,',','.');
+                break;
+            case 'UF':
+                return number_format($this->valor_entero,0,',','.');
+                break;
+            case 'UTM':
+                return number_format($this->valor_entero,0,',','.');
+                break;
     	}
     }
     public function getImpAttribute()

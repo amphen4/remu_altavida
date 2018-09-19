@@ -164,6 +164,7 @@ $(document).ready(function(){
 		valueProperty: 'id'
 	});
 	var tabla = $('#example1').DataTable({
+      "language": { url: "{{url('js/esp.json')}}" },
 		  "processing": true,
     	"ajax": "{{url('registros_horas/data')}}",
       "columns": [

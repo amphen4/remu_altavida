@@ -44,6 +44,7 @@
 <script>
 $(document).ready(function(){
 	var tabla = $('#example1').DataTable({
+		"language": { url: "{{url('js/esp.json')}}" },
     	"ajax": "{{url('usuarios/data')}}",
         "columns": [
             { "data": "opciones" },

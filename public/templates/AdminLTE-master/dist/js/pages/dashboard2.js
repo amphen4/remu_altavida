@@ -92,6 +92,7 @@ $(function () {
   // - PIE CHART -
   // -------------
   // Get context with jQuery - using jQuery's .get() method.
+  /*
   var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
   var pieChart       = new Chart(pieChartCanvas);
   var PieData        = [
@@ -168,7 +169,7 @@ $(function () {
   /* jVector Maps
    * ------------
    * Create a world map with markers
-   */
+   
   $('#world-map-markers').vectorMap({
     map              : 'world_mill_en',
     normalizeFunction: 'polynomial',

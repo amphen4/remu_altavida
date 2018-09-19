@@ -18,7 +18,9 @@ class CreateLiquidacionsTable extends Migration
             $table->unsignedInteger('total_haberes');
             $table->unsignedInteger('total_descuentos');
             $table->unsignedInteger('monto_liquido');
-            $table->date('fecha');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->unsignedTinyInteger('mes');
             $table->unsignedInteger('sueldo_contrato');
             $table->unsignedInteger('monto_bruto');
             $table->unsignedInteger('total_imponible');

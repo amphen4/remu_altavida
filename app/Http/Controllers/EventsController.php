@@ -34,4 +34,30 @@ class EventsController extends Controller
 
         return response(200);
     }
+    public function actualizar(Request $request, $id)
+    {
+        $wow = Event::findOrFail($id);
+        $this->validate($request, ['title' => 'required|string|max:100',
+                                    'start' => 'required',
+                                    'end' => 'required',
+                                  ]);
+        $wow->title = $request->title;
+        $wow->start = $request->start;
+        $wow->end = $request->end;
+        $wow->save();
+        return response()->json([
+            'wow' => 'Wow'
+        ]);
+    }
+    public function eliminar(Request $request,$id)
+    {
+        $this->validate($request, ['method' => 'required|in:DELETE',
+                                    
+                                  ]);
+        Event::findOrFail($id);
+        Event::destroy($id);
+        return response()->json([
+            'wow' => 'Wow'
+        ]);
+    }
 }

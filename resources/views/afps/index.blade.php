@@ -28,7 +28,7 @@
                         <tfoot>
                         </tfoot>
                     </table>
-                    </table>
+                    
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -44,6 +44,7 @@
     <script>
         $(document).ready(function(){
             var tabla = $('#example1').DataTable({
+                "language": { url: "{{url('js/esp.json')}}" },
                 "ajax": "{{url('/afps/data')}}",
                 "columns": [
                     { "data": "opciones" },

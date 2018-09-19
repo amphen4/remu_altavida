@@ -16,10 +16,10 @@ class CreateDsctosTable extends Migration
         Schema::create('dsctos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->enum('tipo',['MONTO','PORCENTAJE']);
+            $table->enum('tipo',['MONTO','PORCENTAJE SUELDO BASE','UF','UTM']);
             $table->unsignedDecimal('valor_porcentaje',5,3)->nullable();
             $table->unsignedInteger('valor_entero')->nullable();
-            $table->enum('factor',['SUELDO BASE','SALARIO MINIMO','UF','UTM'])->nullable(); // ir agregando mas
+            $table->enum('factor',['SUELDO BASE','NINGUNO','SALARIO MINIMO','UF','UTM'])->nullable(); // ir agregando mas
             $table->boolean('imponible');
         });
         // Tabla relacion Muchos a Muchos

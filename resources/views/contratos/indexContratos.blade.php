@@ -22,7 +22,6 @@
             <div class="box-header">
              	<h3 class="box-title">Registros contratos en el sistema</h3>
              	<div class="pull-right">
-             		
              		<a href="{{ url('contratos/crear') }}" class="btn btn-success" ><i class="fa fa-plus"></i> Crear Contrato</a>
              	</div>
             </div>
@@ -57,6 +56,7 @@
 <script>
     $(document).ready(function(){
         var tabla = $('#example1').DataTable({
+        	"language": { url: "{{url('js/esp.json')}}" },
             "ajax": "{{url('contratos/data')}}",
             "columns": [
                 { "data": "opciones" },
@@ -68,49 +68,37 @@
             ]
         });
         tabla.on( 'draw', function () {
+	        $('.botonEditar').each(function(){
+	            $(this).attr('href',"{{url('contratos')}}/"+$(this).attr('data-id')+"/edit");
+	        });
+	        $('.botonVer').each(function(){
+	        	$(this).attr('href',"{{url('contratos')}}/"+$(this).attr('data-id'));
+	        });
+	        $('.botonEliminar').one('click',function(){
+	            if(confirm('Está seguro? ')){
+	                $.ajax({
+	                    url: "{{url('contratos/eliminar')}}"+"/"+$(this).attr('data-id'),
+	                    method: "POST",
+	                    headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+	                    data: {
+	                        '_method': 'DELETE'
+	                    },
+	                    success: function(data){
+	                        toastr.success('El contrato fue eliminado con exito');
+	                        tabla.ajax.reload();
+	                    },
+	                    error: function(jqXHR, textStatus){
+	                        console.log(jqXHR.responseText);
+	                        toastr.error('Ha ocurrido un error');
+	                    },
+	                    async: false
+	                });
+	            }
 
-            $('.botonEditar').each(function(){
-                $(this).attr('href',"{{url('contratos')}}/"+$(this).attr('data-id')+"/edit");
-
-            });
-
-            $('.botonEliminar').one('click',function(){
-                if(confirm('Está seguro? ')){
-                    $.ajax({
-                        url: "{{url('contratos/eliminar')}}"+"/"+$(this).attr('data-id'),
-                        method: "POST",
-                        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        data: {
-                            '_method': 'DELETE'
-                        },
-                        success: function(data){
-                            toastr.success('El contrato fue eliminado con exito');
-                            tabla.ajax.reload();
-                        },
-                        error: function(jqXHR, textStatus){
-                            console.log(jqXHR.responseText);
-                            toastr.error('Ha ocurrido un error');
-                        },
-                        async: false
-                    });
-                }
-
-            });
+	        });
         });
-
+        
     });
-
-    /*
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })*/
-
-
 
 </script>
 @endsection

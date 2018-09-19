@@ -34,6 +34,8 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/profile', 'HomeController@profile');
+Route::put('/profile/update', 'HomeController@profileUpdate');
 
 //Route::resource('/usuarios','AdminUsersController');
 Route::get('/usuarios','AdminUsersController@index')->name('usuarios.index');
@@ -43,11 +45,15 @@ Route::get('/usuarios/{id}/edit','AdminUsersController@edit')->name('usuarios.ed
 Route::put('/usuarios/{id}','AdminUsersController@update')->name('usuarios.update');
 Route::delete('/usuarios/eliminar/{id}','AdminUsersController@destroy');
 Route::get('/usuarios/data','AdminUsersController@data');
+Route::get('/usuarios/fotos/{id}', 'HomeController@enviarFoto');
 
 Route::get('/indicadores','AdminIndicadoresController@index')->name('indicadores');
 Route::post('/indicadores/data','AdminIndicadoresController@enviarData');
 Route::get('/data/eventos','EventsController@data');
 Route::post('/data/eventos/save','EventsController@store');
+Route::post('/data/eventos/update/{id}', 'EventsController@actualizar');
+Route::post('/data/eventos/delete/{id}', 'EventsController@eliminar');
+
 Route::get('/data/graficos/uf','AdminIndicadoresController@graficoUf');
 Route::get('/data/graficos/dolar','AdminIndicadoresController@graficoDolar');
 Route::get('/data/graficos/utm','AdminIndicadoresController@graficoUtm');
@@ -67,6 +73,8 @@ Route::get('/contratos','AdminContratosController@index');
 Route::get('/contratos/crear','AdminContratosController@create');
 Route::post('/contratos','AdminContratosController@store');
 Route::get('/contratos/data','AdminContratosController@data');
+Route::get('/contratos/data_l','AdminContratosController@data_l');
+Route::get('/contratos/{id}','AdminContratosController@show');
 
 Route::post('/haberes','AdminHaberesController@store');
 Route::get('/haberes/data','AdminHaberesController@data');
@@ -90,3 +98,10 @@ Route::get('/afps/{id}/edit','AdminAfpsController@edit')->name('afps.edit');
 Route::put('/afps/{id}','AdminAfpsController@update')->name('afps.update');
 Route::delete('/afps/eliminar/{id}','AdminAfpsController@destroy');
 Route::get('/afps/data','AdminAfpsController@data');
+
+Route::get('/liquidaciones','AdminLiquidacionesController@index');
+Route::get('/liquidaciones/data','AdminLiquidacionesController@data');
+Route::post('/liquidaciones/data/detalleProxLiquidacion','AdminLiquidacionesController@detalleProxLiquidacion');
+Route::post('/liquidaciones/generar', 'AdminLiquidacionesController@generarLiquidacionManual')->name('liquidaciones.generarManual');
+Route::post('/liquidaciones/haber_a', 'AdminLiquidacionesController@mensualidadesHaberAgotadas');
+Route::post('/liquidaciones/dscto_a', 'AdminLiquidacionesController@mensualidadesDsctoAgotadas');
