@@ -129,7 +129,7 @@
                 <!-- Post -->
                 <div class="post clearfix">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="" alt="User Image">
+                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos/1.jpg')}}" alt="User Image">
                         <span class="username">
                           <a href="#">Entrada</a> 31/07/2018 08:58 Hrs
                         </span>
@@ -155,7 +155,7 @@
                 <!-- Post -->
                 <div class="post clearfix">
                   <div class="user-block">
-                    <img class="img-circle img-bordered-sm" src="" alt="User Image">
+                    <img class="img-circle img-bordered-sm" src="{{url('empleados/fotos/1.jpg')}}" alt="User Image">
                         <span class="username">
                           <a href="#">Entrada</a> 30/07/2018 08:58 Hrs
                         </span>

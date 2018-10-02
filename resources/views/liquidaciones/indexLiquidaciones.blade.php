@@ -447,6 +447,7 @@ input[readonly]{
             <!-- /.col -->
             
           </div>
+          
           <!-- /.row -->
           <!-- Table row -->
           <div class="row">
@@ -478,13 +479,57 @@ input[readonly]{
           </div>
           <!-- /.row Detalles Pago-->
           <div class="row">
-            <!-- accepted payments column -->
-            
-            <!-- /.col -->
-            
-            <!-- /.col -->
+              <!-- accepted payments column -->
+              <div class="col-xs-6">
+                <p class="lead">Detalles de Pago al Empleado:</p>
+                <p class="text-muted well well-sm no-shadow" id="pTipoCuenta" style="margin-top: 10px;"></p>
+                <p class="text-muted well well-sm no-shadow" id="pBancoCuenta" style="margin-top: 10px;"></p>
+                <p class="text-muted well well-sm no-shadow" id="pCuenta" style="margin-top: 10px;"></p>
+                <p class="text-muted well well-sm no-shadow" id="pRut" style="margin-top: 10px;"></p>
+              </div>
+              <!-- /.col -->
+              <div class="col-xs-6">
+                <p class="lead">Resumen Próxima Liquidación</p>
 
-          </div>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tr>
+                      <th style="width:50%">Total Haberes Imponibles:</th>
+                      <td id="totalHaberesImponibles"></td>
+                    </tr>
+                    <tr>
+                      <th>Total Haberes No Imponibles:</th>
+                      <td id="totalHaberesNoImponibles"></td>
+                    </tr>
+                    <tr>
+                      <th>Total Haberes:</th>
+                      <td id="totalHaberes"></td>
+                    </tr>
+                    <tr>
+                      <th id="bAfp"></th>
+                      <td id="descuentoAfp"></td>
+                    </tr>
+                    <tr>
+                      <th id="bIsapre"></th>
+                      <td id="descuentoIsapre"></td>
+                    </tr>
+                    <tr>
+                      <th>Total Otros Descuentos:</th>
+                      <td id="totalOtrosDescuentos"></td>
+                    </tr>
+                    <tr>
+                      <th>Total Descuentos:</th>
+                      <td id="totalDescuentos"></td>
+                    </tr>
+                    <tr>
+                      <th>Total Liquido:</th>
+                      <td id="totalAPagar"></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <!-- /.col -->
+            </div>
           <!-- /.row -->
 
           <!-- this row will not appear when printing -->
@@ -522,6 +567,93 @@ input[readonly]{
         function capitalize (str1){
             return str1.charAt(0).toUpperCase() + str1.slice(1);
           };
+
+          function reCalcular(){
+              console.log('se invoco la funcion reCalcular()');
+              var totalHaberesImponibles = 0;
+              var valorUf = 27000;
+              var valorUtm = 50000;
+              var sueldoBase = parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
+              var total = 0;
+              var total_imponible = 0;
+              total_imponible += sueldoBase;
+              var total_no_imponible = 0;
+              $('#bodyTablaHaberes > tr').each(function(){
+                //var totalHaberesImponibles +=  sueldo_base.getRawValue();
+                if( $(this).find('#imp').html() == 'Si' ){
+                  if($(this).find('#tipo').html() == 'MONTO'){
+                    total_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
+                  }else{
+                    if( $(this).find('#tipo').html() == 'PORCENTAJE SUELDO BASE'){
+                      total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
+                    }
+                    if( $(this).find('#tipo').html() == 'UF'){
+                      total_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
+                    }
+                    if( $(this).find('#tipo').html() == 'UTM'){
+                      total_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
+                    }
+                  }
+                }
+                
+              });
+              $('#bodyTablaHaberes > tr').each(function(){
+                //var totalHaberesImponibles +=  sueldo_base.getRawValue();
+                if( $(this).find('#imp').html() == 'No' ){
+                  if($(this).find('#tipo').html() == 'MONTO'){
+                    total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
+                  }else{
+                    if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
+                      total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
+                    }
+                    if( $(this).find('#factor').html() == 'UF'){
+                      total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
+                    }
+                    if( $(this).find('#factor').html() == 'UTM'){
+                      total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
+                    }
+                  }
+                }
+                
+              });
+              //console.log('total imponible: '+total_imponible);
+              //console.log('total no imponible: '+total_no_imponible);
+              var total_haberes = total_imponible + total_no_imponible;
+              $('#totalHaberesImponibles').html( '$ '+total_imponible.toLocaleString('de-DE') );
+              $('#totalHaberesNoImponibles').html( '$ '+total_no_imponible.toLocaleString('de-DE') );
+              $('#totalHaberes').html( '$ '+total_haberes.toLocaleString('de-DE') );
+              var total_descuentos = 0;
+
+              $('#bodyTablaDescuentos > tr').each(function(){
+                //var totalHaberesImponibles +=  sueldo_base.getRawValue();
+                if($(this).find('#tipo').html() == 'MONTO'){
+                  total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') );
+                }else{
+                  if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
+                    total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
+                  }
+                  if( $(this).find('#tipo').html() == 'UF'){
+                      total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
+                    }
+                    if( $(this).find('#tipo').html() == 'UTM'){
+                      total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
+                    }
+                }
+              });
+
+              $('#totalOtrosDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
+              var total_descuento_afp = total_imponible * (afp_porcentaje/100);
+              var total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
+              total_descuentos += total_descuento_afp;
+              total_descuentos += total_descuento_isapre;
+              $('#descuentoAfp').html( '$ '+total_descuento_afp.toLocaleString('de-DE') );
+              $('#descuentoIsapre').html( '$ '+total_descuento_isapre.toLocaleString('de-DE') );
+              $('#totalDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
+              var totalAPagar = total_haberes - total_descuentos;
+              $('#totalAPagar').html( '$ '+ totalAPagar.toLocaleString('de-DE'));
+              //console.log(valor);
+          }
+
           moment.locale('en');
           $('#inputPeriodo').daterangepicker({
             opens: 'left',
@@ -551,36 +683,7 @@ input[readonly]{
         $('#botonActualizarDataHaberes').on('click',function(){
           tabla.ajax.reload();
         })
-        tabla.on( 'draw', function () {
-            /*
-            $('.botonEditar').each(function(){
-                $(this).attr('href',"{{url('isapres')}}/"+$(this).attr('data-id')+"/edit");
-
-            });*/
-            /*
-            $('.botonEliminar').one('click',function(){
-                if(confirm('Está seguro? ')){
-                    $.ajax({
-                        url: "{{url('isapres/eliminar')}}"+"/"+$(this).attr('data-id'),
-                        method: "POST",
-                        headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        data: {
-                            '_method': 'DELETE'
-                        },
-                        success: function(data){
-                            toastr.success('La isapre fue eliminado con exito');
-                            tabla.ajax.reload();
-                        },
-                        error: function(jqXHR, textStatus){
-                            console.log(jqXHR.responseText);
-                            toastr.error('Ha ocurrido un error');
-                        },
-                        async: false
-                    });
-                }
-
-            });*/
-        });
+        
         var tabla2 = $('#tablaContratos').DataTable({
             "language": { url: "{{url('js/esp.json')}}" },
             "ajax": "{{url('contratos/data_l')}}",
@@ -635,6 +738,7 @@ input[readonly]{
                   $('#botonSiguiente').prop('disabled', false);
                   let fecha_inicio = moment(datos['fecha_inicio']).format('DD/MM/YYYY');
                   let fecha_fin = moment(datos['fecha_inicio']).add(1, 'months').subtract(1, 'days').format('DD/MM/YYYY');
+                  $('#inputPeriodo').daterangepicker({ minDate: fecha_inicio });
                   $('#inputPeriodo').val(fecha_inicio+' - '+fecha_fin);
                   $('#bodyTablaHaberes').empty();
                   $('#bodyTablaDescuentos').empty();
@@ -787,16 +891,6 @@ input[readonly]{
         });
 
     });
-
-    /*
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })*/
 
 
 
