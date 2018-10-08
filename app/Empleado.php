@@ -34,7 +34,7 @@ class Empleado extends Model
                             'afp_id'
     					];
      public $timestamps = false;
-     public $appends = ['afp_nombre','isapre_nombre','isapre_porcentaje','afp_porcentaje'];
+     public $appends = ['afp_nombre','isapre_nombre','isapre_porcentaje','afp_porcentaje', 'contrato_id', 'contrato_fecha_inicio'];
 
      public function registros()
     {
@@ -75,5 +75,13 @@ class Empleado extends Model
     public function getAfpPorcentajeAttribute()
     {
         return $this->afp()->first()->porcentaje;
+    }
+    public function getContratoIdAttribute()
+    {
+        return $this->contratos()->where('estado', 'ACTIVO')->first()->id;
+    }
+    public function getContratoFechaInicioAttribute()
+    {
+        return $this->contratos()->where('estado', 'ACTIVO')->first()->fecha_inicio;
     }
 }

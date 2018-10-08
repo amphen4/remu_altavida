@@ -150,7 +150,7 @@
             <i class="fa fa-home"></i> <span>Home</span>
           </a>
         </li>
-        <li class="header">Herramientas Administración</li>
+        <li class="header" style="color:white;">Herramientas Administración</li>
         <!--
         <li class="treeview">
           <a href="#">
@@ -170,7 +170,7 @@
           <a href="{{url('empleados')}}">
             <i class="fa fa-users"></i> <span>Empleados</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">En desarrollo</small>
+              <!-- <small class="label pull-right bg-green">En desarrollo</small> -->
             </span>
           </a>
         </li>
@@ -178,7 +178,7 @@
           <a href="{{url('registros_horas')}}">
             <i class="fa fa-clock-o"></i> <span>Registro Horas</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">En desarrollo</small>
+              <!-- <small class="label pull-right bg-green">En desarrollo</small> -->
             </span>
           </a>
         </li>
@@ -186,7 +186,7 @@
           <a href="{{url('contratos')}}">
             <i class="fa fa-th"></i> <span>Contratos</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">En desarrollo</small>
+              <!-- <small class="label pull-right bg-green">En desarrollo</small> -->
             </span>
           </a>
         </li>
@@ -195,7 +195,7 @@
           <a href="{{url('liquidaciones')}}">
             <i class="fa fa-files-o"></i> <span>Liquidaciones</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">En desarrollo</small>
+              <!-- <small class="label pull-right bg-green">En desarrollo</small> -->
             </span>
           </a>
         </li>
@@ -203,7 +203,7 @@
           <a href="{{ url('isapres') }}">
             <i class="fa fa-calendar"></i> <span>Isapres</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">En desarrollo</small>
+              <!-- <small class="label pull-right bg-green">En desarrollo</small> -->
             </span>
           </a>
         </li>
@@ -211,7 +211,7 @@
           <a href="{{ url('afps') }}">
             <i class="fa fa-envelope"></i> <span>AFP's</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">En desarrollo</small>
+              <!-- <small class="label pull-right bg-green">En desarrollo</small> -->
             </span>
           </a>
         </li>
@@ -221,7 +221,7 @@
               <small class="label pull-right label-default">Pronto</small>
             </span><span>Documentación</span></a></li>
         @if(Auth::user()->hasRole('admin'))
-        <li class="header">Aplicación</li>
+        <li class="header" style="color:white;">Aplicación</li>
         <li><a href="{{url('usuarios')}}"><i class="fa fa-users"></i> <span>Gestionar Usuarios</span></a></li>
         <li><a href="{{url('indicadores')}}"><i class="fa fa-line-chart"></i> <span>Indicadores Económicos</span></a></li>
         @endif

@@ -233,7 +233,7 @@ input[readonly]{
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="bodyModaLiquidacion">
         <section class="invoice " id="contrato">
           <!-- title row -->
           <div class="row">
@@ -481,15 +481,17 @@ input[readonly]{
           <div class="row">
               <!-- accepted payments column -->
               <div class="col-xs-6">
-                <p class="lead">Detalles de Pago al Empleado:</p>
-                <p class="text-muted well well-sm no-shadow" id="pTipoCuenta" style="margin-top: 10px;"></p>
+                <p class="lead">Trabajador Sr(a):</p>
+                <p class="text-muted well well-sm no-shadow" id="nombreEmpleado" style="margin-top: 10px;"></p>
+                <!--
                 <p class="text-muted well well-sm no-shadow" id="pBancoCuenta" style="margin-top: 10px;"></p>
                 <p class="text-muted well well-sm no-shadow" id="pCuenta" style="margin-top: 10px;"></p>
-                <p class="text-muted well well-sm no-shadow" id="pRut" style="margin-top: 10px;"></p>
+                -->
+                <p class="text-muted well well-sm no-shadow" id="rutEmpleado" style="margin-top: 10px;"></p>
               </div>
               <!-- /.col -->
               <div class="col-xs-6">
-                <p class="lead">Resumen Próxima Liquidación</p>
+                <p class="lead">Resumen Liquidación</p>
 
                 <div class="table-responsive">
                   <table class="table">
@@ -537,7 +539,7 @@ input[readonly]{
             <div class="col-xs-12">
               <a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
               
-              <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+              <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;"  id="botonGenerarPdf">
                 <i class="fa fa-download"></i> Generar PDF
               </button>
             </div>
@@ -564,19 +566,46 @@ input[readonly]{
 <script type="text/javascript" src="{{asset('js/daterangepicker-master')}}/daterangepicker.js"></script>
 <script>
     $(document).ready(function(){
+        function generarPdf(){
+          
+          console.log('se quiere generar el pdf');
+
+          var doc = new jsPDF();          
+          var elementHandler = {
+            '#ignorePDF': function (element, renderer) {
+              return true;
+            }
+          };
+          var source = window.document.getElementsByTagName("bodyModaLiquidacion");
+          doc.fromHTML(
+              source,
+              15,
+              15,
+              {
+                'width': 180,'elementHandlers': elementHandler
+              });
+
+          doc.output("dataurlnewwindow");
+        }
         function capitalize (str1){
             return str1.charAt(0).toUpperCase() + str1.slice(1);
           };
-
+          var afp_porcentaje;
+          var isapre_porcentaje;
           function reCalcular(){
               console.log('se invoco la funcion reCalcular()');
               var totalHaberesImponibles = 0;
               var valorUf = 27000;
               var valorUtm = 50000;
-              var sueldoBase = parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
+              var sueldoBaseCalcular = 0;
+              $('#bodyTablaHaberes > tr').each(function(){
+                if( $(this).find('#id').html() == '0' ){
+                  sueldoBaseCalcular = parseInt( $(this).find('#valor').html().replace('.','') );
+                }
+              }); //parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
               var total = 0;
               var total_imponible = 0;
-              total_imponible += sueldoBase;
+              //total_imponible += sueldoBaseCalcular;
               var total_no_imponible = 0;
               $('#bodyTablaHaberes > tr').each(function(){
                 //var totalHaberesImponibles +=  sueldo_base.getRawValue();
@@ -585,7 +614,7 @@ input[readonly]{
                     total_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
                   }else{
                     if( $(this).find('#tipo').html() == 'PORCENTAJE SUELDO BASE'){
-                      total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
+                      total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBaseCalcular;
                     }
                     if( $(this).find('#tipo').html() == 'UF'){
                       total_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
@@ -604,7 +633,7 @@ input[readonly]{
                     total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
                   }else{
                     if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
-                      total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
+                      total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBaseCalcular;
                     }
                     if( $(this).find('#factor').html() == 'UF'){
                       total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
@@ -630,7 +659,7 @@ input[readonly]{
                   total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') );
                 }else{
                   if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
-                    total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBase;
+                    total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBaseCalcular;
                   }
                   if( $(this).find('#tipo').html() == 'UF'){
                       total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
@@ -711,6 +740,9 @@ input[readonly]{
             }
         } );
         var idEmpleado;
+
+        var sueldoBase = 99;
+        console.log(sueldoBase);
         $('#tablaContratos').on( 'select.dt', function ( e, dt, type, indexes ) {
               var fila = dt.rows(indexes).data();
               console.log(fila[0].id);
@@ -726,6 +758,13 @@ input[readonly]{
                 },
                 success: function(data){
                   datos = JSON.parse(data);
+                  sueldoBase = datos['contrato'].sueldo_base;
+                  afp_porcentaje = parseFloat(datos['empleado'].afp_porcentaje);
+                  isapre_porcentaje = parseFloat(datos['empleado'].isapre_porcentaje);
+                  $('#nombreEmpleado').html('Nombre: '+datos['empleado'].nombre+' '+datos['empleado'].apellido_pat+' '+datos['empleado'].apellido_mat);
+                  $('#rutEmpleado').html('Rut: '+datos['empleado'].rut);
+                  $('#bAfp').html('AFP: '+datos['empleado'].afp_nombre+' ('+datos['empleado'].afp_porcentaje+'%)');
+                  $('#bIsapre').html('Salud: '+datos['empleado'].isapre_nombre+' ('+datos['empleado'].isapre_porcentaje+'%)');
                   //$('.filaSelect').prop('hidden', false);
                   //$('#selectPeriodo').empty();
                   moment.locale('es'); 
@@ -742,6 +781,16 @@ input[readonly]{
                   $('#inputPeriodo').val(fecha_inicio+' - '+fecha_fin);
                   $('#bodyTablaHaberes').empty();
                   $('#bodyTablaDescuentos').empty();
+                  let wow = '<tr>'+
+                                    '<td id="id">'+0+'</td>'+
+                                    '<td >'+'Sueldo Base'+'</td>'+
+                                    '<td id="imp">'+'Si'+'</td>'+
+                                    '<td id="tipo">'+'MONTO'+'</td>'+
+                                    '<td id="valor">'+sueldoBase.toLocaleString('de-DE')+'</td>'+
+                                    '<td>'+''+'</td>'+
+                                    '<td>'+'</td>'+
+                                '</tr>';
+                  $('#bodyTablaHaberes').append(wow);
                   for(var i=0; i < datos['haberes'].length; i++){
                     let wow = '';
                     let agotados;
@@ -794,6 +843,8 @@ input[readonly]{
                     }
                     $('#bodyTablaHaberes').append(wow);
                   }
+                  
+                  
                   for(var i=0; i < datos['descuentos'].length; i++){
                     let wow = '';
                     let agotados;
@@ -845,6 +896,7 @@ input[readonly]{
                     }
                     $('#bodyTablaDescuentos').append(wow);
                   }
+                  reCalcular();
                 },
                 error: function(jqXHR, textStatus){
                     console.log(jqXHR.responseText);
@@ -889,9 +941,10 @@ input[readonly]{
           */
           //$('#formLiquidacionManual').submit();
         });
-
+        
+        $('#botonGenerarPdf').on('click',function(){ generarPdf() });  
     });
-
+    
 
 
 </script>
@@ -899,4 +952,5 @@ input[readonly]{
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/chart.js/Chart.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('templates/AdminLTE-master')}}/dist/js/pages/dashboard2.js"></script>
+<script src="{{asset('js/jsPDF-master/dist/jspdf.min.js')}}"></script>
 @endsection

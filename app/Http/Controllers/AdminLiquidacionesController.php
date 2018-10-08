@@ -129,4 +129,10 @@ class AdminLiquidacionesController extends Controller
             return json_encode($nro = 0);
         }
     }
+    public function enviarDataLiquidacionesEmpleado($id)
+    {
+        $empleado = Empleado::findOrFail($id);
+        $liquidaciones = $empleado->liquidacions()->orderBy('fecha_inicio', 'desc')->take(10)->get();
+        return json_encode($liquidaciones);
+    }
 }

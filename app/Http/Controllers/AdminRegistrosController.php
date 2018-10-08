@@ -48,4 +48,12 @@ class AdminRegistrosController extends Controller
         $nuevo->save();
         return redirect()->route('registros.index')->with('exito','El registro fue agregado con exito');
     }
+    public function enviarDataRegistrosEmpleado($id)
+    {
+
+        $empleado = Empleado::findOrFail($id);
+        $registros = $empleado->registros()->orderBy('hora', 'desc')->take(10)->get();
+        $wea['data'] = $registros;
+        return json_encode($registros);
+    }
 }
