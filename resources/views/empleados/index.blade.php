@@ -178,13 +178,13 @@
   		                	<div class="col-lg-6">
   				                <div class="input-group">
   			                        <label >RUN:</label><label><p style="color:red">*</p></label>
-  		                  			<input type="text" class="form-control" name="rut" placeholder="Formato: XXXXXXXX-X" required>
+  		                  			<input id="editarRun" type="text" class="form-control" name="rut" placeholder="Formato: XXXXXXXX-X" required>
   				                </div>
   				            </div>
   				            <div class="col-lg-6">
   				                <div class="input-group">
   			                        <label >Nombre:</label><label><p style="color:red">*</p></label>
-  		                  			<input type="text" class="form-control" name="nombre" required>
+  		                  			<input id="editarNombre" type="text" class="form-control" name="nombre" required>
   				                </div>
   				            </div>
   				          </div>
@@ -193,13 +193,13 @@
 		                	<div class="col-lg-6">
 				                <div class="input-group">
 			                        <label >Apellido Paterno:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="apellido_pat" required>
+		                  			<input id="editarApellidoPaterno" type="text" class="form-control" name="apellido_pat" required>
 				                </div>
 				            </div>
 				            <div class="col-lg-6">
 				                <div class="input-group">
 			                        <label >Apellido Materno:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="apellido_mat" required>
+		                  			<input id="editarApellidoMaterno" type="text" class="form-control" name="apellido_mat" required>
 				                </div>
 				            </div>
 				        </div>
@@ -209,19 +209,19 @@
 		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Direccion:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="direccion" required>
+		                  			<input id="editarDireccion" type="text" class="form-control" name="direccion" required>
 				                </div>
 				            </div>
 		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Comuna:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="comuna" required>
+		                  			<input id="editarComuna" type="text" class="form-control" name="comuna" required>
 				                </div>
 				            </div>
 				            <div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Ciudad:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="ciudad"  required>
+		                  			<input id="editarCiudad" type="text" class="form-control" name="ciudad"  required>
 				                </div>
 				            </div>
 				        </div>
@@ -230,19 +230,19 @@
 		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Email:</label><label><p style="color:red">*</p></label>
-		                  			<input type="email" class="form-control" name="email" required>
+		                  			<input id="editarEmail" type="email" class="form-control" name="email" required>
 				                </div>
 				            </div>
 		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Telefono:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="telefono" required>
+		                  			<input id="editarTelefono" type="text" class="form-control" name="telefono" required>
 				                </div>
 				            </div>
 				            <div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Celular:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="celular">
+		                  			<input id="editarCelular" type="text" class="form-control" name="celular">
 				                </div>
 				            </div>
 				        </div>
@@ -252,8 +252,8 @@
 				                <div class="input-group">
 			                        <label >Sexo:</label><label><p style="color:red">*</p></label>
 		                  			<label>
-					                  <input type="radio" name="sexo" value="Masculino" class="minimal"> Masculino
-					                  <input type="radio" name="sexo" value="Femenino" class="minimal"> Femenino
+					                  <input id="sexoMasculino" type="radio" name="sexo" value="Masculino" class="minimal"> Masculino
+					                  <input id="sexoFemenino" type="radio" name="sexo" value="Femenino" class="minimal"> Femenino
 					                </label>
 				                </div>
 				            </div>
@@ -261,9 +261,9 @@
 				                <div class="input-group">
 			                        <label >Estado Civil:</label><label><p style="color:red">*</p></label>
 		                  			<select class="form-control " name="estado_civil" required>
-		                  				<option selected="selected">Soltero(a)</option>
-		                  				<option>Casado(a)</option>
-		                  				<option>Viudo(a)</option>
+		                  				<option id="soltero" >Soltero(a)</option>
+		                  				<option id="casado" >Casado(a)</option>
+		                  				<option id="viudo" >Viudo(a)</option>
 		                  			</select>
 				                </div>
 				            </div>
@@ -274,7 +274,7 @@
 					                  <div class="input-group-addon">
 					                    <i class="fa fa-calendar"></i>
 					                  </div>
-					                  <input type="text" class="form-control pull-right" name="fecha_nacimiento"  required>
+					                  <input id="editarFechaNacimiento" type="text" class="form-control pull-right" name="fecha_nacimiento"  required>
 					                </div>
 				                </div>
 				            </div>
@@ -284,13 +284,13 @@
 		                	<div class="col-lg-6">
 				                <div class="input-group">
 			                        <label >Cargo:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="cargo" required>
+		                  			<input id="editarCargo" type="text" class="form-control" name="cargo" required>
 				                </div>
 				            </div>
 				            <div class="col-lg-6">
 				                <div class="input-group">
 			                        <label >Titulo:</label><label><p style="color:red">*</p></label>
-		                  			<input type="text" class="form-control" name="titulo" required>
+		                  			<input id="editarTitulo" type="text" class="form-control" name="titulo" required>
 				                </div>
 				            </div>
 				        </div>
@@ -298,17 +298,14 @@
 		                <div class="form-group">
 		                  <label  class="col-sm-2 control-label">Pais:</label><label><p style="color:red">*</p></label>
 		                  <div class="col-sm-10">
-		                    <select class="form-control " name="pais" required>
-		          				<option selected="selected" >Chile</option>
-		          				<option>Venezuela</option>
-		          			</select>
+		                    <input id="editarPais" type="text" class="form-control" name="pais" required>
 		                  </div>
 		                </div>
 		                <div class="row">
 		                	<div class="col-lg-6">
 				                <div class="input-group">
 			                        <label >Banco:</label>
-		                  			<select class="form-control " name="nombre_banco" >
+		                  			<select class="form-control " id="editarBanco" name="nombre_banco" >
 		                  				<option >Banco BBVA</option>
 		                  				<option>Banco BCI</option>
 		                  				<option>Banco de Chlile</option>
@@ -320,7 +317,7 @@
 				            <div class="col-lg-6">
 				                <div class="input-group">
 			                        <label >Tipo Cuenta:</label>
-		                  			<select class="form-control " name="tipo_cuenta" >
+		                  			<select id="editarTipoCuenta" class="form-control " name="tipo_cuenta" >
 		                  				<option selected="selected">Cuenta Corriente</option>
 		                  				<option>Cuenta Vista</option>
 		                  			</select>
@@ -331,20 +328,20 @@
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">Nro. Cuenta:</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="nro_cuenta">
+                    <input id="editarNroCuenta" type="text" class="form-control" name="nro_cuenta">
                   </div>
                 </div>
                 <div class="row">
-                	<div class="col-lg-4">
-		                <div class="input-group">
-	                        <label >Fecha Ingreso:</label><label><p style="color:red">*</p></label>
-                  			<div class="input-group date">
-			                  <div class="input-group-addon">
-			                    <i class="fa fa-calendar"></i>
-			                  </div>
-			                  <input type="text" class="form-control pull-right" name="fecha_ingreso"  required>
+                		<div class="col-lg-4">
+			                <div class="input-group">
+		                        <label >Fecha Ingreso:</label><label><p style="color:red">*</p></label>
+	                  			<div class="input-group date">
+				                  <div class="input-group-addon">
+				                    <i class="fa fa-calendar"></i>
+				                  </div>
+				                  <input id="editarFechaIngreso" type="text" class="form-control pull-right" name="fecha_ingreso"  required>
+				                </div>
 			                </div>
-		                </div>
 			            </div>
 			            <div class="col-lg-4">
 			                <div class="input-group">
@@ -353,7 +350,7 @@
 				                  <div class="input-group-addon">
 				                    <i class="fa fa-calendar"></i>
 				                  </div>
-				                  <input type="text" class="form-control pull-right" name="fecha_retiro" >
+				                  <input id="editarFechaRetiro" type="text" class="form-control pull-right" name="fecha_retiro" >
 				                </div>
 			                </div>
 			            </div>
@@ -364,12 +361,24 @@
 				                  <div class="input-group-addon">
 				                    <i class="fa fa-calendar"></i>
 				                  </div>
-				                  <input type="text" class="form-control pull-right" name="fecha_renovacion" >
+				                  <input id="editarFechaRenovacion" type="text" class="form-control pull-right" name="fecha_renovacion" >
 				                </div>
 			                </div>
 			            </div>
-		            </div>
-                
+	            </div>
+                <div class="row">
+                		<div class="col-lg-12">
+			                <div class="input-group">
+		                        <label >PIN:</label><label><p style="color:red">*</p></label>
+	                  			<div class="input-group date">
+				                  <div class="input-group-addon">
+				                    <i class="fa fa-calendar"></i>
+				                  </div>
+				                  <input id="editarPin" type="text" class="form-control pull-right" name="pin"  required>
+				                </div>
+			                </div>
+			            </div>
+		        </div>
 				        <br>
 		            </div>
 		        </form>
@@ -757,6 +766,16 @@
             $('#afp').html(datos.afp_nombre);
             $('#aContrato').attr('href', "{{url('contratos')}}/"+datos.contrato_id);
             $('#contrato').html('Contrato Nro.'+datos.contrato_id+' '+datos.contrato_fecha_inicio)
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
+            $('#').val();
             $.ajax({
               url: "{{url('data/registrosEmpleado')}}/"+datos.id,
               method: "GET",

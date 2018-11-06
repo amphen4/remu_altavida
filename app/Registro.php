@@ -8,7 +8,8 @@ class Registro extends Model
 {
     protected $table = 'registros';
     protected $fillable = [ 'tipo',
-    						'hora'
+    						'hora',
+                            'empleado_id'
     					];
     protected $appends = ['empleado'];
      public $timestamps = false;

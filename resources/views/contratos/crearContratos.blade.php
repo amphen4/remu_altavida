@@ -194,7 +194,7 @@
     </div>
     <!-- /.col -->
     <div class="col-xs-6">
-      <p class="lead">Resumen Próxima Liquidación</p>
+      <p class="lead">Simulación Próxima Liquidación</p>
 
       <div class="table-responsive">
         <table class="table">
@@ -217,6 +217,10 @@
           <tr>
             <th id="bIsapre"></th>
             <td id="descuentoIsapre"></td>
+          </tr>
+          <tr>
+            <th>Impuesto Renta:</th>
+            <td id="imp_renta"></td>
           </tr>
           <tr>
             <th>Total Otros Descuentos:</th>
@@ -702,12 +706,27 @@ $(document).ready(function(){
             }
         }
       });
-
+      var impuesto_renta = 0;
+      $.ajax({
+        method: 'GET',
+        url: "{{url('')}}/imp_renta/"+total_imponible,
+        async: false,
+        success: function(data){
+          let valor = JSON.parse(data);
+          impuesto_renta = valor;
+          $('#imp_renta').html('$ '+valor.toLocaleString('de-DE'));
+        },
+        error: function(jqXHR, textStatus){
+          console.log(jqXHR.responseText);
+          alert('Ocurrio un error al utilizar ajax, favor ver consola para mas detalles');
+        },
+      });
       $('#totalOtrosDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
       var total_descuento_afp = total_imponible * (afp_porcentaje/100);
       var total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
       total_descuentos += total_descuento_afp;
       total_descuentos += total_descuento_isapre;
+      total_descuentos += impuesto_renta;
       $('#descuentoAfp').html( '$ '+total_descuento_afp.toLocaleString('de-DE') );
       $('#descuentoIsapre').html( '$ '+total_descuento_isapre.toLocaleString('de-DE') );
       $('#totalDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));

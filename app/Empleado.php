@@ -78,10 +78,21 @@ class Empleado extends Model
     }
     public function getContratoIdAttribute()
     {
-        return $this->contratos()->where('estado', 'ACTIVO')->first()->id;
+        
+        if ( $this->contratos()->where('estado', 'ACTIVO')->first() ){
+            return $this->contratos()->where('estado', 'ACTIVO')->first()->id;
+        }else{
+            return [];
+        }
+        
     }
     public function getContratoFechaInicioAttribute()
     {
-        return $this->contratos()->where('estado', 'ACTIVO')->first()->fecha_inicio;
+        if ( $this->contratos()->where('estado', 'ACTIVO')->first() ){
+            return $this->contratos()->where('estado', 'ACTIVO')->first()->fecha_inicio;
+        }else{
+            return [];
+        }
+        
     }
 }

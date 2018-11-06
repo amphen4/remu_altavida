@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Registro;
 use App\Empleado;
+use Illuminate\Support\Facades\DB;
 class AdminRegistrosController extends Controller
 {
     /**
@@ -33,7 +34,6 @@ class AdminRegistrosController extends Controller
     }
     public function store(Request $request)
     {
-    	
         $request->validate([
             'tipo' => 'required|in:ENTRADA,SALIDA',
             'empleado' => 'required|exists:empleados,id',
@@ -55,5 +55,22 @@ class AdminRegistrosController extends Controller
         $registros = $empleado->registros()->orderBy('hora', 'desc')->take(10)->get();
         $wea['data'] = $registros;
         return json_encode($registros);
+    }
+    public function enviarDataHorasTrabajadas(Request $request)
+    {
+        $request->validate([
+            'idEmpleado' => 'required|exists:empleados,id',
+            'inicio' => 'required|date',
+            'fin' => 'required|date',
+        ]);
+        
+        $query = DB::table('registros')->select(DB::raw('TIMESTAMPDIFF(HOUR, MIN(hora), MAX(hora) ) as horas'))->where('hora', '<=', $request->fin)->where('hora', '>=', $request->inicio)->where('empleado_id', $request->idEmpleado)->groupBy(DB::raw('DATE(hora)'))->get();
+        $acumulador = 0; 
+        foreach($query as $fila){
+            //dd($fila->horas);
+            $acumulador+= intval($fila->horas);
+        }
+        return json_encode($acumulador);
+        
     }
 }

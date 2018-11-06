@@ -31,6 +31,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('cargo');
             $table->string('titulo');
             $table->string('pais');
+            $table->unsignedSmallInteger('pin')->default(0000);
 
             $table->string('cta_banco_nombre')->nullable();
             $table->string('cta_banco_nro')->nullable();

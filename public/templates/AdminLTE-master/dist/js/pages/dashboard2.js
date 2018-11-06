@@ -82,7 +82,7 @@ $(function () {
   };
 
   // Create the line chart
-  salesChart.Line(salesChartData, salesChartOptions);
+  salesChart.Bar(salesChartData, salesChartOptions);
 
   // ---------------------------
   // - END MONTHLY SALES CHART -

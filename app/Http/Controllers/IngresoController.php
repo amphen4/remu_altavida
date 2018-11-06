@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Empleado;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Registro;
+class IngresoController extends Controller
+{
+    public function index()
+    {
+    	return view('empleados.ingreso');
+    }
+    public function registro(Request $request)
+    {
+    	$request->validate([
+            'rut' => 'required|numeric',
+            'pin' => 'required|numeric|min:0|max:9999',
+            'tipo' => 'required|in:entrada,salida',
+        ]);
+        $empleados = Empleado::all();
+        $e;
+       
+        foreach ($empleados as $empleado ){
+        	//dd(substr($empleado->rut,0, strlen($empleado->rut)-2));
+			if( substr($empleado->rut,0, strlen($empleado->rut)-2) == $request->rut ){
+				$e = $empleado;
+				
+			}else{
+				return json_encode(['tipo' => 'error', 'mensaje' => 'El rut ingresado no existe']);// ERROR JSON, EL RUT INGRESADO NO EXISTE
+			}
+		}
+	    if( DB::table('empleados')->where('rut', $e->rut)->where('pin',$request->pin)->count() ){
+	    	//dd(Carbon::now()->endOfDay()->toDateTimeString());
+    		if( $request->tipo == 'entrada' ){
+    			if( DB::table('registros')->where('empleado_id',$e->id)->where('tipo', 'ENTRADA')->where('hora','>=',Carbon::now()->startOfDay()->toDateTimeString())->where('hora', '<=', Carbon::now()->endOfDay()->toDateTimeString())->count() ){
+    				return json_encode(['tipo' => 'error', 'mensaje' => 'El empleado ya registro una entrada']);
+    			}else{
+    				$nuevo = new Registro();
+    				$nuevo->tipo = 'ENTRADA';
+    				$fecha_carbon = Carbon::now();
+    				$nuevo->hora = $fecha_carbon->toDateTimeString();
+    				$nuevo->empleado_id = $e->id;
+    				$nuevo->save();
+    				return json_encode(['tipo' => 'exito', 'mensaje' => 'La entrada ha sido registrada a las '.$fecha_carbon->toDateTimeString()]);
+    			}
+    		}
+    		if( $request->tipo == 'salida' ){
+    			if( DB::table('registros')->where('empleado_id',$e->id)->where('tipo', 'SALIDA')->where('hora','>=',Carbon::now()->startOfDay()->toDateTimeString())->where('hora', '<=', Carbon::now()->endOfDay()->toDateTimeString())->count()  ){
+    				return json_encode(['tipo' => 'error', 'mensaje' => 'El empleado ya registro una salida']);
+    			}else{
+    				if( Carbon::now()->startOfDay()->addHours(env('HORA_SALIDA'))->lessThan(Carbon::now()) ){
+    					$fecha_carbon = Carbon::now()->startOfDay()->addHours(env('HORA_SALIDA'));
+    				}else{
+    					$fecha_carbon = Carbon::now();
+    				}
+    				$nuevo = new Registro();
+    				$nuevo->tipo = 'SALIDA';
+    				$nuevo->hora = $fecha_carbon->toDateTimeString();
+    				$nuevo->empleado_id = $e->id;
+    				$nuevo->save();
+    				return json_encode(['tipo' => 'exito', 'mensaje' => 'La salida ha sido registrada a las '.$fecha_carbon->toDateTimeString()]);
+    			}
+    		}
+    		 
+    	}
+    	
+    	
+    }
+}

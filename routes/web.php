@@ -106,3 +106,12 @@ Route::post('/liquidaciones/generar', 'AdminLiquidacionesController@generarLiqui
 Route::post('/liquidaciones/haber_a', 'AdminLiquidacionesController@mensualidadesHaberAgotadas');
 Route::post('/liquidaciones/dscto_a', 'AdminLiquidacionesController@mensualidadesDsctoAgotadas');
 Route::get('data/liquidacionesEmpleado/{id}', 'AdminLiquidacionesController@enviarDataLiquidacionesEmpleado');
+// Registro
+Route::get('ingreso', 'IngresoController@index');
+Route::post('ingreso', 'IngresoController@registro');
+// Data Impuesto a la renta
+Route::get('imp_renta/{monto_imponible}', 'AnexoController@montoImpuestoRenta');
+// Genera PDF
+Route::get('pdf_test', 'AnexoController@pdfPrueba');
+// Horas Trabajadas por Empleado
+Route::post('horas_trabajadas', 'AdminRegistrosController@enviarDataHorasTrabajadas');

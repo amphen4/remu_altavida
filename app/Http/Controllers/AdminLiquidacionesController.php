@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Empleado;
 use App\Haber;
 use App\Dscto;
+use Illuminate\Support\Facades\DB;
 class AdminLiquidacionesController extends Controller
 {
     /**
@@ -32,7 +33,7 @@ class AdminLiquidacionesController extends Controller
     {
     	$asi['data'] = Liquidacion::all()->toArray();
 
-        //dd($wea['data']);
+        
         return json_encode($asi);
     }
     public function detalleProxLiquidacion(Request $request)
@@ -61,20 +62,28 @@ class AdminLiquidacionesController extends Controller
     }
     public function generarLiquidacionManual(Request $request)
     {
-        $this->validate($request, [ 'idEmpleado' => 'required|string',
+        $this->validate($request, [ 'idEmpleado' => 'required|exists:empleados,id',
                                     'periodo' => 'required|string',
+                                    'mes' => 'required|string',
                                   ]);
-        
+        //dd($request->periodo);
         $str_inicio = substr($request->periodo, 0, 10);
         $str_fin = substr($request->periodo, 13, 23);
+
+        $query = DB::table('registros')->select(DB::raw('TIMESTAMPDIFF(HOUR, MIN(hora), MAX(hora) ) as horas'))->where('hora', '<=', $str_fin)->where('hora', '>=', $str_inicio)->where('empleado_id', $request->idEmpleado)->groupBy(DB::raw('DATE(hora)'))->get();
+        $acumulador = 0; 
+        foreach($query as $fila){
+            //dd($fila->horas);
+            $acumulador+= intval($fila->horas);
+        }
 
         $fecha_inicio = Carbon::createFromFormat('Y-m-d', $str_inicio);
         $fecha_fin = Carbon::createFromFormat('Y-m-d', $str_fin);
 
         $empleado = Empleado::find($request->idEmpleado);
 
-        dd( $empleado->contratos()->get() );
-        
+        $contrato = $empleado->contratos()->latest('fecha_inicio')->first() ;
+        dd($contrato);
     }
     public function mensualidadesHaberAgotadas(Request $request)
     {
