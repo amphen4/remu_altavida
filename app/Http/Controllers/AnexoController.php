@@ -54,7 +54,7 @@ class AnexoController extends Controller
         $res = $client->request('GET', 'https://api.sbif.cl/api-sbifv3/recursos_api/utm/'.$ano.'/'.$mes.'?apikey=243ee93523145ebdd7f6f2d9c1a3320401bbee5d&formato=json');
         $string_utm = str_replace_first('.', '',str_replace(',','.',json_decode($res->getBody()->getContents())->UTMs[0]->Valor));
         $valor_utm = intval(floatval($string_utm));
-
+        $fecha_hoy = Carbon::now();
         $arregloHaberes['haberes'] = [];
         $arregloHaberes['agotados'] = [];
         $arregloHaberes['despues'] = [];
@@ -70,7 +70,7 @@ class AnexoController extends Controller
                     $arregloHaberes['agotados'][] = 0;
                 }
                 $fecha_haber = new Carbon($haber->pivot->fecha_inicio);
-                if( $fecha->gte($fecha_haber) ){
+                if( $fecha_hoy->gte($fecha_haber) ){
                     $arregloHaberes['despues'][] = 1;
                 }else{
                     $arregloHaberes['despues'][] = 0;
@@ -92,7 +92,7 @@ class AnexoController extends Controller
                     $arregloDescuentos['agotados'][] = 0;
                 }
                 $fecha_haber = new Carbon($haber->pivot->fecha_inicio);
-                if( $fecha->gte($fecha_haber) ){
+                if( $fecha_hoy->gte($fecha_haber) ){
                     $arregloDescuentos['despues'][] = 1;
                 }else{
                     $arregloDescuentos['despues'][] = 0;
