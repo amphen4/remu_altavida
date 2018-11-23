@@ -20,19 +20,19 @@ input[readonly]{
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Reporte Mensual de Liquidaciones</h3>
+              <h3 class="box-title">Gestionar Liquidaciones</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
                 <div class="col-md-8">
                   <p class="text-center">
-                    <strong>Promedio Liquidaciones Últimos 12 Meses</strong>
+                    <strong>Total de Liquidaciones Últimos 12 Meses</strong>
                   </p>
 
                   <div class="chart">
                     <!-- Sales Chart Canvas -->
-                    <canvas id="salesChart" style="height: 250px;"></canvas>
+                    <canvas id="salesChart" style="height: 320px;"></canvas>
                   </div>
                   <!-- /.chart-responsive -->
                 </div>
@@ -42,51 +42,36 @@ input[readonly]{
                     <strong>Próximas Liquidaciones</strong>
                   </p>
 
-                  <div class="box-body">
-              <ul class="products-list product-list-in-box">
-                <li class="item">
-                  <div class="product-img">
-                    <img src="{{asset('templates/AdminLTE-master')}}/dist/img/default-50x50.gif" alt="Product Image">
+                    <div class="box-body">
+                    <ul class="products-list product-list-in-box">
+                      @forelse($proximas_liquidaciones as $contrato)
+                        <li class="item">
+                          <div class="product-img">
+                            <img src="{{url('empleados/fotos').'/'.$contrato->empleado()->first()->id}}" alt="Product Image">
+                          </div>
+                          <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">{{$contrato->empleado}}
+                              <span class="label label-primary pull-right">{{$contrato->cargo}}</span></a>
+                            <span class="product-description">
+                                  Inicio Periodo: {{$contrato->fecha_inicio_proxima_liquidacion}}
+                                </span>
+                          </div>
+                        </li>
+                      @empty
+                        <li class="item">
+                          <div class="product-info" style="text-align:center;margin-left: 0px;">
+                            <a href="javascript:void(0)" class="product-title">No hay contratos registrados</a>
+                            
+                          </div>
+                        </li>
+                      @endforelse
+                      
+                      
+                      
+                        <!--<span class="product-description text-center"  ><a href="#" >Ver más</a></span>-->
+                      
+                    </ul>
                   </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Juanito Perez
-                      <span class="label label-warning pull-right">Educador Diferencial</span></a>
-                    <span class="product-description">
-                          Fecha Pago: 20 de Agosto
-                        </span>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="{{asset('templates/AdminLTE-master')}}/dist/img/default-50x50.gif" alt="Product Image">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Rosita Muñoz
-                      <span class="label label-info pull-right">Administracion</span></a>
-                    <span class="product-description">
-                          Fecha Pago: 23 de Agosto
-                        </span>
-                  </div>
-                </li>
-                <!-- /.item -->
-                <li class="item">
-                  <div class="product-img">
-                    <img src="{{asset('templates/AdminLTE-master')}}/dist/img/default-50x50.gif" alt="Product Image">
-                  </div>
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">Juanito Vidal <span
-                        class="label label-danger pull-right">Trabajador a Honorarios</span></a>
-                    <span class="product-description">
-                          Fecha Pago: 1 de Septiembre
-                        </span>
-                  </div>
-                </li>
-                
-                  <span class="product-description text-center"  ><a href="#" >Ver más</a></span>
-                
-              </ul>
-            </div>
                 </div>
                 <!-- /.col -->
               </div>
@@ -96,19 +81,19 @@ input[readonly]{
             <div class="box-footer">
               <div class="row">
                 <div class="col-sm-6 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-                    <h5 class="description-header">$4.670.830 Pesos</h5>
-                    <span class="description-text">Total Liquidado</span>
+                  <div class="description-block border-right" id="DivPorcentajeLiq">
+                    
+                    <h5 class="description-header" id="diferenciaLiqs">$4.670.830 Pesos</h5>
+                    <span class="description-text" id="mesRespectoLiqs">Total Liquidado</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6 col-xs-6">
-                  <div class="description-block border-right">
-                    <span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-                    <h5 class="description-header">843 Hrs.</h5>
-                    <span class="description-text">Total Horas Registradas</span>
+                  <div class="description-block border-right" id="DivPorcentajeHoras">
+                    
+                    <h5 class="description-header" id="diferenciaHoras">843 Hrs.</h5>
+                    <span class="description-text" id="mesRespectoHoras">Total Horas Registradas</span>
                   </div>
                   <!-- /.description-block -->
                 </div>
@@ -140,8 +125,13 @@ input[readonly]{
                     <tr>
                         <th style="width:90px">Opciones</th>
                         <th>Empleado</th>
-                        <th>Fecha desde</th>
-                        <th>Fecha hasta</th>
+                        <th>Periodo</th>
+                        <th>Mes</th>
+                        <th>Total Liquidado</th>
+                        <th>Total Imponible</th>
+                        <th>Total No Imponible</th>
+                        <th>Total Descuentos</th>
+                        <th>Estado</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -577,11 +567,13 @@ input[readonly]{
         };
         var afp_porcentaje;
         var isapre_porcentaje;
+        var utm_global = 0;
+        var uf_global = 0;
         function reCalcular(){
             console.log('se invoco la funcion reCalcular()');
             var totalHaberesImponibles = 0;
-            var valorUf = 27000;
-            var valorUtm = 50000;
+            var valorUf = uf_global;
+            var valorUtm = utm_global;
             var sueldoBaseCalcular = 0;
             $('#bodyTablaHaberes > tr').each(function(){
               if( $(this).find('#id').html() == '0' ){
@@ -693,8 +685,13 @@ input[readonly]{
             "columns": [
                 { "data": "opciones" },
                 { "data": "empleado" },
-                { "data": "fecha_inicio" },
-                { "data": "fecha_fin"},
+                { "data": "periodo" },
+                { "data": "nombre_mes"},
+                { "data": "monto_liquido_f"},
+                { "data": "total_imponible_f"},
+                { "data": "total_no_imponible_f"},
+                { "data": "total_descuentos_f"},
+                { "data": "estado"},
             ]
         });
         $('#botonActualizarDataHaberes').on('click',function(){
@@ -762,13 +759,54 @@ input[readonly]{
                   $('#inputIdContrato').val( datos['contrato'].id );
                   $('#inputFechaContrato').val( moment(datos['contrato'].fecha_inicio).format('DD/MM/YYYY') );
                   $('#inputCargo').val( datos['empleado'].cargo );
-                  $('#botonSiguiente').prop('disabled', false);
-                  let fecha_inicio = moment(datos['fecha_inicio']).subtract(1, 'months').add(1, 'days').format('DD/MM/YYYY');
-                  let fecha_fin = moment(datos['fecha_inicio']).format('DD/MM/YYYY');
-                  $('#inputPeriodo').daterangepicker({ minDate: fecha_inicio });
+                  
+                  let fecha_inicio = moment(datos['fecha_inicio']).format('DD/MM/YYYY');
+                  let fecha_fin = moment(datos['fecha_inicio']).add(1, 'months').subtract(1, 'days').format('DD/MM/YYYY');
+                  $('#inputPeriodo').daterangepicker({
+                    opens: 'left',
+                    locale: { format: 'DD/MM/YYYY',
+                              daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                              monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                                  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
+                                  'Diciembre'],
+                              applyLabel: 'Aplicar',
+                              cancelLabel: 'Limpiar',
+                              fromLabel: 'Desde',
+                              toLabel: 'Hasta',
+                            },
+                    minDate: fecha_inicio
+                    
+                  },function(start, end, label){
+                    $('#hiddenStart').val(start.format('YYYY-MM-DD'));
+                    $('#hiddenEnd').val(end.format('YYYY-MM-DD'));
+                    console.log('CALL BACK');
+                    $.ajax({
+                        method: 'POST',
+                        url: '{{url("horas_trabajadas")}}',
+                        //url: '{{url("liquidaciones/generar")}}',
+                        data: {
+                          'idEmpleado': idEmpleado,
+                          'inicio': start.format('YYYY-MM-DD'),
+                          'fin': end.format('YYYY-MM-DD')
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+                        },
+                        success: function(data){
+                          console.log('KE WEA');
+                          $('#horasTrabajadas').val(JSON.parse(data));
+                        },
+                        error: function(jqXHR, textStatus){
+                            console.log(jqXHR.responseText);
+                            toastr.error('Ha ocurrido un error el llamar a metodo Horas Trabajadas');
+                        },
+                    });
+                  });
+                  //$('#inputPeriodo').daterangepicker({ minDate: fecha_inicio });
                   $('#inputPeriodo').val(fecha_inicio+' - '+fecha_fin);
-                  $('#hiddenStart').val(moment(datos['fecha_inicio']).subtract(1, 'months').add(1, 'days').format('YYYY-MM-DD'));
-                  $('#hiddenEnd').val(moment(datos['fecha_inicio']).format('YYYY-MM-DD'));
+                  //$('#inputPeriodo').daterangepicker({ minDate: fecha_inicio });
+                  $('#hiddenStart').val(moment(datos['fecha_inicio']).format('YYYY-MM-DD'));
+                  $('#hiddenEnd').val(moment(datos['fecha_inicio']).add(1, 'months').subtract(1, 'days').format('YYYY-MM-DD'));
                   $('#bodyTablaHaberes').empty();
                   $('#bodyTablaDescuentos').empty();
                   let wow = '<tr>'+
@@ -798,7 +836,7 @@ input[readonly]{
                               },
                               success: function(data){
                                 agotados = JSON.parse(data) +1 ;
-                                if(agotados <= datos['haberes'][i].pivot.duracion){
+                                if(agotados < datos['haberes'][i].pivot.duracion ){
                                   wow = '<tr>'+
                                             '<td id="id">'+datos['haberes'][i].id+'</td>'+
                                             '<td >'+datos['haberes'][i].nombre+' ('+agotados+'/'+datos['haberes'][i].pivot.duracion+')</td>'+
@@ -819,17 +857,21 @@ input[readonly]{
                         });
                         
                       } else{
-                        if( moment(datos['fecha_inicio']).isAfter( datos['haberes'][i].pivot.fecha_inicio ) ){
-                          wow = '<tr>'+
-                                      '<td id="id">'+datos['haberes'][i].id+'</td>'+
-                                      '<td >'+datos['haberes'][i].nombre+'</td>'+
-                                      '<td id="imp">'+datos['haberes'][i].imp+'</td>'+
-                                      '<td id="tipo">'+datos['haberes'][i].tipo+'</td>'+
-                                      '<td id="valor">'+datos['haberes'][i].valor+'</td>'+
-                                      '<td>'+'<div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input class="form-control inputFecha" type="text" ></div>'+'</td>'+
-                                      '<td>'+'</td>'+
-                                  '</tr>';
-                        }
+                        console.log('el haber no tiene duracion');
+                            if( moment(datos['fecha_inicio']).isSameOrAfter( moment(datos['haberes'][i].pivot.fecha_inicio) ) ){
+                              wow = '<tr>'+
+                                          '<td id="id">'+datos['haberes'][i].id+'</td>'+
+                                          '<td >'+datos['haberes'][i].nombre+'</td>'+
+                                          '<td id="imp">'+datos['haberes'][i].imp+'</td>'+
+                                          '<td id="tipo">'+datos['haberes'][i].tipo+'</td>'+
+                                          '<td id="valor">'+datos['haberes'][i].valor+'</td>'+
+                                          '<td>'+'<div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input class="form-control inputFecha" readonly type="text" value="'+datos['haberes'][i].pivot.fecha_inicio+'"></div>'+'</td>'+
+                                          '<td>'+'</td>'+
+                                      '</tr>';
+                            }
+                            else{
+                              console.log('y no entro aqui');
+                            }
                           
                       }
                       $('#bodyTablaHaberes').append(wow);
@@ -854,7 +896,7 @@ input[readonly]{
                               },
                               success: function(data){
                                 agotados = JSON.parse(data) +1 ;
-                                if(agotados <= datos['descuentos'][i].pivot.duracion){
+                                if(agotados < datos['descuentos'][i].pivot.duracion  ){
                                   wow = '<tr>'+
                                             '<td id="id">'+datos['descuentos'][i].id+'</td>'+
                                             '<td >'+datos['descuentos'][i].nombre+' ('+agotados+'/'+datos['descuentos'][i].pivot.duracion+')</td>'+
@@ -874,11 +916,10 @@ input[readonly]{
                         });
                         
                       } else{
-                        if( moment(datos['fecha_inicio']).isAfter( datos['descuentos'][i].pivot.fecha_inicio ) ){
+                        if( moment(datos['fecha_inicio']).isSameOrAfter( datos['descuentos'][i].pivot.fecha_inicio ) ){
                           wow = '<tr>'+
                                       '<td id="id">'+datos['descuentos'][i].id+'</td>'+
                                       '<td >'+datos['descuentos'][i].nombre+'</td>'+
-                                      '<td id="imp">'+datos['descuentos'][i].imp+'</td>'+
                                       '<td id="tipo">'+datos['descuentos'][i].tipo+'</td>'+
                                       '<td id="valor">'+datos['descuentos'][i].valor+'</td>'+
                                       '<td>'+'<div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input class="form-control inputFecha" type="text" ></div>'+'</td>'+
@@ -890,7 +931,31 @@ input[readonly]{
                       $('#bodyTablaDescuentos').append(wow);
                     }
                   }
-                    
+                  $.ajax({
+                    url: "{{url('obtener_uf')}}",
+                    success: function(data){
+                      uf_global = JSON.parse(data);
+                      console.log('El valor de la uf hoy es: '+uf_global);
+                    },
+                    error: function(jqXHR, textStatus){
+                      console.log(jqXHR.responseText);
+                      toastr.error('Ha ocurrido un error');
+                    },
+                    async: false
+                  });
+                  $.ajax({
+                    url: "{{url('obtener_utm')}}",
+                    success: function(data){
+                      utm_global = JSON.parse(data);
+                      console.log('El valor de la utm hoy es: '+utm_global);
+                    },
+                    error: function(jqXHR, textStatus){
+                      console.log(jqXHR.responseText);
+                      toastr.error('Ha ocurrido un error');
+                    },
+                    async: false
+                  });
+                  $('#botonSiguiente').prop('disabled', false);  
                   reCalcular();
                 },
                 error: function(jqXHR, textStatus){
@@ -899,43 +964,7 @@ input[readonly]{
                 },
                 async: false
               });
-              $('#inputPeriodo').daterangepicker({
-                opens: 'left',
-                locale: { format: 'DD/MM/YYYY',
-                          daysOfWeek: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
-                          monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-                              'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre',
-                              'Diciembre'],
-                          applyLabel: 'Aplicar',
-                          cancelLabel: 'Limpiar',
-                          fromLabel: 'Desde',
-                          toLabel: 'Hasta',
-                        },
-                
-              },function(start, end, label){
-                $('#hiddenStart').val(start.format('YYYY-MM-DD'));
-                $('#hiddenEnd').val(end.format('YYYY-MM-DD'));
-                $.ajax({
-                    method: 'POST',
-                    url: '{{url("horas_trabajadas")}}',
-                    //url: '{{url("liquidaciones/generar")}}',
-                    data: {
-                      'idEmpleado': idEmpleado,
-                      'inicio': start.format('YYYY-MM-DD'),
-                      'fin': end.format('YYYY-MM-DD')
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
-                    },
-                    success: function(data){
-                      $('#horasTrabajadas').val(JSON.parse(data));
-                    },
-                    error: function(jqXHR, textStatus){
-                        console.log(jqXHR.responseText);
-                        toastr.error('Ha ocurrido un error el llamar a metodo Horas Trabajadas');
-                    },
-                });
-              });
+              
         } );
         $('#tablaContratos').on( 'deselect.dt', function ( e, dt, type, indexes ) {
               $('#botonSiguiente').prop('disabled', true);
@@ -986,7 +1015,10 @@ input[readonly]{
                   'mes': $('#inputMes').val(),
                 },
                 success: function(data){
-                  datos = JSON.parse(data);
+                  if (JSON.parse(data)){
+                    toastr.success('La liquidacion se ha generado con exito!');
+                    window.location = "{{url('liquidaciones')}}";
+                  }
 
                 },
                 error: function(jqXHR, textStatus){
@@ -1007,8 +1039,170 @@ input[readonly]{
         }
 </script>
 <!-- ChartJS -->
-<script src="{{asset('templates/AdminLTE-master')}}/bower_components/chart.js/Chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('templates/AdminLTE-master')}}/dist/js/pages/dashboard2.js"></script>
+<!--<script src="{{asset('templates/AdminLTE-master')}}/dist/js/pages/dashboard2.js"></script>-->
+<script>
+  function marcarPagado(elem){
+    $.ajax({
+      method: 'POST',
+      url:  "{{url('marcarLiquidacionPagado')}}",
+      data: { 'id': $(elem).attr('data-id')},
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+      },
+      success: function(data){
+        window.location = "{{url('liquidaciones')}}";
+      },
+      error: function(jqXHR, textStatus){
+          console.log(jqXHR.responseText);
+          alert('Ocurrio un error al utilizar ajax, favor ver consola para mas detalles');
+      }
+    });
+  };
+  $(function(){
+    let labels = [];
+    let data1 = [];
+    let data2 = [];
+    $.ajax({
+      url: "{{url('data/graficoLiquidaciones')}}",
+      method: "GET",
+      async: false,
+      success: function(data){
+        data = JSON.parse(data);
+        let contador = 0;
+        let valor1hora;
+        let valor2hora;
+        let valor1liq;
+        let valor2liq;
+        let mesRespecto;
+        for(let i=data.length; i>0; i--){
+          contador++;
+          if(contador==(data.length)){
+            valor1hora = data[i-1].horas;
+            valor1liq = data[i-1].valor;
+          }
+          if(contador==(data.length-1)){
+            valor2liq = data[i-1].valor;
+            valor2hora = data[i-1].horas;
+            mesRespecto = data[i-1].mes;
+          }
+          labels.push(data[i-1].mes);
+          data1.push(data[i-1].valor);
+          data2.push(data[i-1].horas);
+        }
+        let diferenciaHoras = valor1hora-valor2hora;
+        if(valor2hora!=0){
+          let porcentaje = (diferenciaHoras*100)/valor2hora;
+          if(porcentaje == 0){
+            $('#DivPorcentajeHoras').prepend('<span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>');
+          }
+          if(porcentaje > 0){
+            $('#DivPorcentajeHoras').prepend('<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> '+porcentaje.toLocaleString('de-DE')+'%</span>');
+          }
+          if(porcentaje < 0){
+            $('#DivPorcentajeHoras').prepend('<span class="description-percentage text-red"><i class="fa fa-caret-down"></i> '+porcentaje.toLocaleString('de-DE')+'%</span>');
+          }
+        }
+        $('#diferenciaHoras').html(diferenciaHoras.toLocaleString('de-DE')+' Hrs.'); 
+        $('#mesRespectoHoras').html('Horas registradas con respecto a '+mesRespecto);
+        let diferenciaLiqs = valor1liq-valor2liq;
+        if(valor2liq!=0){
+          let porcentaje = (diferenciaLiqs*100)/valor2liq;
+          if(porcentaje == 0){
+            $('#DivPorcentajeLiq').prepend('<span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>');
+          }
+          if(porcentaje > 0){
+            $('#DivPorcentajeLiq').prepend('<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> '+porcentaje.toLocaleString('de-DE')+'%</span>');
+          }
+          if(porcentaje < 0){
+            $('#DivPorcentajeLiq').prepend('<span class="description-percentage text-red"><i class="fa fa-caret-down"></i> '+porcentaje.toLocaleString('de-DE')+'%</span>');
+          }
+        }
+        $('#diferenciaLiqs').html('$ '+diferenciaLiqs.toLocaleString('de-DE')+' Pesos');
+        $('#mesRespectoLiqs').html('Monto total liquidado con respecto a '+mesRespecto);
+      },
+      error: function(jqXHR, textStatus){
+        console.log(jqXHR.responseText);
+        alert('Ocurrio un error al utilizar ajax, favor ver consola para mas detalles');
+      },
 
+      
+    });
+    console.log(data2);
+    let barChartData = {
+      labels: labels,
+      datasets: [{
+                  type: 'bar',
+                  backgroundColor: 'rgba(63, 150, 191, 0.6)',
+                  label: 'Total Liquidado',
+                  yAxisID: 'y-axis-1',
+                  data: data1
+                }, {
+                  showLine: false,
+                  backgroundColor: 'rgba(191, 63, 87, 1)',
+                  type: 'line',
+                  label: 'Horas registradas',
+                  yAxisID: 'y-axis-2',
+                  data: data2
+                }]
+
+    };
+    
+      
+      let ctx = document.getElementById('salesChart').getContext('2d');
+      let myBar = new Chart(ctx, {
+        type: 'bar',
+        data: barChartData,
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: true
+          },
+          scales: {
+            xAxes:[{ticks: {autoSkip: false}}],
+            yAxes: [{
+              type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+              display: true,
+              min:0,
+              position: 'left',
+              id: 'y-axis-1',
+              scaleLabel: {
+                display: true,
+                labelString: 'Valor en Pesos'
+              },
+              ticks: {
+                beginAtZero:true,
+                callback: function(value) {
+                  return '$ '+value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                }
+              }
+            }, {
+              type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+              display: true,
+              position: 'right',
+              id: 'y-axis-2',
+              gridLines: {
+                drawOnChartArea: false
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Valor en Horas'
+              },
+              ticks: {
+                beginAtZero:true,
+                callback: function(value) {
+                  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                }
+              }
+            }],
+          }
+        }
+      });
+  });
+</script>
 @endsection

@@ -35,7 +35,6 @@
                   <th>Fecha Creacion</th>
                   <th>Nombre Empleado</th>
                   <th>Estado</th>
-                  <th>Tipo</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -64,7 +63,6 @@
                 { "data": "fecha_inicio"},
                 { "data": "empleado" },
                 { "data": "estado" },
-                { "data": "tipo" }
             ]
         });
         tabla.on( 'draw', function () {

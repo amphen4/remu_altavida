@@ -121,7 +121,7 @@
           	<div class="pull-right"><button id="botonHide" class="btn btn-xs">X</button></div>
             <ul class="nav nav-tabs">
               <li class="active"><a href="#activity" data-toggle="tab">Últimos Registros</a></li>
-              <li><a href="#timeline" data-toggle="tab">Últimas Liquidaciones</a></li>
+              <!--<li><a href="#timeline" data-toggle="tab">Últimas Liquidaciones</a></li>-->
               <li><a href="#settings" id="tabEditarDatos" data-toggle="tab">Editar Datos</a></li>
             </ul>
             <div class="tab-content">
@@ -157,22 +157,20 @@
                 <!-- /.post -->
               </div>
               <!-- /.tab-pane -->
-              <div class="tab-pane" id="timeline">
-                <!-- The timeline -->
+              <!-- <div class="tab-pane" id="timeline">
+                
                 <ul class="timeline timeline-inverse" id="liquidaciones">
-                  <!-- timeline time label -->
                   
-                  <!-- /.timeline-label -->
-                  <!-- timeline item -->
                   
                   
                 </ul>
-              </div>
+              </div> -->
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal"  method="POST" >
-		      		  @csrf
+                <form class="form-horizontal" enctype="multipart/form-data" action="" id="formularioUpdate" method="POST" >
+		      		@csrf
+		      		{{ method_field('put') }}
 		            <div class="box-body">
   		            	<div class="row">
   		                	<div class="col-lg-6">
@@ -251,16 +249,17 @@
 		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Sexo:</label><label><p style="color:red">*</p></label>
+			                        <br>
 		                  			<label>
-					                  <input id="sexoMasculino" type="radio" name="sexo" value="Masculino" class="minimal"> Masculino
-					                  <input id="sexoFemenino" type="radio" name="sexo" value="Femenino" class="minimal"> Femenino
+					                  <input id="sexoMasculino" type="radio" name="sexo" value="masculino" class="minimal"> Masculino
+					                  <input id="sexoFemenino" type="radio" name="sexo" value="femenino" class="minimal"> Femenino
 					                </label>
 				                </div>
 				            </div>
 				            <div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Estado Civil:</label><label><p style="color:red">*</p></label>
-		                  			<select class="form-control " name="estado_civil" required>
+		                  			<select id="editarEstadoCivil" class="form-control " name="estado_civil" required>
 		                  				<option id="soltero" >Soltero(a)</option>
 		                  				<option id="casado" >Casado(a)</option>
 		                  				<option id="viudo" >Viudo(a)</option>
@@ -281,40 +280,42 @@
 				        </div>
 				        <br>
 		                <div class="row">
-		                	<div class="col-lg-6">
+		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Cargo:</label><label><p style="color:red">*</p></label>
 		                  			<input id="editarCargo" type="text" class="form-control" name="cargo" required>
 				                </div>
 				            </div>
-				            <div class="col-lg-6">
+				            <div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Titulo:</label><label><p style="color:red">*</p></label>
 		                  			<input id="editarTitulo" type="text" class="form-control" name="titulo" required>
 				                </div>
 				            </div>
+				            <div class="col-lg-4">
+				            	<div class="input-group">
+					                  <label   >Pais:</label><label><p style="color:red">*</p></label>
+					                  <input id="editarPais" type="text" class="form-control" name="pais" required>
+					                  
+				                </div>
+				            </div>
+					            
 				        </div>
 				        <br>
-		                <div class="form-group">
-		                  <label  class="col-sm-2 control-label">Pais:</label><label><p style="color:red">*</p></label>
-		                  <div class="col-sm-10">
-		                    <input id="editarPais" type="text" class="form-control" name="pais" required>
-		                  </div>
-		                </div>
 		                <div class="row">
-		                	<div class="col-lg-6">
+		                	<div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Banco:</label>
 		                  			<select class="form-control " id="editarBanco" name="nombre_banco" >
-		                  				<option >Banco BBVA</option>
+		                  				<option>Banco BBVA</option>
 		                  				<option>Banco BCI</option>
-		                  				<option>Banco de Chlile</option>
+		                  				<option>Banco de Chile</option>
 		                  				<option>Banco Falabella</option>
-		                  				<option selected="selected">Banco Estado</option>
+		                  				<option>Banco Estado</option>
 		                  			</select>
 				                </div>
 				            </div>
-				            <div class="col-lg-6">
+				            <div class="col-lg-4">
 				                <div class="input-group">
 			                        <label >Tipo Cuenta:</label>
 		                  			<select id="editarTipoCuenta" class="form-control " name="tipo_cuenta" >
@@ -323,63 +324,94 @@
 		                  			</select>
 				                </div>
 				            </div>
+				            <div class="col-lg-4">
+				            	<div class="input-group">
+				            		<label >Nro. Cuenta:</label>
+				                    <input id="editarNroCuenta" type="text" class="form-control" name="nro_cuenta">
+				            	</div>
+				            </div>
 				        </div>
 				        <br>
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nro. Cuenta:</label>
-                  <div class="col-sm-10">
-                    <input id="editarNroCuenta" type="text" class="form-control" name="nro_cuenta">
-                  </div>
-                </div>
-                <div class="row">
-                		<div class="col-lg-4">
-			                <div class="input-group">
-		                        <label >Fecha Ingreso:</label><label><p style="color:red">*</p></label>
-	                  			<div class="input-group date">
-				                  <div class="input-group-addon">
-				                    <i class="fa fa-calendar"></i>
-				                  </div>
-				                  <input id="editarFechaIngreso" type="text" class="form-control pull-right" name="fecha_ingreso"  required>
+                		<div class="row">
+	                		<div class="col-lg-4">
+				                <div class="input-group">
+			                        <label >Fecha Ingreso:</label><label><p style="color:red">*</p></label>
+		                  			<div class="input-group date">
+					                  <div class="input-group-addon">
+					                    <i class="fa fa-calendar"></i>
+					                  </div>
+					                  <input id="editarFechaIngreso" type="text" readonly class="form-control pull-right" name="fecha_ingreso"  >
+					                </div>
 				                </div>
+				            </div>
+				            <!--
+				            <div class="col-lg-4">
+				                <div class="input-group">
+			                        <label >Fecha Retiro:</label>
+		                  			<div class="input-group date">
+					                  <div class="input-group-addon">
+					                    <i class="fa fa-calendar"></i>
+					                  </div>
+					                  <input id="editarFechaRetiro" type="text" class="form-control pull-right" name="fecha_retiro" >
+					                </div>
+				                </div>
+				            </div>
+				            <div class="col-lg-4">
+				                <div class="input-group">
+			                        <label >Fecha Renovacion:</label>
+		                  			<div class="input-group date">
+					                  <div class="input-group-addon">
+					                    <i class="fa fa-calendar"></i>
+					                  </div>
+					                  <input id="editarFechaRenovacion" type="text" class="form-control pull-right" name="fecha_renovacion" >
+					                </div>
+				                </div>
+				            </div>
+				        	-->
+				        	<div class="col-lg-4">
+				                <div class="input-group">
+			                        <label >PIN:</label><label><p style="color:red">*</p></label>
+		                  			<div class="input-group date">
+					                  <div class="input-group-addon">
+					                    <i class="fa fa-key"></i>
+					                  </div>
+					                  <input id="editarPin" type="text" class="form-control pull-right" name="pin"  required>
+					                </div>
+				                </div>
+				            </div>
+				            <div class="col-lg-4">
+				                <div class="input-group">
+			                        <label style="margin-bottom: 14px;" >Foto Empleado: (Formato .jpg, máx. 3MB)</label>
+		                  			<div class="input-group date">
+					                  <div class="input-group-addon">
+					                    <i class="fa fa-file"></i>
+					                  </div>
+					                  <input id="inputFoto" type="file" accept="image/jpeg" class="form-control pull-right" name="perfil"  >
+					                </div>
+				                </div>
+				            </div>
+	            		</div>
+	            		<br>
+			            <div class="row">
+			                  <div class="col-lg-6">
+			                    <div class="input-group">
+			                          <label >AFP:</label><label><p style="color:red">*</p></label>
+			                        <select class="form-control" required id="editarAfp" name="afp" >
+			                          
+			                        </select>
+			                    </div>
+			                </div>
+			                <div class="col-lg-6">
+			                    <div class="input-group">
+			                          <label >ISAPRE:</label><label><p style="color:red">*</p></label>
+			                        <select class="form-control" required id="editarIsapre" name="isapre" >
+			                         
+			                        </select>
+			                    </div>
 			                </div>
 			            </div>
-			            <div class="col-lg-4">
-			                <div class="input-group">
-		                        <label >Fecha Retiro:</label>
-	                  			<div class="input-group date">
-				                  <div class="input-group-addon">
-				                    <i class="fa fa-calendar"></i>
-				                  </div>
-				                  <input id="editarFechaRetiro" type="text" class="form-control pull-right" name="fecha_retiro" >
-				                </div>
-			                </div>
-			            </div>
-			            <div class="col-lg-4">
-			                <div class="input-group">
-		                        <label >Fecha Renovacion:</label>
-	                  			<div class="input-group date">
-				                  <div class="input-group-addon">
-				                    <i class="fa fa-calendar"></i>
-				                  </div>
-				                  <input id="editarFechaRenovacion" type="text" class="form-control pull-right" name="fecha_renovacion" >
-				                </div>
-			                </div>
-			            </div>
-	            </div>
-                <div class="row">
-                		<div class="col-lg-12">
-			                <div class="input-group">
-		                        <label >PIN:</label><label><p style="color:red">*</p></label>
-	                  			<div class="input-group date">
-				                  <div class="input-group-addon">
-				                    <i class="fa fa-calendar"></i>
-				                  </div>
-				                  <input id="editarPin" type="text" class="form-control pull-right" name="pin"  required>
-				                </div>
-			                </div>
-			            </div>
-		        </div>
 				        <br>
+				        <button class="btn btn-success" type="submit" form="formularioUpdate">Guardar</button>
 		            </div>
 		        </form>
               </div>
@@ -483,6 +515,7 @@
                 	<div class="col-lg-4">
 		                <div class="input-group">
 	                        <label >Sexo:</label><label><p style="color:red">*</p></label>
+	                        <br>
                   			<label>
 			                  <input type="radio" name="sexo" value="Masculino" class="minimal"> Masculino
 			                  <input type="radio" name="sexo" value="Femenino" class="minimal"> Femenino
@@ -658,8 +691,14 @@
             $('#selectAfp').append(
                 '<option selected value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
               );
+            $('#editarAfp').append(
+                '<option selected value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
           }else{
             $('#selectAfp').append(
+                '<option value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
+            $('#editarAfp').append(
                 '<option value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
               );
           }
@@ -682,8 +721,14 @@
             $('#selectIsapre').append(
                 '<option selected value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
               );
+            $('#editarIsapre').append(
+                '<option selected value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
           }else{
             $('#selectIsapre').append(
+                '<option value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
+              );
+            $('#editarIsapre').append(
                 '<option value="'+datos[i].id+'">'+datos[i].nombre+' ('+datos[i].porcentaje+'%)</option>'
               );
           }
@@ -766,16 +811,36 @@
             $('#afp').html(datos.afp_nombre);
             $('#aContrato').attr('href', "{{url('contratos')}}/"+datos.contrato_id);
             $('#contrato').html('Contrato Nro.'+datos.contrato_id+' '+datos.contrato_fecha_inicio)
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
-            $('#').val();
+            $('#editarNombre').val(datos.nombre);
+            $('#editarApellidoPaterno').val(datos.apellido_pat);
+            $('#editarApellidoMaterno').val(datos.apellido_mat);
+            $('#editarRun').val(datos.rut);
+            $('#editarDireccion').val(datos.direccion);
+            $('#editarComuna').val(datos.comuna);
+            $('#editarCiudad').val(datos.ciudad);
+            $('#editarEmail').val(datos.email);
+            $('#editarTelefono').val(datos.telefono);
+            $('#editarCelular').val(datos.celular);
+            if (datos.sexo == 'masculino'){ 
+            	$('#sexoMasculino').click();
+            }else{ 
+            	$('#sexoFemenino').click();
+            }
+            $('#editarEstadoCivil').val(datos.estado_civil);
+            $('#editarFechaNacimiento').val(datos.fecha_nacimiento);
+            $('#editarCargo').val(datos.cargo);
+            $('#editarTitulo').val(datos.titulo);
+            $('#editarPais').val(datos.pais);
+            $('#editarBanco').val(datos.cta_banco_nombre);
+            $('#editarTipoCuenta').val(datos.cta_banco_tipo);
+            $('#editarNroCuenta').val(datos.cta_banco_nro);
+            $('#editarFechaIngreso').val(datos.fecha_ingreso);
+            //$('#editarFechaRetiro').val(datos.fecha_retiro);
+            //$('#editarFechaRenovacion').val(datos.fecha_renovacion);
+            $('#editarPin').val(datos.pin);
+            $('#editarAfp').val(datos.afp_id);
+            $('#editarIsapre').val(datos.isapre_id);
+            $('#formularioUpdate').attr('action', "{{url('empleados')}}/"+datos.id);
             $.ajax({
               url: "{{url('data/registrosEmpleado')}}/"+datos.id,
               method: "GET",

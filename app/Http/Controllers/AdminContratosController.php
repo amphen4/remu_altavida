@@ -40,9 +40,17 @@ class AdminContratosController extends Controller
                                     'dias_semanales' => 'required|numeric',
                                     'fecha_inicio' => 'required|date'
                                   ]);
+
         $haberes = json_decode($request->haberes);
         $descuentos = json_decode($request->descuentos);
         $empleado = Empleado::find($request->empleado);
+        if($empleado->contratos()->where('estado', 'ACTIVO')->first()){
+            $contrato = $empleado->contratos()->where('estado', 'ACTIVO')->first();
+            $contrato->estado = 'INACTIVO';
+            //$empleado->contrato()->first()->empleado()->dissociate();
+            $contrato->save();
+
+        }
         $sueldo_base = $request->sueldo_base;
         $contrato = new Contrato();
         $contrato->horas_semanales = json_decode($request->horas_semanales);
@@ -91,5 +99,11 @@ class AdminContratosController extends Controller
     {
         $asi['data'] = Contrato::where('estado','ACTIVO')->get()->toArray();
         return json_encode($asi);
+    }
+    public function edit($id)
+    {
+        $contrato = Contrato::findOrFail($id);
+        $empresa = Empresa::find(1);
+        return view('contratos.editarContrato', ['contrato' => $contrato, 'empresa' => $empresa]);
     }
 }

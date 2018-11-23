@@ -12,7 +12,7 @@
 <!-- FlexDataList -->
 <link rel="stylesheet" href="{{asset('js/jquery-flexdatalist-2.2.4')}}/jquery.flexdatalist.min.css">
 @endsection
-@section('cabecera','Crear Contrato')
+@section('cabecera','Editar Contrato #'.$contrato->id)
 @section('content')
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -24,54 +24,16 @@
     </div>
     <br>
 @endif
-<div class="box box-info">
-    <div class="box-header with-border">
-      
-    </div>
-    <!-- /.box-header -->
-    <!-- form start -->
-    <form class="form-horizontal">
-      <div class="box-body">
-        <div class="input-group input-group-lg">
-          <span class="input-group-addon"><strong>Seleccione un Empleado:</strong></span>
-          <input type="text" id="inputBusqueda" class="form-control" placeholder="Ingrese un nombre o apellido">
-          
-        </div>
-        
-      </div>
-      <!-- /.box-footer -->
-    </form>
-    
-</div>
-<br>
-<div id="divLoading" class="pre col-lg-12 col-md-12 col-md-xs-12">
-  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 30 30" enable-background="new 0 0 30 30" xml:space="preserve" width="30" height="30">
 
-    <rect fill="#FBBA44" width="15" height="15">
-    <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;15,0;15,15;0,15;0,0;" repeatCount="indefinite"/>
-    </rect> 
 
-    <rect x="15" fill="#E84150" width="15" height="15">
-    <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;0,15;-15,15;-15,0;0,0;" repeatCount="indefinite"/>
-    </rect> 
-    
-    <rect x="15" y="15" fill="#62B87B" width="15" height="15">
-    <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;-15,0;-15,-15;0,-15;0,0;" repeatCount="indefinite"/>
-    </rect> 
-
-    <rect y="15" fill="#2F6FB6" width="15" height="15">
-    <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="1.7s" values="0,0;0,-15;15,-15;15,0;0,0;" repeatCount="indefinite"/>
-    </rect>
-  </svg>
-</div>
 <!-- Main content -->
-<section class="invoice hidden" id="contrato">
+<section class="invoice" id="contrato">
   <!-- title row -->
   <div class="row">
     <div class="col-xs-12">
       <h2 class="page-header">
         <i class="glyphicon glyphicon-briefcase"></i>  Contrato de Trabajo
-        <div class="pull-right " ><small>Fecha de Inicio:<label><p style="color:red">*</p></label> <input style="width:100px" type="text"  id="datepickerFechaInicio"></small></div>
+        <div class="pull-right " ><small>Fecha de Inicio:<label><p style="color:red">*</p></label> <input style="width:100px" type="text"  id="datepickerFechaInicio" value="{{$contrato->fecha_inicio}}"></small></div>
       </h2>
     </div>
     <!-- /.col -->
@@ -93,6 +55,12 @@
     <div class="col-sm-4 invoice-col">
       <strong>Datos Empleado</strong>
       <address id="datosEmpleado">
+        {{$contrato->empleado()->first()->nombre.' '.$contrato->empleado()->first()->apellido_pat.' '.$contrato->empleado()->first()->apellido_mat}}<br>
+            <strong>Cargo:</strong> {{$contrato->empleado()->first()->cargo}}<br>
+            <strong>Titulo:</strong> {{$contrato->empleado()->first()->titulo}}<br>
+            <strong>Direccion:</strong> {{$contrato->empleado()->first()->direccion.', '.$contrato->empleado()->first()->ciudad}}<br>
+            <strong>Contacto:</strong>{{$contrato->empleado()->first()->telefono.' - '.$contrato->empleado()->first()->celular}}<br>
+            <strong>Email:</strong> {{$contrato->empleado()->first()->email}}<br>
       </address>
     </div>
     <!-- /.col -->
@@ -105,17 +73,17 @@
       <b>Account:</b> 968-34567 -->
       <div class="input-group">
           <label >Sueldo Base:<label><p style="color:red">*</p></label></label>
-          <input type="text" id="inputSueldoBase" class="form-control" name="nombre" placeholder="" required>
+          <input type="text" id="inputSueldoBase" value="{{$contrato->sueldo_base}}" class="form-control" name="nombre" placeholder="" required>
       </div>
       <br>
       <div class="input-group">
           <label >Horas Semanales:<label><p style="color:red">*</p></label></label>
-          <input type="number" id="inputHorasSemanales" class="form-control" min="1"  max="168" value="45" name="horas_semanales" placeholder="" required>
+          <input type="number" id="inputHorasSemanales" class="form-control" min="1"  max="168" value="{{$contrato->horas_semanales}}" name="horas_semanales" placeholder="" required>
       </div>
       <br>
       <div class="input-group">
           <label >Dias Semanales:<label><p style="color:red">*</p></label></label>
-          <input type="number" id="inputDiasSemanales" max="7" min="1" id="" class="form-control" value="5" name="dias_semanales" placeholder="" required>
+          <input type="number" id="inputDiasSemanales" max="7" min="1" id="" class="form-control" value="{{$contrato->dias_semanales}}" name="dias_semanales" placeholder="" required>
       </div>
       
     </div>
@@ -145,16 +113,25 @@
           </tr>
         </thead>
         <tbody id="bodyTablaHaberes">
+          @foreach( $contrato->habers()->get() as $haber )
+            <tr>
+                    <td id="id">{{$haber->id}}</td>
+                    <td >{{$haber->nombre}}</td>
+                    <td id="imp">{{$haber->imp}}</td>
+                    <td id="tipo">{{$haber->tipo}}</td>
+                    <td id="valor">{{$haber->valor}}</td>
+                    <td id="factor">{{$haber->factor}}</td>
+                    <td><div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input value="{{$haber->pivot->fecha_inicio}}" class="form-control inputFecha" type="text" id="datepickerhaber"></div></td>
+                    <td><input style="width:100px;" class="form-control" id="duracion" @if(!$haber->pivot->duracion) disabled value="1"@else value="{{$haber->pivot->duracion}}" @endif min="1"  type="number"></td>
+                    <td><div class="input-group"><input type="checkbox" class="flat-red checkboxDuracion"  @if(!$haber->pivot->duracion) unchecked @endif></label></div></td>
+                    <td><button class="btn btn-xs btn-danger botonEliminarFila" >X</button></td>
+                </tr>
+          @endforeach
         </tbody>
       </table>
       <button data-toggle="modal" data-target="#exampleModalHaberes" class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Agregar Haberes</button>
     </div>
-
-    <!-- /.col -->
-    
   </div>
-  <!-- /.row -->
-  <!-- Table row -->
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <p class="lead">Otros Descuentos Incluidos:</p>
@@ -174,6 +151,20 @@
           </tr>
         </thead>
         <tbody id="bodyTablaDescuentos">
+          @foreach($contrato->dsctos()->get() as $dscto)
+          <tr>
+              <td id="id">{{$dscto->id}}</td>
+              <td>{{$dscto->nombre}}</td>
+              
+              <td id="tipo">{{$dscto->tipo}}</td>
+              <td id="valor">{{$dscto->valor}}</td>
+              <td id="factor">{{$dscto->factor}}</td>
+              <td><div class="input-group date"><div class="input-group-addon"><i class="fa fa-calendar"></i></div><input value="{{$dscto->pivot->fecha_inicio}}" class="form-control inputFecha" type="text" id="datepickerDescuento'+(contador)+'"></div></td>
+              <td><input style="width:100px;" class="form-control" id="duracion" @if(!$dscto->pivot->duracion)disabled value="1" @else value="{{$dscto->pivot->duracion}}" @endif min="1"  type="number"></td>
+              <td><div class="input-group"><input type="checkbox" class="flat-red checkboxDuracion"  @if(!$dscto->pivot->duracion) unchecked @endif></label></div></td>
+              <td><button class="btn btn-xs btn-danger botonEliminarFila" >X</button></td>
+          </tr>
+          @endforeach
         </tbody>
       </table>
       <button data-toggle="modal" data-target="#exampleModalDescuentos" class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Agregar Descuentos</button>
@@ -187,10 +178,10 @@
     <!-- accepted payments column -->
     <div class="col-xs-6">
       <p class="lead">Detalles de Pago al Empleado:</p>
-      <p class="text-muted well well-sm no-shadow" id="pTipoCuenta" style="margin-top: 10px;"></p>
-      <p class="text-muted well well-sm no-shadow" id="pBancoCuenta" style="margin-top: 10px;"></p>
-      <p class="text-muted well well-sm no-shadow" id="pCuenta" style="margin-top: 10px;"></p>
-      <p class="text-muted well well-sm no-shadow" id="pRut" style="margin-top: 10px;"></p>
+      <p class="text-muted well well-sm no-shadow" id="pTipoCuenta" style="margin-top: 10px;">Tipo Cuenta: {{$contrato->empleado()->first()->cta_banco_tipo}}</p>
+      <p class="text-muted well well-sm no-shadow" id="pBancoCuenta" style="margin-top: 10px;">Nombre Banco: {{$contrato->empleado()->first()->cta_banco_nombre}}</p>
+      <p class="text-muted well well-sm no-shadow" id="pCuenta" style="margin-top: 10px;">Nro. de Cuenta: {{$contrato->empleado()->first()->cta_banco_nro}}</p>
+      <p class="text-muted well well-sm no-shadow" id="pRut" style="margin-top: 10px;">RUT: {{$contrato->empleado()->first()->rut}}</p>
     </div>
     <!-- /.col -->
     <div class="col-xs-6">
@@ -532,33 +523,39 @@
 <script>
   
 $(document).ready(function(){
-  $('#divLoading').hide();
-  $('#perfil').hide();
-
-  $('#inputBusqueda').flexdatalist({
-    requestType: 'GET',
-    data: "{{url('/data/empleados/lista')}}",
-    params: {
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    },
-    minLength: 1,
-    selectionRequired: true,
-    searchByWord: true,
-    searchIn: ['nombre','apellido_pat','apellido_mat'],
-    visibleProperties: ["nombre","apellido_pat",'apellido_mat'],
-  });
-  $('#inputBusqueda').on('select:flexdatalist',function(event,set,options){
-    console.log('has elegido '+set.nombre);
-    $('#contrato').removeClass('hidden');
-    cargarContrato(set.id);
-    reCalcular();
-  });
-  var afp_porcentaje = 0;
-  var isapre_porcentaje = 0;
+  var cake = $('.datepickerHaber').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+      });
+      cake.val(moment().format('YYYY-MM-DD'));
+      contador++;
+      $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+        checkboxClass: 'icheckbox_flat-green',
+        radioClass   : 'iradio_flat-green'
+      });
+    
+    
+    
+    $('.checkboxDuracion').on('ifChecked', function(event){
+      $(this).parent().parent().parent().parent().find('td > input[type="number"]').prop("disabled", false);
+    });
+    $('.checkboxDuracion').on('ifUnchecked', function(event){
+      $(this).parent().parent().parent().parent().find('td > input[type="number"]').prop("disabled", true);
+    });
+    $('.botonEliminarFila').on('click', function(){
+      $(this).parent().parent().remove();
+      reCalcular();
+    });
+    
+  //var afp_porcentaje = 0;
+  //var isapre_porcentaje = 0;
   var id_global = 0;
   var sueldo_base_global = 0;
+
+  var afp_porcentaje = parseFloat('{{$contrato->empleado()->first()->afp()->first()->porcentaje}}');
+  var isapre_porcentaje = parseFloat('{{$contrato->empleado()->first()->isapre()->first()->porcentaje}}');
+  $('#bAfp').html('AFP: '+'{{$contrato->empleado()->first()->afp_nombre}}'+' ('+'{{$contrato->empleado()->first()->afp_porcentaje}}'+'%)');
+  $('#bIsapre').html('Salud: '+'{{$contrato->empleado()->first()->isapre_nombre}}'+' ('+'{{$contrato->empleado()->first()->isapre_porcentaje}}'+'%)');
   function cargarContrato(id){
     $('#contrato').fadeOut();
     $('#contrato').hide();
@@ -626,7 +623,7 @@ $(document).ready(function(){
           delimiter: '.',
           numeralDecimalScale: 0
       });
-  var sueldo_base = new Cleave('#inputSueldoBase', {
+  var sueldo_base_cleave = new Cleave('#inputSueldoBase', {
           prefix: '$ ',
           numeral: true,
           numeralDecimalMark: ',',
@@ -634,38 +631,14 @@ $(document).ready(function(){
           numeralDecimalScale: 0
 
       });
-  var utm_global = 0;
-  var uf_global = 0;
-  $.ajax({
-    url: "{{url('obtener_uf')}}",
-    success: function(data){
-      uf_global = JSON.parse(data);
-      console.log('El valor de la uf hoy es: '+uf_global);
-    },
-    error: function(jqXHR, textStatus){
-      console.log(jqXHR.responseText);
-      toastr.error('Ha ocurrido un error');
-    },
-    async: false
-  });
-  $.ajax({
-    url: "{{url('obtener_utm')}}",
-    success: function(data){
-      utm_global = JSON.parse(data);
-      console.log('El valor de la utm hoy es: '+utm_global);
-    },
-    error: function(jqXHR, textStatus){
-      console.log(jqXHR.responseText);
-      toastr.error('Ha ocurrido un error');
-    },
-    async: false
-  });
+  
+  reCalcular();
   function reCalcular(){
       console.log('se invoco la funcion reCalcular()');
       var totalHaberesImponibles = 0;
-      var valorUf = uf_global;
-      var valorUtm = utm_global;
-      var sueldoBase = parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
+      var valorUf = 27000;
+      var valorUtm = 50000;
+      var sueldoBase = parseInt( (sueldo_base_cleave.getRawValue().slice(2)=='')?'0':sueldo_base_cleave.getRawValue().slice(2) );
       var total = 0;
       var total_imponible = 0;
       total_imponible += sueldoBase;
@@ -763,8 +736,7 @@ $(document).ready(function(){
 
   $('#tipoHaber').change(function(){
     console.log($(this).val());
-    //if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){ // CAMBIO
-    if( $(this).val() == 'MONTO' ){
+    if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){
       //$('#factorHaber').val('NINGUNO');
       //$('#factorHaber').prop('disabled',true);
       //document.getElementById("formularioHaber").elements.namedItem("valor").value = '';

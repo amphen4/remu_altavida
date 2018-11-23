@@ -63,6 +63,7 @@ Route::get('/data/empleados/lista','AdminEmpleadosController@enviarLista');
 Route::post('/empleados/create','AdminEmpleadosController@create');
 Route::get('/empleados/fotos/{id}','AdminEmpleadosController@enviarFoto');
 Route::get('/data/empleados/{id}','AdminEmpleadosController@enviarDatosEmpleadoJson');
+Route::put('/empleados/{id}', 'AdminEmpleadosController@update')->name('empleados.update');
 // RUTAS DE ADMINISRACION DE REGISTRO DE HORAS =========================
 Route::get('/registros_horas','AdminRegistrosController@index')->name('registros.index');
 Route::get('/registros_horas/data','AdminRegistrosController@data');
@@ -75,6 +76,7 @@ Route::post('/contratos','AdminContratosController@store');
 Route::get('/contratos/data','AdminContratosController@data');
 Route::get('/contratos/data_l','AdminContratosController@data_l');
 Route::get('/contratos/{id}','AdminContratosController@show');
+Route::get('contratos/edit/{id}', 'AdminContratosController@edit');
 // RUTAS DE ADMINISTRACION DE HABERES EN EL SISTEMA ====================
 Route::post('/haberes','AdminHaberesController@store');
 Route::get('/haberes/data','AdminHaberesController@data');
@@ -106,6 +108,8 @@ Route::post('/liquidaciones/generar', 'AdminLiquidacionesController@generarLiqui
 Route::post('/liquidaciones/haber_a', 'AdminLiquidacionesController@mensualidadesHaberAgotadas');
 Route::post('/liquidaciones/dscto_a', 'AdminLiquidacionesController@mensualidadesDsctoAgotadas');
 Route::get('data/liquidacionesEmpleado/{id}', 'AdminLiquidacionesController@enviarDataLiquidacionesEmpleado');
+Route::get('data/graficoLiquidaciones', 'AdminLiquidacionesController@enviarDataGrafico');
+Route::post('marcarLiquidacionPagado', 'AdminLiquidacionesController@marcarLiquidacionPagado');
 // Registro
 Route::get('ingreso', 'IngresoController@index');
 Route::post('ingreso', 'IngresoController@registro');
@@ -113,5 +117,9 @@ Route::post('ingreso', 'IngresoController@registro');
 Route::get('imp_renta/{monto_imponible}', 'AnexoController@montoImpuestoRenta');
 // Genera PDF
 Route::get('pdf_test', 'AnexoController@pdfPrueba');
+Route::get('pdf_liquidacion/{id}', 'AnexoController@pdf_liquidacion')->middleware(['auth']);
 // Horas Trabajadas por Empleado
 Route::post('horas_trabajadas', 'AdminRegistrosController@enviarDataHorasTrabajadas');
+// Obtener valores uf y utm actuales
+Route::get('obtener_uf','AnexoController@obtenerUF');
+Route::get('obtener_utm', 'AnexoController@obtenerUTM');

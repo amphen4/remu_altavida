@@ -42,11 +42,11 @@ class HomeController extends Controller
     public function enviarFoto($id){
         //dd('wea');
         $user = User::findOrFail($id);
-        if(Storage::disk('fotos-empleados')->exists($user->id.'.jpg'))
+        if(Storage::disk('fotos-usuarios')->exists($user->id.'.jpg'))
         {
-            return new Response(Storage::disk('fotos-empleados')->get($user->id.'.jpg'),200);
+            return new Response(Storage::disk('fotos-usuarios')->get($user->id.'.jpg'),200);
         } 
-        return new Response(Storage::disk('fotos-empleados')->get('sinfoto.jpg'),200);
+        return new Response(Storage::disk('fotos-usuarios')->get('sinfoto.jpg'),200);
     }
     public function profileUpdate(Request $request)
     {
@@ -64,7 +64,7 @@ class HomeController extends Controller
             $filename = Auth::user()->id.'.jpg';
             if($file)
             {
-                Storage::disk('fotos-empleados')->put($filename, File::get($file));
+                Storage::disk('fotos-usuarios')->put($filename, File::get($file));
             }
         }
         if(!empty($request->password))

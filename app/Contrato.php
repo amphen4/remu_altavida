@@ -18,7 +18,7 @@ class Contrato extends Model
                             'fecha_inicio',
                             'tipo',
     						];
-    protected $appends = ['empleado','opciones','proxima_liquidacion'];
+    protected $appends = ['empleado','opciones','proxima_liquidacion', 'fecha_inicio_proxima_liquidacion', 'cargo'];
     public function empleado()
     {
         return $this->belongsTo('App\Empleado');
@@ -35,6 +35,10 @@ class Contrato extends Model
     {
         return $this->hasMany('App\Liquidacion');
     }
+    public function getCargoAttribute()
+    {
+        return $this->empleado()->first()->cargo;
+    }
     public function getEmpleadoAttribute()
     {
         $empleado = $this->empleado()->first();
@@ -42,7 +46,21 @@ class Contrato extends Model
     }
     public function getOpcionesAttribute()
     {
-        return '<button class="btn btn-xs btn-default" >Pronto</button> <a class="btn btn-xs btn-primary botonVer" href="" data-id="'.$this->id.'">Ver</a>';
+        return '<a href="contratos/edit/'.$this->id.'" class="btn btn-xs btn-warning" >Modificar</a> <a class="btn btn-xs btn-primary botonVer" href="" data-id="'.$this->id.'">Ver</a>';
+    }
+    public function getFechaInicioProximaLiquidacionAttribute()
+    {
+        $liquidacionesEmpleado = $this->empleado()->first()->liquidacions();
+        if(!$liquidacionesEmpleado->count()){
+            // Caso:  no hay liquidaciones
+            return $this->fecha_inicio;
+            
+        }else{
+            // Caso: si hay liquidaciones, osea hay que obtener la fecha de la prox liquidacion
+            $ultimaLiquidacion = $liquidacionesEmpleado->orderBy('fecha_fin', 'desc')->first();
+            $fecha_inicio_proxLiquidacion = Carbon::createFromFormat('Y-m-d',$ultimaLiquidacion->fecha_fin)->addDay();
+            return $fecha_inicio_proxLiquidacion->toDateString();
+        }
     }
     public function getProximaLiquidacionAttribute()
     {

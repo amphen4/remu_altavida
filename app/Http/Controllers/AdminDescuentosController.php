@@ -35,10 +35,10 @@ class AdminDescuentosController extends Controller
                 $nuevo->valor_entero = intval(str_replace('.','',$request->valor));
                 break;
             case 'UF':
-                $nuevo->valor_entero = intval(str_replace('.','',$request->valor));
+                $nuevo->valor_porcentaje = floatval(str_replace(',','.',$request->valor));
                 break;
             case 'UTM':
-                $nuevo->valor_entero = intval(str_replace('.','',$request->valor));
+                $nuevo->valor_porcentaje = floatval(str_replace(',','.',$request->valor));
                 break;
             case 'PORCENTAJE SUELDO BASE':
                 $nuevo->valor_porcentaje = floatval(str_replace(',','.',$request->valor));

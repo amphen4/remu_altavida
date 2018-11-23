@@ -31,7 +31,8 @@ class Empleado extends Model
     						'fecha_renovacion',
     						'empresa_id',
                             'isapre_id',
-                            'afp_id'
+                            'afp_id',
+                            'pin'
     					];
      public $timestamps = false;
      public $appends = ['afp_nombre','isapre_nombre','isapre_porcentaje','afp_porcentaje', 'contrato_id', 'contrato_fecha_inicio'];

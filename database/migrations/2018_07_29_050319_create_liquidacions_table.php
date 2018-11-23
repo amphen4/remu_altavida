@@ -22,13 +22,24 @@ class CreateLiquidacionsTable extends Migration
             $table->date('fecha_fin');
             $table->unsignedTinyInteger('mes');
             $table->unsignedInteger('sueldo_contrato');
-            $table->unsignedInteger('monto_bruto');
+            //$table->unsignedInteger('monto_bruto');
             $table->unsignedInteger('total_imponible');
-            $table->unsignedTinyInteger('tasa_impuesto');
+            //$table->unsignedTinyInteger('tasa_impuesto');
             $table->enum('estado',['PAGADO','NO PAGADO']);
-            $table->unsignedInteger('afecto_impuesto');
+            //$table->unsignedInteger('afecto_impuesto');
             $table->unsignedTinyInteger('dias_trabajados');
-            $table->unsignedTinyInteger('horas_extras');
+            $table->unsignedTinyInteger('horas_trabajadas');
+            $table->unsignedInteger('total_no_imponible');
+            $table->unsignedInteger('descuentos_o');
+            $table->unsignedInteger('total_salud');
+            $table->unsignedInteger('total_afp');
+            $table->unsignedInteger('impuesto_renta');
+            $table->string('nombre_afp');
+            $table->string('nombre_salud');
+            $table->unsignedDecimal('tasa_afp', 4 ,2);
+            $table->unsignedDecimal('tasa_salud', 4, 2);
+            $table->timestamps();
+            //$table->unsignedTinyInteger('horas_extras');
 
             // ==================
             // Llaves Foraneas  

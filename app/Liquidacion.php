@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 class Liquidacion extends Model
 {
     protected $table = 'liquidacions';
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $fillable = [ 'total_haberes',
                             'total_descuentos',
@@ -16,15 +16,28 @@ class Liquidacion extends Model
                             'fecha_fin',
                             'mes',
                             'sueldo_contrato',
-                            'monto_bruto',
+                            //'monto_bruto',
                             'total_imponible',
-                            'tasa_impuesto',
+                            //'tasa_impuesto',
                             'estado',
-                            'afecto_impuesto',
+                            //'afecto_impuesto',
                             'dias_trabajados',
-                            'horas_extras' ];
+                            'horas_trabajadas',
+                            //'horas_extras',
+                            'contrato_id',
+                            'empleado_id',
+                            'total_no_imponible',
+                            'descuentos_o',
+                            'total_salud',
+                            'total_afp',
+                            'impuesto_renta',
+                            'nombre_afp',
+                            'nombre_salud',
+                            'tasa_afp',
+                            'tasa_salud',
+                             ];
 
-    public $appends = [ 'opciones', 'empleado', 'nombre_mes' ];
+    public $appends = [ 'opciones', 'empleado', 'nombre_mes', 'periodo', 'monto_liquido_f', 'total_imponible_f', 'total_descuentos_f', 'total_no_imponible_f', 'descuentos_o_f', 'total_salud_f', 'total_afp_f', 'impuesto_renta_f' ];
 
     public function empleado()
     {
@@ -34,9 +47,44 @@ class Liquidacion extends Model
     {
         return $this->belongsTo('App\Contrato');
     }
+    public function getImpuestoRentaFAttribute()
+    {
+        return number_format($this->impuesta_renta, 0, ",", ".");
+    }
+    public function getTotalSaludFAttribute()
+    {
+        return number_format($this->total_salud, 0, ",", ".");
+    }
+    public function getTotalAfpFAttribute()
+    {
+        return number_format($this->total_afp, 0, ",", ".");
+    }
+    public function getMontoLiquidoFAttribute()
+    {
+        return number_format($this->monto_liquido, 0, ",", ".");
+    }
+    public function getTotalImponibleFAttribute()
+    {
+        return number_format($this->total_imponible, 0, ",", ".");
+    }
+    public function getTotalDescuentosFAttribute()
+    {
+        return number_format($this->total_descuentos, 0, ",", ".");
+    }
+    public function getTotalNoImponibleFAttribute()
+    {
+        return number_format($this->total_no_imponible, 0, ",", ".");
+    }
+    public function getDescuentosOFAttribute()
+    {
+        return number_format($this->descuentos_o, 0, ",", ".");
+    }
     public function getOpcionesAttribute()
     {
-        return '<button class="btn btn-primary btn-xs" >Opciones</button>';
+        if($this->estado == 'NO PAGADO'){
+            return '<button class="btn btn-success btn-xs" data-id="'.$this->id.'" onclick="marcarPagado(this);">Marcar como Pagado</button><a class="btn btn-primary btn-xs" href="pdf_liquidacion/'.$this->id.'">Ver PDF</a>';
+        }
+        return '<a class="btn btn-primary btn-xs" href="pdf_liquidacion/'.$this->id.'">Ver PDF</a>';
     }
     public function getEmpleadoAttribute()
     {
@@ -71,5 +119,9 @@ class Liquidacion extends Model
             case 12:
                 return 'Diciembre';
         }
+    }
+    public function getPeriodoAttribute()
+    {
+        return $this->fecha_inicio.' - '.$this->fecha_fin;
     }
 }

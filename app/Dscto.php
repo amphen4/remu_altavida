@@ -26,10 +26,10 @@ class Dscto extends Model
     			return number_format($this->valor_porcentaje,3,',','.');
     			break;
             case 'UF':
-                return number_format($this->valor_entero,0,',','.');
+                return number_format($this->valor_porcentaje,3,',','.');
                 break;
             case 'UTM':
-                return number_format($this->valor_entero,0,',','.');
+                return number_format($this->valor_porcentaje,3,',','.');
                 break;
 
     	}
