@@ -33,13 +33,13 @@
 				            <div class="box-body">
 				            	<div class="form-group">
 				                  <label for="exampleInputEmail1">Nombre</label> <label><p style="color:red">*</p></label>
-				                  <input type="text" class="form-control" name="Nombre" value="{{$afp->nombre}}" placeholder="Ingrese el Nombre de la AFP. *máx. 190 caracteres" required>
+				                  <input type="text" class="form-control" name="nombre" value="{{$afp->nombre}}" placeholder="Ingrese un nombre. *máx. 190 caracteres" required>
 				                </div>
 
 												<div class="box-body">
 				            	<div class="form-group">
-				                  <label for="exampleInputEmail1">Nombre</label> <label><p style="color:red">*</p></label>
-				                  <input type="unsignedDecimal" class="form-control" name="Porcentaje" value="{{$afp->porcentaje}}" placeholder="Ingrese el porcentaje correspondiente a la AFP. *Dos decimales máximo." required>
+				                  <label for="exampleInputEmail1">Porcentaje</label> <label><p style="color:red">*</p></label>
+				                  <input type="number" placeholder="1.0" step="0.01" min="0" max="100" class="form-control" name="porcentaje" placeholder="Ingrese un porcentaje de 0 a 100" value="{{$afp->porcentaje}}" required>
 				                </div>
 
 				            </div>
@@ -49,7 +49,7 @@
 
 			            <div class="box-footer">
 
-			                <button type="submit" class="btn btn-success">Enviar</button>
+			                <button type="submit" class="btn btn-success">Guardar</button>
 			                (<label><p style="color:red">*</p></label>) Campo obligatorio
 			            </div>
 			        	</form>

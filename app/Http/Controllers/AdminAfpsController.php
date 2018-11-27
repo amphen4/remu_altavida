@@ -93,7 +93,7 @@ class AdminAfpsController extends Controller
             'porcentaje' => 'required|numeric|min:0|max:100',
         ]);
         $afp->nombre = $request->nombre;
-        $afp->porsentaje = $request->porcentaje;
+        $afp->porcentaje = $request->porcentaje;
         $afp->save();
         
 
