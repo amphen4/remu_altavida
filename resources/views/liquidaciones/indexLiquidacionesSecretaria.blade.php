@@ -115,9 +115,7 @@ input[readonly]{
             <div class="box-header">
                 <h3 class="box-title">Lista de Liqudaciones en el Sistema</h3>
                 <div class="pull-right">
-                  @if(Auth::user()->hasRole('admin'))
                   <button  class="btn btn-success"  data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Generar Liquidacion Manualmente</button>
-                  @endif
                 </div>
             </div>
             <!-- /.box-header -->
@@ -573,20 +571,19 @@ input[readonly]{
         var uf_global = 0;
         function reCalcular(){
             console.log('se invoco la funcion reCalcular()');
-            let totalHaberesImponibles = 0;
-            let valorUf = uf_global;
-            let valorUtm = utm_global;
-            let sueldoBaseCalcular = 0;
+            var totalHaberesImponibles = 0;
+            var valorUf = uf_global;
+            var valorUtm = utm_global;
+            var sueldoBaseCalcular = 0;
             $('#bodyTablaHaberes > tr').each(function(){
               if( $(this).find('#id').html() == '0' ){
                 sueldoBaseCalcular = parseInt( $(this).find('#valor').html().replace('.','') );
-                console.log('El sueldo base a calcular es: '+sueldoBaseCalcular);
               }
             }); //parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
-            let total = 0;
-            let total_imponible = 0;
+            var total = 0;
+            var total_imponible = 0;
             //total_imponible += sueldoBaseCalcular;
-            let total_no_imponible = 0;
+            var total_no_imponible = 0;
             $('#bodyTablaHaberes > tr').each(function(){
               //var totalHaberesImponibles +=  sueldo_base.getRawValue();
               if( $(this).find('#imp').html() == 'Si' ){
@@ -594,7 +591,6 @@ input[readonly]{
                   total_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
                 }else{
                   if( $(this).find('#tipo').html() == 'PORCENTAJE SUELDO BASE'){
-                    
                     total_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBaseCalcular;
                   }
                   if( $(this).find('#tipo').html() == 'UF'){
@@ -613,20 +609,20 @@ input[readonly]{
                 if($(this).find('#tipo').html() == 'MONTO'){
                   total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') );
                 }else{
-                  if( $(this).find('#tipo').html() == 'PORCENTAJE SUELDO BASE'){
+                  if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
                     total_no_imponible += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBaseCalcular;
                   }
-                  if( $(this).find('#tipo').html() == 'UF'){
+                  if( $(this).find('#factor').html() == 'UF'){
                     total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUf;
                   }
-                  if( $(this).find('#tipo').html() == 'UTM'){
+                  if( $(this).find('#factor').html() == 'UTM'){
                     total_no_imponible += parseInt( $(this).find('#valor').html().replace('.','') ) * valorUtm;
                   }
                 }
               }
               
             });
-            let impuesto_renta = 0;
+            var impuesto_renta = 0;
               $.ajax({
                 method: 'GET',
                 url: "{{url('')}}/imp_renta/"+total_imponible,
@@ -643,19 +639,18 @@ input[readonly]{
               });
             //console.log('total imponible: '+total_imponible);
             //console.log('total no imponible: '+total_no_imponible);
-            let total_haberes = total_imponible + total_no_imponible;
+            var total_haberes = total_imponible + total_no_imponible;
             $('#totalHaberesImponibles').html( '$ '+total_imponible.toLocaleString('de-DE') );
             $('#totalHaberesNoImponibles').html( '$ '+total_no_imponible.toLocaleString('de-DE') );
             $('#totalHaberes').html( '$ '+total_haberes.toLocaleString('de-DE') );
-            let total_descuentos = 0;
+            var total_descuentos = 0;
 
             $('#bodyTablaDescuentos > tr').each(function(){
               //var totalHaberesImponibles +=  sueldo_base.getRawValue();
               if($(this).find('#tipo').html() == 'MONTO'){
                 total_descuentos += parseInt( $(this).find('#valor').html().replace('.','') );
               }else{
-                if( $(this).find('#tipo').html() == 'PORCENTAJE SUELDO BASE'){
-                  console.log('tengo que calcular respecto al sueldo base aqui');
+                if( $(this).find('#factor').html() == 'PORCENTAJE SUELDO BASE'){
                   total_descuentos += (parseFloat( $(this).find('#valor').html().replace(',','.') )/100) * sueldoBaseCalcular;
                 }
                 if( $(this).find('#tipo').html() == 'UF'){
@@ -668,15 +663,15 @@ input[readonly]{
             });
 
             $('#totalOtrosDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
-            let total_descuento_afp = total_imponible * (afp_porcentaje/100);
-            let total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
+            var total_descuento_afp = total_imponible * (afp_porcentaje/100);
+            var total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
             total_descuentos += total_descuento_afp;
             total_descuentos += total_descuento_isapre;
             total_descuentos += impuesto_renta;
             $('#descuentoAfp').html( '$ '+total_descuento_afp.toLocaleString('de-DE') );
             $('#descuentoIsapre').html( '$ '+total_descuento_isapre.toLocaleString('de-DE') );
             $('#totalDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
-            let totalAPagar = total_haberes - total_descuentos;
+            var totalAPagar = total_haberes - total_descuentos;
             $('#totalAPagar').html( '$ '+ totalAPagar.toLocaleString('de-DE'));
             //console.log(valor);
         }
@@ -734,9 +729,9 @@ input[readonly]{
         var sueldoBase = 99;
         console.log(sueldoBase);
         $('#tablaContratos').on( 'select.dt', function ( e, dt, type, indexes ) {
-              let fila = dt.rows(indexes).data();
-              console.log("La fila 0 es: "+fila[0]);
-              //idContrato = fila[0].id;
+              var fila = dt.rows(indexes).data();
+              console.log(fila[0].id);
+              idEmpleado = fila[0].id;
               $.ajax({
                 url: "{{ url('liquidaciones/data/detalleProxLiquidacion') }}",
                 method: 'POST',
@@ -748,7 +743,6 @@ input[readonly]{
                 },
                 success: function(data){
                   datos = JSON.parse(data);
-                  idEmpleado = datos['empleado'].id;
                   sueldoBase = datos['contrato'].sueldo_base;
                   afp_porcentaje = parseFloat(datos['empleado'].afp_porcentaje);
                   isapre_porcentaje = parseFloat(datos['empleado'].isapre_porcentaje);
@@ -982,7 +976,30 @@ input[readonly]{
           $('#inputIdEmpleado').val(idEmpleado);
 
           $('#modalDetalle').modal();
-          
+          /*
+          $.ajax({
+                url: "{{ url('liquidaciones/data/detalles') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  
+                },
+                data: {
+                  'periodo': fila[0].id,
+                  'idEmpleado': ,
+                },
+                success: function(data){
+                  datos = JSON.parse(data);
+
+                },
+                error: function(jqXHR, textStatus){
+                    console.log(jqXHR.responseText);
+                    toastr.error('Ha ocurrido un error');
+                },
+                async: false
+
+          });
+          */
+          //$('#formLiquidacionManual').submit();
         });
         $('#botonAceptar').on('click', function(){
           console.log(idEmpleado);

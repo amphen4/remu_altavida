@@ -165,7 +165,7 @@
           </ul>
         </li>
         -->
-        @if(Auth::user()->hasRole('admin'))
+        
         <li>
           <a href="{{url('empleados')}}">
             <i class="fa fa-users"></i> <span>Empleados</span>
@@ -174,6 +174,7 @@
             </span>
           </a>
         </li>
+        @if(Auth::user()->hasRole('admin'))
         <li>
           <a href="{{url('registros_horas')}}">
             <i class="fa fa-clock-o"></i> <span>Registro Horas</span>

@@ -188,7 +188,8 @@
     <script src="{{asset('templates/AdminLTE-master')}}/bower_components/select2/dist/js/select2.full.min.js"></script>
     <!-- Toastr -->
     <script src="{{asset('js/toastr-master/build')}}/toastr.min.js"></script>
-
+    <!--  VALIDA RUT  -->
+    <script src="{{asset('js/jquery.rut-master/')}}/jquery.rut.min.js"></script>
     <script>
       function enviarFormulario(tipo)
       {
@@ -253,6 +254,7 @@
               alert("El rut " + rut + "-" + dv + " es correcto");
           }, { minimumLength: 7} );
           */
+          $("input#rut").rut();
       })
     </script>
 

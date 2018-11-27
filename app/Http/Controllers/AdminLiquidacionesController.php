@@ -22,7 +22,7 @@ class AdminLiquidacionesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:admin');
+        //$this->middleware('role:admin');
     }
     public function index()
     {
@@ -207,8 +207,8 @@ class AdminLiquidacionesController extends Controller
                                 $descuentos_o += $haber->valor_entero;
                                 break;
                             case 'PORCENTAJE SUELDO BASE':
-                                $total_descuentos += $contrato->sueldo_base * $haber->valor_porcentaje;
-                                $descuentos_o += $contrato->sueldo_base * $haber->valor_porcentaje;
+                                $total_descuentos += $contrato->sueldo_base * ($haber->valor_porcentaje/100);
+                                $descuentos_o += $contrato->sueldo_base * ($haber->valor_porcentaje/100);
                                 break;
                             case 'UF':
                                 $total_descuentos += $haber->valor_porcentaje * $valor_uf;
@@ -228,8 +228,8 @@ class AdminLiquidacionesController extends Controller
                             $descuentos_o += $haber->valor_entero;
                             break;
                         case 'PORCENTAJE SUELDO BASE':
-                            $total_descuentos += $contrato->sueldo_base * $haber->valor_porcentaje;
-                            $descuentos_o += $contrato->sueldo_base * $haber->valor_porcentaje;
+                            $total_descuentos += $contrato->sueldo_base * ($haber->valor_porcentaje/100);
+                            $descuentos_o += $contrato->sueldo_base * ($haber->valor_porcentaje/100);
                             break;
                         case 'UF':
                             $total_descuentos += $haber->valor_porcentaje * $valor_uf;

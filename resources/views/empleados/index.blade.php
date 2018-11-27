@@ -442,7 +442,7 @@
                 	<div class="col-lg-6">
 		                <div class="input-group">
 	                        <label >RUN:</label><label><p style="color:red">*</p></label>
-                  			<input type="text" class="form-control" name="rut" placeholder="Formato: XXXXXXXX-X" required>
+                  			<input type="text" class="form-control" id="rut" name="rut" placeholder="Formato: XXXXXXXX-X" required>
 		                </div>
 		            </div>
 		            <div class="col-lg-6">
@@ -675,8 +675,14 @@
 <script src="{{asset('js/jquery-flexdatalist-2.2.4')}}/jquery.flexdatalist.min.js"></script>
 <!-- Select2 -->
 <script src="{{asset('templates/AdminLTE-master')}}/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- VALIDA RUT -->
+<script src="{{asset('js/jquery.rut-master/')}}/jquery.rut.min.js"></script>
 <script>
 	$(document).ready(function(){
+		$("input#rut").rut({
+			formatOn: 'keyup',
+			useThousandsSeparator : false
+		});
     moment.locale('es');
 		$('#divLoading').hide();
 		$('#perfil').hide();

@@ -104,7 +104,7 @@ Route::get('/afps/data','AdminAfpsController@data');
 Route::get('/liquidaciones','AdminLiquidacionesController@index');
 Route::get('/liquidaciones/data','AdminLiquidacionesController@data');
 Route::post('/liquidaciones/data/detalleProxLiquidacion','AdminLiquidacionesController@detalleProxLiquidacion');
-Route::post('/liquidaciones/generar', 'AdminLiquidacionesController@generarLiquidacionManual')->name('liquidaciones.generarManual');
+Route::post('/liquidaciones/generar', 'AdminLiquidacionesController@generarLiquidacionManual')->name('liquidaciones.generarManual')->middleware('role:admin');
 Route::post('/liquidaciones/haber_a', 'AdminLiquidacionesController@mensualidadesHaberAgotadas');
 Route::post('/liquidaciones/dscto_a', 'AdminLiquidacionesController@mensualidadesDsctoAgotadas');
 Route::get('data/liquidacionesEmpleado/{id}', 'AdminLiquidacionesController@enviarDataLiquidacionesEmpleado');

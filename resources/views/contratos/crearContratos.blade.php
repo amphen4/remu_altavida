@@ -244,12 +244,10 @@
   <!-- this row will not appear when printing -->
   <div class="row no-print">
     <div class="col-xs-12">
-      <a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+      <!--<a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>-->
       <button type="button" id="botonGuardarContrato" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Guardar Contrato
       </button>
-      <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
-        <i class="fa fa-download"></i> Generar PDF
-      </button>
+      
     </div>
   </div>
 </section>
