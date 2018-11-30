@@ -18,7 +18,7 @@ class Contrato extends Model
                             'fecha_inicio',
                             'tipo',
     						];
-    protected $appends = ['empleado','opciones','proxima_liquidacion', 'fecha_inicio_proxima_liquidacion', 'cargo'];
+    protected $appends = ['empleado','opciones','proxima_liquidacion', 'fecha_inicio_proxima_liquidacion', 'cargo', /*'cotizacion_pactada'*/];
     public function empleado()
     {
         return $this->belongsTo('App\Empleado');
@@ -47,7 +47,11 @@ class Contrato extends Model
     public function getOpcionesAttribute()
     {
         return '<a href="contratos/edit/'.$this->id.'" class="btn btn-xs btn-warning" >Modificar</a> <a class="btn btn-xs btn-primary botonVer" href="" data-id="'.$this->id.'">Ver</a>';
-    }
+    }/*
+    public function getCotizacionPactadaAttribute()
+    {
+        return $this->empleado()->first()->cotizacion_pactada;
+    }*/
     public function getFechaInicioProximaLiquidacionAttribute()
     {
         $liquidacionesEmpleado = $this->empleado()->first()->liquidacions();

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Registro;
 use App\Empleado;
 use Illuminate\Support\Facades\DB;
+use PDF;
+use Carbon\Carbon;
+//use Carbon\CarbonPeriod;
 class AdminRegistrosController extends Controller
 {
     /**
@@ -21,8 +24,6 @@ class AdminRegistrosController extends Controller
     }
     public function index()
     {
-
-
     	return view('registros.indexRegistros');
     }
     public function data()
@@ -46,7 +47,7 @@ class AdminRegistrosController extends Controller
         $nuevo->hora = $request->fecha.' '.$request->hora;
         $nuevo->empleado()->associate($empleado);
         $nuevo->save();
-        return redirect()->route('registros.index')->with('exito','El registro fue agregado con exito');
+        return redirect()->route('registros.index')->with('exito','Se ha dejado registro con éxito :'.$request->tipo.' con fecha: '.$request->fecha.' a las '.$request->hora.' hrs.');
     }
     public function enviarDataRegistrosEmpleado($id)
     {
@@ -72,5 +73,32 @@ class AdminRegistrosController extends Controller
         }
         return json_encode($acumulador);
         
+    }
+    public function libro_asistencias_pdf($idEmpleado, $desde, $hasta)
+    {
+        $desdeCarbon = new Carbon($desde);
+        $hastaCarbon = new Carbon($hasta);
+        $empleado = Empleado::findOrFail($idEmpleado);
+        $arreglo = array();
+        while( $desdeCarbon->lte($hasta) ){
+            $objeto['entrada'] = null;
+            $objeto['salida'] = null;
+            $query = DB::table('registros')->select('*')->where(DB::raw('DATE(hora)'), $desdeCarbon->toDateString())->where('tipo', 'ENTRADA')->get();
+            if(!$query->isEmpty()){
+                $entrada = $query;
+                $objeto['entrada'] = $entrada->first();
+            }
+            $query = DB::table('registros')->select('*')->where(DB::raw('DATE(hora)'), $desdeCarbon->toDateString())->where('tipo', 'SALIDA')->get();
+            if(!$query->isEmpty()){
+                $salida = $query;
+                $objeto['salida'] = $salida->first();
+            }
+            if( $objeto['entrada'] || $objeto['salida'] ){
+                $arreglo[] = $objeto;
+            }
+            $desdeCarbon->addDay();
+        }
+        $pdf = PDF::loadView('registros.libro_asistencias_pdf', ['asistencias' => $arreglo, 'empleado' => $empleado, 'desde' => $desde, 'hasta' => $hasta]);
+        return $pdf->stream('Registro de Asistencias '.$desde.' - '.$hasta.' '.$empleado->nombre.' '.$empleado->apellido_pat.' '.$empleado->apellido_mat.'.pdf');
     }
 }

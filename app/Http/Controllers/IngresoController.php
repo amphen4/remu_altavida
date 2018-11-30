@@ -21,17 +21,20 @@ class IngresoController extends Controller
             'tipo' => 'required|in:entrada,salida',
         ]);
         $empleados = Empleado::all();
-        $e;
+        $e = null;
        
         foreach ($empleados as $empleado ){
         	//dd(substr($empleado->rut,0, strlen($empleado->rut)-2));
-			if( substr($empleado->rut,0, strlen($empleado->rut)-2) == $request->rut ){
+            //dd(substr($empleado->rut,0, strlen($empleado->rut)-2) == $request->rut);
+            $rutBD = substr($empleado->rut,0, strlen($empleado->rut)-2);
+			if( $rutBD == $request->rut ){
 				$e = $empleado;
 				
-			}else{
-				return json_encode(['tipo' => 'error', 'mensaje' => 'El rut ingresado no existe']);// ERROR JSON, EL RUT INGRESADO NO EXISTE
 			}
 		}
+        if(!$e){
+            return json_encode(['tipo' => 'error', 'mensaje' => 'El rut ingresado no existe']);// ERROR JSON, EL RUT INGRESADO NO EXISTE
+        }
 	    if( DB::table('empleados')->where('rut', $e->rut)->where('pin',$request->pin)->count() ){
 	    	//dd(Carbon::now()->endOfDay()->toDateTimeString());
     		if( $request->tipo == 'entrada' ){
@@ -68,5 +71,36 @@ class IngresoController extends Controller
     	}
     	
     	
+    }
+    public function cambiar_pin_mostrar()
+    {
+        return view('empleados.cambiarPin');
+    }
+    public function cambiar_pin_guardar(Request $request)
+    {
+        $request->validate([
+            'rut' => 'required|numeric',
+            'pin_actual' => 'required|numeric|max:9999|min:0',
+            'pin_nuevo' => 'required|numeric|max:9999|min:0'
+        ]);
+        $empleados = Empleado::all();
+        $e;
+       
+        foreach ($empleados as $empleado ){
+            //dd(substr($empleado->rut,0, strlen($empleado->rut)-2));
+            if( substr($empleado->rut,0, strlen($empleado->rut)-2) == $request->rut ){
+                $e = $empleado;
+                
+            }else{
+                return json_encode(['tipo' => 'error', 'mensaje' => 'El rut ingresado no existe']);// ERROR JSON, EL RUT INGRESADO NO EXISTE
+            }
+        }
+        if( $e->pin != $request->pin_actual )
+        {
+            return json_encode((['tipo' => 'error', 'mensaje' => 'El rut con el pin actual no coinciden']));
+        }
+        $e->pin = $request->pin_nuevo;
+        $e->save();
+        return json_encode(['tipo' => 'exito', 'mensaje' => 'El Pin ha sido cambiado exitosamente, si tiene algun problema favor contactarse con un administrador']);
     }
 }

@@ -37,7 +37,7 @@ class CreateLiquidacionsTable extends Migration
             $table->string('nombre_afp');
             $table->string('nombre_salud');
             $table->unsignedDecimal('tasa_afp', 4 ,2);
-            $table->unsignedDecimal('tasa_salud', 4, 2);
+            $table->unsignedDecimal('cotizacion_pactada', 5, 3)->nullable();
             $table->timestamps();
             //$table->unsignedTinyInteger('horas_extras');
 

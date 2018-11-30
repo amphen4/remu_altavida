@@ -137,7 +137,7 @@
                     <a class="navbar-brand">
                         Corporación Altavida
                      
-                    <h3>Registro de Ingresos</h3>
+                    <h3>Cambiar Pin</h3>
                     </a>
                 </div>
             </nav>
@@ -146,18 +146,13 @@
           <div class="form">
          
             
-              <input type="number"  id="rut" pattern="[0-9]*"   class="form-control" placeholder="Ingrese su RUN (Sin puntos ni guión)."/>
-              <input type="password"  pattern="[0-9]*" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="4" autocomplete="new-password" class="form-control" id="entradaPin" placeholder="Ingrese su PIN (Número de 4 dígitos)."/>
-              <small id="passwordHelpBlock" class="form-text text-muted">
-                Poner "Entrada" en el caso de no haber tenido un ingreso previo.
-                Poner "Salida" Habiendo ingresado previamente al recinto.
-              </small> 
+              <input type="number"  id="rut" pattern="[0-9]*"  autocomplete="new-password" class="form-control" placeholder="Ingrese su RUN (Sin puntos ni guión)."/>
+              <input type="password"  pattern="[0-9]*" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="4" autocomplete="new-password" class="form-control" id="pin_actual" placeholder="Ingrese su PIN Actual (Número de 4 dígitos)."/>
+              <input type="password"  pattern="[0-9]*" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="4" autocomplete="new-password" class="form-control" id="pin_nuevo" placeholder="Ingrese su PIN Nuevo (Número de 4 dígitos)."/>
               <br>
-              <button onclick="enviarFormulario('entrada')" style="background:#00BFFF;margin-bottom: 30px;">Entrada</button>
+              <button onclick="enviarFormulario()" style="background:green;margin-bottom: 30px;">Enviar</button>
               <br>
-              <button onclick="enviarFormulario('salida')" style="background:#DF013A;">Salida</button>
-              <br><br>
-              <a href="cambiar_pin">Cambiar Pin</a>
+              <a href="ingreso">Volver</a>
             
           </div>
         </div>
@@ -192,62 +187,41 @@
     <!--  VALIDA RUT  -->
     <script src="{{asset('js/jquery.rut-master/')}}/jquery.rut.min.js"></script>
     <script>
-      function enviarFormulario(tipo)
+      function enviarFormulario()
       {
-        if( $('#entradaPin').val() == '') { toastr.warning('Ingrese un pin');return; }
-        if( $('#rut').val() == '') { toastr.warning('Ingrese un rut');return; }
-        if(tipo == 'entrada'){
-          $.ajax({
-            method: 'POST',
-            url: "{{url('ingreso')}}",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')} ,
-            data: {
-              'rut' : $('#rut').val(),
-              'pin' : $('#entradaPin').val(),
-              'tipo': tipo ,
-            },
-            success: function(data){
-                if(JSON.parse(data).tipo == 'error'){
-                  toastr.error( JSON.parse(data).mensaje );
-                }else{
-                  toastr.success( JSON.parse(data).mensaje );
-                }
-                //toastr.success('Se acaba de registrar con exito a las: '+JSON.parse(data).hora);
-            },
-            error: function(jqXHR, textStatus){
-                console.log(jqXHR.responseText);
-                toastr.error('Ha ocurrido un error');
-            },
-            async: false
+      	flag = 1;
+      	if( $('#rut').val() == '') { toastr.warning('Ingrese un rut');flag=0;return; }
+        if( $('#pin_actual').val() == '') { toastr.warning('Ingrese su pin actual');flag=0;return; }
+        if( $('#pin_nuevo').val() == '') { toastr.warning('Ingrese su pin nuevo');flag=0;return; }
+        if(flag){
+        	$.ajax({
+		        method: 'POST',
+		        url: "{{url('cambiar_pin')}}",
+		        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')} ,
+		        data: {
+		          'rut' : $('#rut').val(),
+		          'pin_actual' : $('#pin_actual').val(),
+		          'pin_nuevo': $('#pin_nuevo').val(),
+		        },
+		        success: function(data){
+		            if(JSON.parse(data).tipo == 'error'){
+		              toastr.error( JSON.parse(data).mensaje );
+		            }else{
+		              toastr.success( JSON.parse(data).mensaje );
+		            }
+		            //toastr.success('Se acaba de registrar con exito a las: '+JSON.parse(data).hora);
+		        },
+		        error: function(jqXHR, textStatus){
+		            console.log(jqXHR.responseText);
+		            toastr.error('Ha ocurrido un error');
+		        },
+		        async: false
 
-          });
+		      });
         }
-        if(tipo == 'salida'){
-          $.ajax({
-            method: 'POST',
-            url: "{{url('ingreso')}}",
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')} ,
-            data: {
-              'rut' : $('#rut').val(),
-              'pin' : $('#entradaPin').val(),
-              'tipo': tipo ,
-            },
-            success: function(data){
-                if(JSON.parse(data).tipo == 'error'){
-                  toastr.error( JSON.parse(data).mensaje );
-                }else{
-                  toastr.success( JSON.parse(data).mensaje );
-                }
-                //toastr.success('Se acaba de registrar con exito a las: '+JSON.parse(data).hora);
-            },
-            error: function(jqXHR, textStatus){
-                console.log(jqXHR.responseText);
-                toastr.error('Ha ocurrido un error');
-            },
-            async: false
-
-          });
-        }
+		     
+        
+        
       }
       $(function() {
           /*
@@ -256,32 +230,6 @@
           }, { minimumLength: 7} );
           */
           //$("input#rut").rut();
-      })
-    </script>
-
-
-
-    <script type="text/javascript">
-    /* CONSULTA POR EMPLEADO CON PIN E ID 
-        $('#inputBusqueda').flexdatalist({
-          requestType: 'GET',
-          data: "{{url('/data/empleados/lista')}}",
-          params: {
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          },
-          minLength: 1,
-          selectionRequired: true,
-          searchByWord: true,
-          searchIn: ['rut','pin'],
-          visibleProperties: ["nombre","apellido_pat",'apellido_mat'],
-        });
-    */ 
-
-    </script>
-    
-     
-     
-    
+      });
+    </script> 
 </html>

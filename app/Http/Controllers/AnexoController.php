@@ -8,6 +8,7 @@ use PDF;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 use App\Liquidacion;
+use NumerosEnLetras;
 class AnexoController extends Controller
 {
     public function montoImpuestoRenta($monto_imponible)
@@ -100,7 +101,7 @@ class AnexoController extends Controller
         }        
 
         //dd($arregloHaberes);
-        $pdf = PDF::loadView('liquidaciones.pdf_liquidacion', ['liquidacion' => $liquidacion, 'valor_utm' => $valor_utm, 'valor_uf' => $valor_uf, 'haberes' => $arregloHaberes, 'descuentos' => $arregloDescuentos, 'ano' => 2018]);
+        $pdf = PDF::loadView('liquidaciones.pdf_liquidacion', ['liquidacion' => $liquidacion, 'valor_utm' => $valor_utm, 'valor_uf' => $valor_uf, 'haberes' => $arregloHaberes, 'descuentos' => $arregloDescuentos, 'ano' => 2018, 'monto_palabras' => NumerosEnLetras::convertir($liquidacion->monto_liquido), 'fecha' => Carbon::now()->format('d/m/Y')]);
         return $pdf->stream('Liquidacion_'.$liquidacion->id.'.pdf');
     }
     public function obtenerUF()

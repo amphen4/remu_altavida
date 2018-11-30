@@ -94,6 +94,11 @@
       <strong>Datos Empleado</strong>
       <address id="datosEmpleado">
       </address>
+      <br>
+      <div class="input-group">
+          <label >Cotizacion Pactada (UF):<label><p style="color:red">*</p></label></label>
+          <input type="number"  id="read_cotizacion_pactada"   class="form-control" readonly>
+      </div>
     </div>
     <!-- /.col -->
     <div class="col-sm-4 invoice-col">
@@ -115,7 +120,7 @@
       <br>
       <div class="input-group">
           <label >Dias Semanales:<label><p style="color:red">*</p></label></label>
-          <input type="number" id="inputDiasSemanales" max="7" min="1" id="" class="form-control" value="5" name="dias_semanales" placeholder="" required>
+          <input type="number" id="inputDiasSemanales" max="7" min="1"  class="form-control" value="5" name="dias_semanales" placeholder="" required>
       </div>
       
     </div>
@@ -557,6 +562,8 @@ $(document).ready(function(){
   var isapre_porcentaje = 0;
   var id_global = 0;
   var sueldo_base_global = 0;
+  var cotizacion_pactada = null;
+  var isapre_nombre;
   function cargarContrato(id){
     $('#contrato').fadeOut();
     $('#contrato').hide();
@@ -570,9 +577,11 @@ $(document).ready(function(){
         id_global = datos.id;
         console.log('la id del empleado es: '+id);
         $('#bAfp').html('AFP: '+datos.afp_nombre+' ('+datos.afp_porcentaje+'%)');
-        $('#bIsapre').html('Salud: '+datos.isapre_nombre+' ('+datos.isapre_porcentaje+'%)');
+        $('#bIsapre').html('Prevision: '+datos.isapre_nombre+'');
+        isapre_nombre = datos.isapre_nombre;
         afp_porcentaje = parseFloat(datos.afp_porcentaje);
         isapre_porcentaje = parseFloat(datos.isapre_porcentaje);
+        cotizacion_pactada = parseFloat(datos.cotizacion_pactada);
         $('#datosEmpleado').html(
             datos.nombre+' '+datos.apellido_pat+' '+datos.apellido_mat+'<br>'+
             '<strong>Cargo:</strong> '+datos.cargo+'<br>'+
@@ -585,6 +594,7 @@ $(document).ready(function(){
         $('#pBancoCuenta').html('Nombre Banco: '+datos.cta_banco_nombre);
         $('#pCuenta').html('Nro de Cuenta: '+datos.cta_banco_nro);
         $('#pRut').html('Rut: '+datos.rut);
+        $('#read_cotizacion_pactada').val(datos.cotizacion_pactada);
         $('#divLoading').hide();
         $('#contrato').fadeIn();
         
@@ -747,7 +757,12 @@ $(document).ready(function(){
       });
       $('#totalOtrosDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
       var total_descuento_afp = total_imponible * (afp_porcentaje/100);
-      var total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
+      if(isapre_nombre == 'FONASA'){
+          var total_descuento_isapre = total_imponible * (7/100);
+      }else{
+          var total_descuento_isapre = cotizacion_pactada * valorUf;
+      }
+      
       total_descuentos += total_descuento_afp;
       total_descuentos += total_descuento_isapre;
       total_descuentos += impuesto_renta;
@@ -792,7 +807,7 @@ $(document).ready(function(){
   
   $('#tipoDescuento').change(function(){
     console.log($(this).val());
-    if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){
+    if( $(this).val() == 'MONTO' ){
       //$('#factorDescuento').val('NINGUNO');
       //$('#factorDescuento').prop('disabled',true);
       //("#formularioDescuento").find('input[name="valor"]').val('');

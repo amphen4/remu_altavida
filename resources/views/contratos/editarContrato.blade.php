@@ -235,7 +235,7 @@
   <!-- this row will not appear when printing -->
   <div class="row no-print">
     <div class="col-xs-12">
-      <a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+      
       <button type="button" id="botonGuardarContrato" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Guardar Contrato
       </button>
     </div>
@@ -520,6 +520,7 @@
 <script>
   
 $(document).ready(function(){
+
   var cake = $('.datepickerHaber').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd'
@@ -548,11 +549,39 @@ $(document).ready(function(){
   //var isapre_porcentaje = 0;
   var id_global = 0;
   var sueldo_base_global = 0;
-
+  var cotizacion_pactada = null;
+  var uf_global = 0;
+  var utm_global = 0;
+  $.ajax({
+    url: "{{url('obtener_uf')}}",
+    success: function(data){
+      uf_global = JSON.parse(data);
+      console.log('El valor de la uf hoy es: '+uf_global);
+    },
+    error: function(jqXHR, textStatus){
+      console.log(jqXHR.responseText);
+      toastr.error('Ha ocurrido un error');
+    },
+    async: false
+  });
+  $.ajax({
+    url: "{{url('obtener_utm')}}",
+    success: function(data){
+      utm_global = JSON.parse(data);
+      console.log('El valor de la utm hoy es: '+utm_global);
+    },
+    error: function(jqXHR, textStatus){
+      console.log(jqXHR.responseText);
+      toastr.error('Ha ocurrido un error');
+    },
+    async: false
+  });
+  cotizacion_pactada = parseFloat('{{$contrato->empleado()->first()->cotizacion_pactada}}');
+  var isapre_nombre = '{{$contrato->empleado()->first()->isapre_nombre}}';
   var afp_porcentaje = parseFloat('{{$contrato->empleado()->first()->afp()->first()->porcentaje}}');
-  var isapre_porcentaje = parseFloat('{{$contrato->empleado()->first()->isapre()->first()->porcentaje}}');
+  //var isapre_porcentaje = parseFloat('{{$contrato->empleado()->first()->isapre()->first()->porcentaje}}');
   $('#bAfp').html('AFP: '+'{{$contrato->empleado()->first()->afp_nombre}}'+' ('+'{{$contrato->empleado()->first()->afp_porcentaje}}'+'%)');
-  $('#bIsapre').html('Salud: '+'{{$contrato->empleado()->first()->isapre_nombre}}'+' ('+'{{$contrato->empleado()->first()->isapre_porcentaje}}'+'%)');
+  $('#bIsapre').html('Salud: '+'{{$contrato->empleado()->first()->isapre_nombre}}'+'');
   function cargarContrato(id){
     $('#contrato').fadeOut();
     $('#contrato').hide();
@@ -568,7 +597,7 @@ $(document).ready(function(){
         $('#bAfp').html('AFP: '+datos.afp_nombre+' ('+datos.afp_porcentaje+'%)');
         $('#bIsapre').html('Salud: '+datos.isapre_nombre+' ('+datos.isapre_porcentaje+'%)');
         afp_porcentaje = parseFloat(datos.afp_porcentaje);
-        isapre_porcentaje = parseFloat(datos.isapre_porcentaje);
+        //isapre_porcentaje = parseFloat(datos.isapre_porcentaje);
         $('#datosEmpleado').html(
             datos.nombre+' '+datos.apellido_pat+' '+datos.apellido_mat+'<br>'+
             '<strong>Cargo:</strong> '+datos.cargo+'<br>'+
@@ -719,7 +748,13 @@ $(document).ready(function(){
       });
       $('#totalOtrosDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
       var total_descuento_afp = total_imponible * (afp_porcentaje/100);
-      var total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
+      let total_descuento_isapre = 0;
+      if('FONASA' == isapre_nombre){
+        total_descuento_isapre = total_imponible * (7/100);
+      }else{
+        total_descuento_isapre = cotizacion_pactada * uf_global;
+      }
+            
       total_descuentos += total_descuento_afp;
       total_descuentos += total_descuento_isapre;
       total_descuentos += impuesto_renta;
@@ -733,7 +768,7 @@ $(document).ready(function(){
 
   $('#tipoHaber').change(function(){
     console.log($(this).val());
-    if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){
+    if( $(this).val() == 'MONTO' ){
       //$('#factorHaber').val('NINGUNO');
       //$('#factorHaber').prop('disabled',true);
       //document.getElementById("formularioHaber").elements.namedItem("valor").value = '';
@@ -763,7 +798,7 @@ $(document).ready(function(){
   
   $('#tipoDescuento').change(function(){
     console.log($(this).val());
-    if( $(this).val() == 'MONTO' || $(this).val() == 'UF' || $(this).val() == 'UTM' ){
+    if( $(this).val() == 'MONTO'  ){
       //$('#factorDescuento').val('NINGUNO');
       //$('#factorDescuento').prop('disabled',true);
       //("#formularioDescuento").find('input[name="valor"]').val('');
@@ -962,7 +997,7 @@ $(document).ready(function(){
   });
   $('#botonGuardarContrato').on('click',function(){
     console.log('comenzo a guardarContrato');
-    var sueldo_base_ajax = parseInt( (sueldo_base.getRawValue().slice(2)=='')?'0':sueldo_base.getRawValue().slice(2) );
+    var sueldo_base_ajax = parseInt( (sueldo_base_cleave.getRawValue().slice(2)=='')?'0':sueldo_base_cleave.getRawValue().slice(2) );
     var fechaDeInicio = $('#datepickerFechaInicio').val();
     if( sueldo_base_ajax == 0 ) { alert('Debe ingresar un valor en el campo: Sueldo Base.'); return;}
     if( fechaDeInicio == '' ) { alert('Debe ingresar un valor en el campo: Sueldo Fecha de Inicio.'); return;}
@@ -970,7 +1005,7 @@ $(document).ready(function(){
     var haberes = [];
     var descuentos = [];
     console.log(id_global);
-    var empleado = id_global;
+    var empleado = {{$contrato->empleado()->first()->id}};
     $('#bodyTablaHaberes > tr').each(function(){
       console.log('recorriendo tabla haberes');
       //console.log('imprimiendo la id '+$(this).find('#id').html());
@@ -996,7 +1031,7 @@ $(document).ready(function(){
     });
     console.log('Se enviara el contrato por ajax');
     $.ajax({
-      url: "{{url('/contratos/')}}",
+      url: "{{url('/contratos/edit')}}/"+"{{$contrato->id}}",
       method: "POST",
       headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

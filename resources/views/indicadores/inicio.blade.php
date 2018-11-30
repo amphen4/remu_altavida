@@ -70,6 +70,7 @@
 	              </div>
 	            </div>
 	        </div>
+	        <!--
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="box">
@@ -77,7 +78,7 @@
 			              <h3 class="box-title">Registro de indicadores económicos en el Sistema</h3>
 			              
 			            </div>
-			            <!-- /.box-header -->
+			            
 			            <div class="box-body">
 			              <table id="example2" class="table table-bordered table-striped">
 			                <thead>
@@ -91,23 +92,16 @@
 			                </tr>
 			                </thead>
 			                <tbody>
-			                <!--
-			                <tr>
-			                  <td></td>
-			                  <td></td>
-			                  <td></td>
-			                  <td></td>
-			                </tr>
-			                -->
+			                
 			                </tbody>
 			                <tfoot>
 			                </tfoot>
 			              </table>
 			            </div>
-			            <!-- /.box-body -->
+			            
 			         </div>
 				</div>
-			</div>
+			</div> -->
 @endsection
 @section('js')
 

@@ -40,6 +40,8 @@ class CreateEmpleadosTable extends Migration
             $table->date('fecha_ingreso');
             $table->date('fecha_retiro')->nullable();
             $table->date('fecha_renovacion')->nullable();
+
+
             // ==================
             // Llaves Foraneas  
             // ==================
@@ -54,6 +56,8 @@ class CreateEmpleadosTable extends Migration
                   ->references('id')->on('afps')
                   ->onDelete('restrict')
                   ->onUpdate('cascade');
+
+            $table->unsignedDecimal('cotizacion_pactada', 5, 3)->nullable();
 
             $table->integer('isapre_id')->unsigned()->nullable();
             $table->foreign('isapre_id')

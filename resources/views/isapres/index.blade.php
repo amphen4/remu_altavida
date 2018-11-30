@@ -20,7 +20,7 @@
                         <tr>
                             <th style="width:90px">Opciones</th>
                             <th>Nombre</th>
-                            <th>Porcentaje</th>
+                            <!--<th>Porcentaje</th>-->
                         </tr>
                         </thead>
                         <tbody>
@@ -49,7 +49,7 @@
             "columns": [
                 { "data": "opciones" },
                 { "data": "nombre" },
-                { "data": "porcentaje"},
+                /*{ "data": "porcentaje"},*/
             ]
         });
         tabla.on( 'draw', function () {

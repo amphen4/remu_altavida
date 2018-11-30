@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Isapre extends Model
 {
     protected $table = 'isapres';
-    protected $fillable = ['nombre','porcentaje'];
+    protected $fillable = ['nombre'];
     public $timestamps = false;
     protected $appends = ['opciones'];
     public function empleados()

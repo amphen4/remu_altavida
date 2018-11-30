@@ -35,10 +35,11 @@
                                     <label for="exampleInputEmail1">Nombre</label> <label><p style="color:red">*</p></label>
                                     <input type="text" class="form-control" name="nombre" value="{{$isapre->nombre}}" placeholder="Ingrese un nombre. *máx. 190 caracteres" required>
                                 </div>
+                                <!--
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Porcentaje</label> <label><p style="color:red">*</p></label>
                                     <input type="number" placeholder="1.0" step="0.01" min="0" max="100" class="form-control" name="porcentaje" placeholder="Ingrese un porcentaje de 0 a 100" value="{{$isapre->porcentaje}}" required>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- /.box-body -->
                         </div>

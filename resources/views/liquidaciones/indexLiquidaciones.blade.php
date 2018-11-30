@@ -571,6 +571,8 @@ input[readonly]{
         var isapre_porcentaje;
         var utm_global = 0;
         var uf_global = 0;
+        var isapre_nombre;
+        var cotizacion_pactada = null;
         function reCalcular(){
             console.log('se invoco la funcion reCalcular()');
             let totalHaberesImponibles = 0;
@@ -669,7 +671,13 @@ input[readonly]{
 
             $('#totalOtrosDescuentos').html( '$ '+ total_descuentos.toLocaleString('de-DE'));
             let total_descuento_afp = total_imponible * (afp_porcentaje/100);
-            let total_descuento_isapre = total_imponible * (isapre_porcentaje/100);
+            let total_descuento_isapre = 0;
+            if('FONASA' == isapre_nombre){
+              total_descuento_isapre = total_imponible * (7/100);
+            }else{
+              total_descuento_isapre = cotizacion_pactada * uf_global;
+            }
+            
             total_descuentos += total_descuento_afp;
             total_descuentos += total_descuento_isapre;
             total_descuentos += impuesto_renta;
@@ -749,13 +757,15 @@ input[readonly]{
                 success: function(data){
                   datos = JSON.parse(data);
                   idEmpleado = datos['empleado'].id;
+                  cotizacion_pactada = datos['empleado'].cotizacion_pactada;
                   sueldoBase = datos['contrato'].sueldo_base;
                   afp_porcentaje = parseFloat(datos['empleado'].afp_porcentaje);
-                  isapre_porcentaje = parseFloat(datos['empleado'].isapre_porcentaje);
+                  //isapre_porcentaje = parseFloat(datos['empleado'].isapre_porcentaje);
                   $('#nombreEmpleado').html('Nombre: '+datos['empleado'].nombre+' '+datos['empleado'].apellido_pat+' '+datos['empleado'].apellido_mat);
                   $('#rutEmpleado').html('Rut: '+datos['empleado'].rut);
                   $('#bAfp').html('AFP: '+datos['empleado'].afp_nombre+' ('+datos['empleado'].afp_porcentaje+'%)');
-                  $('#bIsapre').html('Salud: '+datos['empleado'].isapre_nombre+' ('+datos['empleado'].isapre_porcentaje+'%)');
+                  isapre_nombre = datos['empleado'].isapre_nombre;
+                  $('#bIsapre').html('Salud: '+datos['empleado'].isapre_nombre+'');
                   //$('.filaSelect').prop('hidden', false);
                   //$('#selectPeriodo').empty();
                   moment.locale('es'); 

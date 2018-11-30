@@ -69,6 +69,7 @@ Route::get('/registros_horas','AdminRegistrosController@index')->name('registros
 Route::get('/registros_horas/data','AdminRegistrosController@data');
 Route::post('/registros_horas','AdminRegistrosController@store');
 Route::get('/data/registrosEmpleado/{id}', 'AdminRegistrosController@enviarDataRegistrosEmpleado');
+Route::get('/libro_asistencias_pdf/{idEmpleado}/{desde}/{hasta}', 'AdminRegistrosController@libro_asistencias_pdf');
 // ROTAS DE ADMINISTRACION DE CONTRATOS EN EL SISTEMA ==================
 Route::get('/contratos','AdminContratosController@index');
 Route::get('/contratos/crear','AdminContratosController@create');
@@ -77,6 +78,7 @@ Route::get('/contratos/data','AdminContratosController@data');
 Route::get('/contratos/data_l','AdminContratosController@data_l');
 Route::get('/contratos/{id}','AdminContratosController@show');
 Route::get('contratos/edit/{id}', 'AdminContratosController@edit');
+Route::post('contratos/edit/{id}', 'AdminContratosController@update');
 // RUTAS DE ADMINISTRACION DE HABERES EN EL SISTEMA ====================
 Route::post('/haberes','AdminHaberesController@store');
 Route::get('/haberes/data','AdminHaberesController@data');
@@ -113,6 +115,8 @@ Route::post('marcarLiquidacionPagado', 'AdminLiquidacionesController@marcarLiqui
 // Registro
 Route::get('ingreso', 'IngresoController@index');
 Route::post('ingreso', 'IngresoController@registro');
+Route::get('cambiar_pin', 'IngresoController@cambiar_pin_mostrar');
+Route::post('cambiar_pin', 'IngresoController@cambiar_pin_guardar');
 // Data Impuesto a la renta
 Route::get('imp_renta/{monto_imponible}', 'AnexoController@montoImpuestoRenta');
 // Genera PDF
@@ -123,3 +127,7 @@ Route::post('horas_trabajadas', 'AdminRegistrosController@enviarDataHorasTrabaja
 // Obtener valores uf y utm actuales
 Route::get('obtener_uf','AnexoController@obtenerUF');
 Route::get('obtener_utm', 'AnexoController@obtenerUTM');
+// Matenedor de parametros imp renta
+Route::get('rentas', 'RentasController@index');
+Route::get('rentas_data', 'RentasController@data');
+Route::post('rentas', 'RentasController@store');

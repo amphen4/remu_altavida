@@ -16,7 +16,7 @@ class CreateIsapresTable extends Migration
         Schema::create('isapres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->unsignedDecimal('porcentaje',4,2);
+            
         });
     }
 

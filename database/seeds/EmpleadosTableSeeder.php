@@ -38,7 +38,7 @@ class EmpleadosTableSeeder extends Seeder
         
         $empleado->isapre_id = 1;
         $empleado->afp_id = 1;
-
+        
         $empleado->save();
     }
 }

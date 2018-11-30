@@ -354,6 +354,13 @@ class ComposerStaticInit91bceb9fd5688797247dbacde9653d21
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
             ),
         ),
+        'N' => 
+        array (
+            'NumerosEnLetras' => 
+            array (
+                0 => __DIR__ . '/..' . '/villca/numeros-en-letras/src',
+            ),
+        ),
         'M' => 
         array (
             'Mockery' => 
@@ -408,6 +415,7 @@ class ComposerStaticInit91bceb9fd5688797247dbacde9653d21
         'App\\Http\\Controllers\\EventsController' => __DIR__ . '/../..' . '/app/Http/Controllers/EventsController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\IngresoController' => __DIR__ . '/../..' . '/app/Http/Controllers/IngresoController.php',
+        'App\\Http\\Controllers\\RentasController' => __DIR__ . '/../..' . '/app/Http/Controllers/RentasController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\CheckRole' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckRole.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -2261,6 +2269,7 @@ class ComposerStaticInit91bceb9fd5688797247dbacde9653d21
         'Monolog\\ResettableInterface' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/ResettableInterface.php',
         'Monolog\\SignalHandler' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/SignalHandler.php',
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
+        'NumerosEnLetras' => __DIR__ . '/..' . '/villca/numeros-en-letras/src/NumerosEnLetras.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Inspector' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Inspector.php',

@@ -32,7 +32,8 @@ class Empleado extends Model
     						'empresa_id',
                             'isapre_id',
                             'afp_id',
-                            'pin'
+                            'pin',
+                            'cotizacion_pactada'
     					];
      public $timestamps = false;
      public $appends = ['afp_nombre','isapre_nombre','isapre_porcentaje','afp_porcentaje', 'contrato_id', 'contrato_fecha_inicio'];

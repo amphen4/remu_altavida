@@ -60,7 +60,8 @@ class AdminEmpleadosController extends Controller
                                     'fecha_retiro' => 'nullable|date',
                                     'fecha_renovacion' => 'nullable|date',
                                     'afp' => 'required|numeric|exists:afps,id',
-                                    'isapre' => 'required|numeric|exists:isapres,id'
+                                    'isapre' => 'required|numeric|exists:isapres,id',
+                                    'cotizacion_pactada' => 'nullable|numeric|min:0'
                                   ]);
         $nuevo = new Empleado();
         $nuevo->rut = $request->rut ;
@@ -85,6 +86,7 @@ class AdminEmpleadosController extends Controller
         $nuevo->fecha_ingreso = $request->fecha_ingreso ;
         if(!empty($request->fecha_retiro)) { $nuevo->fecha_retiro = $request->fecha_retiro; }
         if(!empty($request->fecha_renovacion)) { $nuevo->fecha_renovacion = $request->fecha_renovacion; }
+        if(!empty($request->cotizacion_pactada)) { $nuevo->cotizacion_pactada = $request->cotizacion_pactada; }
         $nuevo->empresa_id = 1;
         $isapre = Isapre::find($request->isapre);
         $nuevo->isapre()->associate($isapre);
@@ -135,8 +137,10 @@ class AdminEmpleadosController extends Controller
                                     'afp' => 'required|numeric|exists:afps,id',
                                     'isapre' => 'required|numeric|exists:isapres,id',
                                     'pin' => 'required|numeric|max:9999|min:0',
-                                    'perfil' => 'nullable|image|max:3000|mimes:jpeg'
+                                    'perfil' => 'nullable|image|max:3000|mimes:jpeg',
+                                    'cotizacion_pactada' => 'nullable|numeric|min:0'
                                   ]);
+        //dd($request);
         if($request->perfil)
         {
             $file = $request->file('perfil');
@@ -168,6 +172,7 @@ class AdminEmpleadosController extends Controller
         $empleado->fecha_ingreso = $request->fecha_ingreso ;
         if(!empty($request->fecha_retiro)) { $empleado->fecha_retiro = $request->fecha_retiro; }
         if(!empty($request->fecha_renovacion)) { $empleado->fecha_renovacion = $request->fecha_renovacion; }
+        if(!empty($request->cotizacion_pactada)) { $empleado->cotizacion_pactada = $request->cotizacion_pactada; }
         $empleado->empresa_id = 1;
         $isapre = Isapre::find($request->isapre);
         $empleado->isapre()->dissociate();

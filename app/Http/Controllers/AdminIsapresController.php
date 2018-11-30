@@ -44,13 +44,13 @@ class AdminIsapresController extends Controller
     {
         $request->validate([
             'nombre' => 'required|string|max:190',
-            'porcentaje' => 'required|numeric|min:0|max:100',
+            //'porcentaje' => 'required|numeric|min:0|max:100',
         ]);
 
 
         $nuevo = new Isapre();
         $nuevo->nombre = $request->nombre ;
-        $nuevo->porcentaje = $request->porcentaje ;
+        //$nuevo->porcentaje = $request->porcentaje ;
         $nuevo->save();
         return redirect()->route('isapres.index')->with('exito','La isapre ha sido agregada con exito!');
 
@@ -91,11 +91,11 @@ class AdminIsapresController extends Controller
         $isapre = Isapre::findOrFail($id);
         $request->validate([
             'nombre' => 'required|string|max:190',
-            'porcentaje' => 'required|numeric|min:0|max:100',
+            //'porcentaje' => 'required|numeric|min:0|max:100',
         ]);
 
         $isapre->nombre = $request->nombre;
-        $isapre->porcentaje = $request->porcentaje;
+        //$isapre->porcentaje = $request->porcentaje;
 
         $isapre->save();
 

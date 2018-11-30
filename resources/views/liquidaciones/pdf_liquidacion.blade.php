@@ -35,7 +35,7 @@
 	<tr>
 		<td align="left"><strong>Dias Trabajados: </strong> {{$liquidacion->dias_trabajados}}</td>
 		<td></td>
-		<td align="left"><strong></strong> </td>
+		<td align="left"><strong>Cotización Pactada: </strong> @if($liquidacion->empleado()->first()->afp()->first()->nombre != 'FONASA'){{$liquidacion->empleado()->first()->cotizacion_pactada}} U.F @endif</td>
 	</tr>
 	<tr>
 		<td align="left"><strong></strong> </td>
@@ -119,7 +119,7 @@
 <h4 align="center">Descuentos</h4>
 <table style="width: 100%;">
 	<tr>
-		<td align="left">Salud: {{$liquidacion->nombre_salud.'('.number_format($liquidacion->tasa_salud, 2, ',', '.').'%)'}}</td>
+		<td align="left">Salud: {{$liquidacion->nombre_salud.''}}</td>
 		<td align="right">$ {{number_format($liquidacion->total_salud, 0, ',', '.')}}</td>
 	</tr>
 	<tr>
@@ -172,5 +172,25 @@
 	<tr>
 		<td></td>
 		<td align="right"><strong>Total Liquido: </strong> $ {{number_format($liquidacion->monto_liquido, 0, ',', '.')}}</td>
+	</tr>
+	<br>
+	<tr>
+		<td align="left"><strong>Son: </strong> {{$monto_palabras}}</td>
+		<td></td>
+	</tr>
+</table>
+
+Certifico que he recibido de CORPORACION ALTAVIDA, a mi entera satisfacción el saldo indicado en la presente liquidación y no tengo cargo ni cobros posteriores que hacer.
+<br><br>
+<table style="width:100%;">
+	<tr>
+		<td align="left">Fecha de emisión: {{$fecha}}</td>
+		<td align="right"></td>
+	</tr>
+</table>
+<table style="width:100%;">
+	<tr>
+		<td align="left"></td>
+		<td align="right">___________________<br>He recibido conforme</td>
 	</tr>
 </table>

@@ -263,7 +263,12 @@ class AdminLiquidacionesController extends Controller
         // Guardando la Liquidacion
         $nuevaLiquidacion = new Liquidacion();
         $nuevaLiquidacion->impuesto_renta = $impuesto_renta;
-        $nuevaLiquidacion->total_salud = $total_imponible * ($empleado->isapre()->first()->porcentaje/100.0); 
+        if ($empleado->isapre()->first()->nombre == 'FONASA'){
+            $nuevaLiquidacion->total_salud = $total_imponible * (7/100.0); 
+        }else{
+            $nuevaLiquidacion->total_salud = $empleado->cotizacion_pactada * $valor_uf; 
+        }
+        
         $nuevaLiquidacion->total_afp = $total_imponible * ($empleado->afp()->first()->porcentaje/100.0);
         $nuevaLiquidacion->total_haberes = $total_haberes;
         $nuevaLiquidacion->descuentos_o = $descuentos_o;
@@ -321,7 +326,10 @@ class AdminLiquidacionesController extends Controller
         $nuevaLiquidacion->nombre_afp = $empleado->afp()->first()->nombre;
         $nuevaLiquidacion->nombre_salud = $empleado->isapre()->first()->nombre;
         $nuevaLiquidacion->tasa_afp = $empleado->afp()->first()->porcentaje;
-        $nuevaLiquidacion->tasa_salud = $empleado->isapre()->first()->porcentaje;
+        if($empleado->afp()->first()->nombre != 'FONASA'){
+            $nuevaLiquidacion->cotizacion_pactada = $empleado->cotizacion_pactada;
+        }
+        
         $nuevaLiquidacion->save();
 
         return json_encode(1);
