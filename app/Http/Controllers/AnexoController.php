@@ -101,7 +101,7 @@ class AnexoController extends Controller
         }        
 
         //dd($arregloHaberes);
-        $pdf = PDF::loadView('liquidaciones.pdf_liquidacion', ['liquidacion' => $liquidacion, 'valor_utm' => $valor_utm, 'valor_uf' => $valor_uf, 'haberes' => $arregloHaberes, 'descuentos' => $arregloDescuentos, 'ano' => 2018, 'monto_palabras' => NumerosEnLetras::convertir($liquidacion->monto_liquido), 'fecha' => Carbon::now()->format('d/m/Y')]);
+        $pdf = PDF::loadView('liquidaciones.pdf_liquidacion', ['liquidacion' => $liquidacion, 'valor_utm' => $valor_utm, 'valor_uf' => $valor_uf, 'haberes' => $arregloHaberes, 'descuentos' => $arregloDescuentos, 'ano' => Carbon::createFromFormat('Y-m-d', $liquidacion->fecha_inicio)->format('Y'), 'monto_palabras' => NumerosEnLetras::convertir($liquidacion->monto_liquido), 'fecha' => Carbon::now()->format('d/m/Y')]);
         return $pdf->stream('Liquidacion_'.$liquidacion->id.'.pdf');
     }
     public function obtenerUF()

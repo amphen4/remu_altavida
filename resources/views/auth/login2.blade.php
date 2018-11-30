@@ -66,15 +66,9 @@
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> Recordar datos
-            </label>
-          </div>
-        </div>
+        
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-12">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Ingresar</button>
         </div>
         <!-- /.col -->
@@ -89,7 +83,7 @@
         Google+</a>
     </div> -->
     <!-- /.social-auth-links -->
-
+    <br>
     <a href="{{asset('password/reset')}}">Olvidé mi contraseña</a><br>
     <!-- <a href="#" class="text-center">Register a new membership</a> -->
 

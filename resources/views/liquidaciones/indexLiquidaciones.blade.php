@@ -540,9 +540,9 @@ input[readonly]{
         
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary "   id="botonGenerarPdf">
+        <!--<button type="button" class="btn btn-primary "   id="botonGenerarPdf">
                 <i class="fa fa-file-pdf-o" style="margin-right: 5px;"></i> Generar PDF
-              </button>
+              </button>-->
         <button type="button" id="botonAceptar" class="btn btn-primary">Registrar en el Sistema</button>
       </div>
       
