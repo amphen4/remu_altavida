@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>Sistema de Remuneraciones - Corporacion Altavida</title>
+  <title>Sistema de Remuneraciones - {{env('NOMBRE_APLICACION')}}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -37,9 +37,9 @@
     <!-- Logo -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>C</b>AV</span>
+      <span class="logo-mini"><img src="altavida.png" style="width: 50px; height:50px;"></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Corporación</b>Altavida</span>
+      <span class="logo-lg">{{env('NOMBRE_EMPRESA')}}</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
