@@ -127,7 +127,7 @@
 		<td align="right">$ {{number_format($liquidacion->total_afp, 0, ',', '.')}}</td>
 	</tr>
 	<tr>
-		<td align="left">Impuesto Unico 2da Cat. ()</td>
+		<td align="left">Impuesto Unico 2da Cat. </td>
 		<td align="right">$ {{number_format($liquidacion->impuesto_renta, 0, ',', '.')}}</td>
 	</tr>
 	@foreach($descuentos['descuentos'] as $haber)

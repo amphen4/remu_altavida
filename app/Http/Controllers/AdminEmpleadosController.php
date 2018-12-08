@@ -26,24 +26,24 @@ class AdminEmpleadosController extends Controller
 
     public function index()
     {
-    	return view('empleados.index');
+        return view('empleados.index');
     }
 
     public function enviarLista()
     {
-    	
-    	return Empleado::all()->toJson();
+        
+        return Empleado::all()->toJson();
     }
     public function create(Request $request)
     {
-    	//dd($request);
+        //dd($request);
         $this->validate($request, [ 'rut' => 'required|string|max:10',
-        						    'nombre' => 'required|string',
-        						    'apellido_pat' => 'required|string',
-        						    'apellido_mat' => 'required|string',
-        						    'direccion' => 'required|string',
-        						    'comuna' => 'required|string',
-        						    'ciudad' => 'required|string',
+                                    'nombre' => 'required|string',
+                                    'apellido_pat' => 'required|string',
+                                    'apellido_mat' => 'required|string',
+                                    'direccion' => 'required|string',
+                                    'comuna' => 'required|string',
+                                    'ciudad' => 'required|string',
                                     'email' => 'required|string|email|max:100',
                                     'telefono' => 'required|string', 
                                     'celular' => 'required|string',
@@ -61,7 +61,8 @@ class AdminEmpleadosController extends Controller
                                     'fecha_renovacion' => 'nullable|date',
                                     'afp' => 'required|numeric|exists:afps,id',
                                     'isapre' => 'required|numeric|exists:isapres,id',
-                                    'cotizacion_pactada' => 'nullable|numeric|min:0'
+                                    'cotizacion_pactada' => 'nullable|numeric|min:0',
+                                    'pin' => 'required|numeric|min:0|max:9999'
                                   ]);
         $nuevo = new Empleado();
         $nuevo->rut = $request->rut ;
@@ -80,6 +81,7 @@ class AdminEmpleadosController extends Controller
         $nuevo->cargo = $request->cargo ;
         $nuevo->titulo = $request->titulo ;
         $nuevo->pais = $request->pais ;
+        $nuevo->pin = $request->pin;
         if(!empty($request->nombre_banco)) { $nuevo->cta_banco_nombre = $request->nombre_banco; }
         if(!empty($request->tipo_cuenta)) { $nuevo->cta_banco_tipo = $request->tipo_cuenta; }
         if(!empty($request->nro_cuenta)) { $nuevo->cta_banco_nro = $request->nro_cuenta; }
@@ -97,17 +99,17 @@ class AdminEmpleadosController extends Controller
     }
     public function enviarFoto($id){
         //dd('wea');
-    	$empleado = Empleado::findOrFail($id);
-    	if(Storage::disk('fotos-empleados')->exists($empleado->id.'.jpg'))
-    	{
-    		return new Response(Storage::disk('fotos-empleados')->get($empleado->id.'.jpg'),200);
-    	} 
-    	return new Response(Storage::disk('fotos-empleados')->get('sinfoto.jpg'),200);
+        $empleado = Empleado::findOrFail($id);
+        if(Storage::disk('fotos-empleados')->exists($empleado->id.'.jpg'))
+        {
+            return new Response(Storage::disk('fotos-empleados')->get($empleado->id.'.jpg'),200);
+        } 
+        return new Response(Storage::disk('fotos-empleados')->get('sinfoto.jpg'),200);
     }
     public function enviarDatosEmpleadoJson($id)
     {
-    	$empleado = Empleado::findOrFail($id);
-    	return $empleado->toJson();
+        $empleado = Empleado::findOrFail($id);
+        return $empleado->toJson();
     }
     public function update(Request $request, $id)
     {
@@ -166,6 +168,7 @@ class AdminEmpleadosController extends Controller
         $empleado->cargo = $request->cargo ;
         $empleado->titulo = $request->titulo ;
         $empleado->pais = $request->pais ;
+        $empleado->pin = $request->pin;
         if(!empty($request->nombre_banco)) { $empleado->cta_banco_nombre = $request->nombre_banco; }
         if(!empty($request->tipo_cuenta)) { $empleado->cta_banco_tipo = $request->tipo_cuenta; }
         if(!empty($request->nro_cuenta)) { $empleado->cta_banco_nro = $request->nro_cuenta; }

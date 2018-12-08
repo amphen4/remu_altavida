@@ -26,11 +26,11 @@ class AdminLiquidacionesController extends Controller
     }
     public function index()
     {
-    	return view('liquidaciones.indexLiquidaciones', ['proximas_liquidaciones' => Contrato::where('estado', 'ACTIVO')->get()->sortBy('fecha_inicio_proxima_liquidacion')->take(3)]);
+        return view('liquidaciones.indexLiquidaciones', ['proximas_liquidaciones' => Contrato::where('estado', 'ACTIVO')->get()->sortBy('fecha_inicio_proxima_liquidacion')->take(3)]);
     }
     public function data()
     {
-    	$asi['data'] = Liquidacion::all()->toArray();
+        $asi['data'] = Liquidacion::all()->toArray();
         return json_encode($asi);
     }
     public function detalleProxLiquidacion(Request $request)
@@ -259,7 +259,12 @@ class AdminLiquidacionesController extends Controller
         }
         // agregando afp e isapre
         $total_descuentos+= $total_imponible * ($empleado->afp()->first()->porcentaje/100.0);
-        $total_descuentos+= $total_imponible * ($empleado->isapre()->first()->porcentaje/100.0); 
+        //$total_descuentos+= $total_imponible * ($empleado->isapre()->first()->porcentaje/100.0);
+        if ($empleado->isapre()->first()->nombre == 'FONASA'){
+            $total_descuentos+= $total_imponible * (7/100.0); 
+        }else{
+            $total_descuentos+=  $empleado->cotizacion_pactada * $valor_uf; 
+        } 
         // Guardando la Liquidacion
         $nuevaLiquidacion = new Liquidacion();
         $nuevaLiquidacion->impuesto_renta = $impuesto_renta;

@@ -375,7 +375,7 @@
 					                  <div class="input-group-addon">
 					                    <i class="fa fa-key"></i>
 					                  </div>
-					                  <input id="editarPin" type="text" class="form-control pull-right" name="pin"  required>
+					                  <input id="editarPin" type="number" min="0" max="9999" class="form-control pull-right" name="pin"  required>
 					                </div>
 				                </div>
 				            </div>
@@ -450,25 +450,19 @@
                 	<div class="col-lg-6">
 		                <div class="input-group">
 	                        <label >RUN:</label><label><p style="color:red">*</p></label>
-                  			<input type="text" class="form-control" name="rut" placeholder="Formato: XXXXXXXX-X" required>
+                  			<input type="text" class="form-control" id="ingresaRut" name="rut" placeholder="Formato: XXXXXXXX-X" required>
 		                </div>
 		            </div>
 		            <div class="col-lg-6">
 		                <div class="input-group">
 	                        <label >PIN:</label><label><p style="color:red">*</p></label>
-                  			   <input type="text"  pattern="[0-9]*" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="4" autocomplete="new-password" class="form-control" id="entradaPin" placeholder="Ingresar PIN (Número de 4 dígitos)."/>
+                  			   <input type="text"  pattern="[0-9]*"  inputmode="numeric" minlength="4" maxlength="4"  class="form-control" name="pin" id="entradaPin" placeholder="Ingresar PIN (Número de 4 dígitos)."/>
 		                </div>
 		            </div>
 		        </div>
 		        <br>
             	<div class="row">
-                	<div class="col-lg-6">
-		                <div class="input-group">
-	                        <label >Confirmación PIN:</label><label><p style="color:red">*</p></label>
-                  			<input type="text"  pattern="[0-9]*" autocomplete="new-password" inputmode="numeric" minlength="4" maxlength="4" autocomplete="new-password" class="form-control" id="entradaPin" placeholder=" Repita PIN (Número de 4 dígitos)."/>
-		                </div>
-		            </div>
-		            <div class="col-lg-6">
+		            <div class="col-lg-12">
 		                <div class="input-group">
 	                        <label >Nombre:</label><label><p style="color:red">*</p></label>
                   			<input type="text" class="form-control" name="nombre" required>
@@ -502,7 +496,7 @@
                 	<div class="col-lg-4">
 		                <div class="input-group">
 	                        <label >Comuna:</label><label><p style="color:red">*</p></label>
-                  			<input type="text" class="form-control" name="comuna" required>
+                  			<input type="text" class="form-control" id="inputComuna" name="comuna" required>
 		                </div>
 		            </div>
 		            <div class="col-lg-4">
@@ -720,7 +714,7 @@
 <script src="{{asset('js/jquery.rut-master/')}}/jquery.rut.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$("input#rut").rut({
+		$("input#ingresaRut").rut({
 			formatOn: 'keyup',
 			useThousandsSeparator : false
 		});
@@ -728,7 +722,15 @@
 			formatOn: 'keyup',
 			useThousandsSeparator : false
 		});
-		
+		if($("#selectIsapre option:selected").text() == 'FONASA'){
+				$('#cotizacion_pactada').prop('readonly', true);
+				$('#cotizacion_pactada').prop('disabled', true);
+				$('#cotizacion_pactada').prop('required', false);
+			}else{
+				$('#cotizacion_pactada').prop('readonly', false);
+				$('#cotizacion_pactada').prop('disabled', false);
+				$('#cotizacion_pactada').prop('required', true);
+			}
 		$('#selectIsapre').change(function(){
 			console.log('ha seleccionado '+$("#selectIsapre option:selected").text());
 
@@ -817,6 +819,16 @@
       },
     });
     $('#inputCiudad').flexdatalist({
+      data: "{{asset('json/comunas.json')}}",
+      minLength: 1,
+      searchIn: 'name',
+      groupBy: 'region',
+      visibleProperties: ["name"],
+      textProperty: '{name}',
+      searchByWord: true,
+      valueProperty: 'name'
+    });
+    $('#inputComuna').flexdatalist({
       data: "{{asset('json/comunas.json')}}",
       minLength: 1,
       searchIn: 'name',
@@ -921,6 +933,7 @@
             $('#editarFechaIngreso').val(datos.fecha_ingreso);
             //$('#editarFechaRetiro').val(datos.fecha_retiro);
             //$('#editarFechaRenovacion').val(datos.fecha_renovacion);
+            console.log(datos.pin);
             $('#editarPin').val(datos.pin);
             $('#editarAfp').val(datos.afp_id);
             $('#editarIsapre').val(datos.isapre_id);

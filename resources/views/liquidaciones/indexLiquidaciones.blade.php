@@ -769,7 +769,7 @@ input[readonly]{
                   //$('.filaSelect').prop('hidden', false);
                   //$('#selectPeriodo').empty();
                   moment.locale('es'); 
-                  $('#inputMes').val( capitalize(moment(datos['contrato'].fecha_inicio).format('MMMM')) );
+                  $('#inputMes').val( capitalize(moment(datos['fecha_inicio']).format('MMMM')) );
                   $('#inputNombreEmpleado').val( datos['empleado'].nombre+' '+datos['empleado'].apellido_pat+' '+datos['empleado'].apellido_mat );
                   $('#inputRutEmpleado').val( datos['empleado'].rut );
                   $('#inputIdContrato').val( datos['contrato'].id );
